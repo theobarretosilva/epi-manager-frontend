@@ -1,10 +1,12 @@
+import { BrowserRouter } from 'react-router-dom'
 import './App.css'
+import { Router } from './router/Routes'
 
 function App() {
   return (
-    <>
-      TELA APP.TSX
-    </>
+    <BrowserRouter>
+      <Router />
+    </BrowserRouter>
   )
 }
 
