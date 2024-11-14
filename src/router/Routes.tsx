@@ -13,7 +13,7 @@ import { CadastroEPI } from "../pages/Administrador/CadastroEPI/CadastroEPI";
 export const Router = () => {
     return(
         <Routes>
-            <Route index path="/login" element={<Login/>} />
+            <Route index path="/" element={<Login/>} />
             <Route path="/funcionario" element={<FuncAlmoxLayout />}>
                 <Route path="solicitarEPI" element={<SolicitarEPI />} />
             </Route>
