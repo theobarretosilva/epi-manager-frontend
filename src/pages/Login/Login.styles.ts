@@ -34,12 +34,21 @@ export const ImgLogo = styled.img`
 
 export const BoxForm = styled.div`
     background-color: #90C7CA;
-    width: 31vw;
-    height: 65vh;
+    width: 27vw;
+    height: 57vh;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
     border-radius: 15px;
+    padding: 4vh 2vw 4vh 2vw;
 `
 
 export const TituloBox = styled.h1`
-    
+    font-size: 1.7rem;
+    font-weight: 600;
+    margin: 0;
+`
+
+export const SubtituloBox = styled.h2`
+    font-size: 1.3rem;
+    font-weight: 400;
+    margin: 0;
 `
