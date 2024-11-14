@@ -6,7 +6,7 @@ interface InputStyledProps {
     placeholder: string;
 }
 
-export const InputStyled: React.FC<InputStyledProps> = ({ titulo, tipo, placeholder }) => {
+export const InputStyled = ({ titulo, tipo, placeholder }: InputStyledProps) => {
     return (
         <S.DivGeral>
             <S.NameInput>{titulo}</S.NameInput>

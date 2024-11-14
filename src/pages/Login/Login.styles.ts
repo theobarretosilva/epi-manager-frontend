@@ -34,8 +34,8 @@ export const ImgLogo = styled.img`
 
 export const BoxForm = styled.div`
     background-color: #90C7CA;
-    width: 27vw;
-    height: 57vh;
+    width: 28vw;
+    height: 58vh;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
     border-radius: 15px;
     padding: 4vh 2vw 4vh 2vw;
@@ -51,4 +51,13 @@ export const SubtituloBox = styled.h2`
     font-size: 1.3rem;
     font-weight: 400;
     margin: 0;
+`
+
+export const PEsqueciSenha = styled.p`
+    font-size: 1.05rem;
+    text-decoration: underline;
+    text-align: end;
+    margin-top: 0.5vh;
+    cursor: pointer;
+    margin-bottom: 1vh;
 `
