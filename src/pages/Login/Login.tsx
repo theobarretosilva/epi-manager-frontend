@@ -3,6 +3,7 @@ import { BtnStyled } from '../../components/BtnStyled/BtnStyled';
 import { InputStyled } from '../../components/InputStyled/InputStyled';
 import * as S from './Login.styles';
 import { useState } from 'react';
+import { useNavigate } from 'react-router';
 
 export const Login = () => {
     const [value, setValue] = useState('');
@@ -10,6 +11,8 @@ export const Login = () => {
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
       setValue((event.target as HTMLInputElement).value);
     };
+
+    const navigate = useNavigate();
 
     return(
         <S.DivGeral>
@@ -21,9 +24,9 @@ export const Login = () => {
                     <S.TituloBox>Bem-vindo(a) de volta!</S.TituloBox>
                     <S.SubtituloBox>Insira seus dados nos campos abaixo para logar:</S.SubtituloBox>
                     <form>
-                        <InputStyled titulo='CPF' tipo='text' placeholder='___.___.___-__' />
+                        <InputStyled titulo='Matrícula' tipo='text' placeholder='XXXXXX' />
                         <InputStyled titulo='Senha' tipo='password' placeholder='' />
-                        <S.PEsqueciSenha>Esqueci a senha</S.PEsqueciSenha>
+                        <S.PEsqueciSenha onClick={() => navigate('/esqueci_senha')}>Esqueci a senha</S.PEsqueciSenha>
                         <FormControl>
                             <FormLabel id="demo-controlled-radio-buttons-group">Tipo de acesso</FormLabel>
                             <RadioGroup
