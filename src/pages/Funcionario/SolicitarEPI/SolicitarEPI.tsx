@@ -23,9 +23,9 @@ export const SolicitarEPI = () => {
                 />
             ],
         },
-        {field: 'id', headerName: 'ID', width: 200, align: 'center'},
-        {field: 'descricaoItem', headerName: 'Descrição de Item', width: 200, align: 'center'},
-        {field: 'status', headerName: 'Status', width: 200, align: 'center'}
+        {field: 'id', headerName: 'ID', width: 320, align: 'center', headerAlign: 'center'},
+        {field: 'descricaoItem', headerName: 'Descrição de Item', width: 320, align: 'center', headerAlign: 'center'},
+        {field: 'status', headerName: 'Status', width: 320, align: 'center', headerAlign: 'center'}
     ];
     const rows = [
         { id: 'SOL-24-01', descricaoItem: 'Abafadores de som', status: 'Pendente'},
@@ -53,7 +53,7 @@ export const SolicitarEPI = () => {
                 <BtnStyled text='Solicitar' />
             </S.BoxSolEPI> */}
             {/* <S.BoxSolicitacoes> */}
-                <Paper sx={{ height: '100%', width: '100%' }}>
+                <Paper sx={{ height: '100%', width: '100%', fontSize: 5 }}>
                     <DataGrid
                         rows={rows}
                         columns={columns}
