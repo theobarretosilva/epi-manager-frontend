@@ -8,15 +8,16 @@ export const DivGeral = styled.div`
 `
 
 export const NameInput = styled.p`
-    font-size: 1.32rem;
+    font-size: 1.2rem;
     font-weight: 600;
     margin-bottom: 0;
+    margin-top: 1vh;
 `
 
 export const InputStyled = styled.input`
     background-color: white;
     border: 2px solid black;
-    height: 5.2vh;
+    height: 5vh;
     border-radius: 6px;
     margin-top: 0;
     font-size: 1.2rem;
