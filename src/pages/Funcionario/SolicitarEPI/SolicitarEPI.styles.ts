@@ -5,6 +5,8 @@ export const MainStyled = styled.main`
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    width: 70vw;
+    padding: 8vh 4vw 8vh 4vw;
 `
 
 export const BoxSolEPI = styled.div`
