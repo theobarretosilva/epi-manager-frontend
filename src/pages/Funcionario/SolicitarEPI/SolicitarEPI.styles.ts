@@ -5,4 +5,5 @@ export const MainStyled = styled.main`
     height: 100vh;
     display: flex;
     flex-direction: row;
+    position: fixed;
 `
