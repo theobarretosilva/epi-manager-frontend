@@ -1,7 +1,7 @@
 import { SidebarProps } from "./Sidebar.styles"
 import * as S from "./Sidebar.styles"
 
-export const Sidebar: React.FC<SidebarProps> = ({links}) => {
+export const Sidebar: React.FC<SidebarProps> = ({links, onClick}) => {
     return (
         <S.SidebarWrapper>
             <S.SidebarContent>
@@ -9,7 +9,7 @@ export const Sidebar: React.FC<SidebarProps> = ({links}) => {
                 <S.SidebarHr/>
                 <ul>
                 {links.map((elements)=> (
-                        <S.LinkSidebarWrapper>
+                        <S.LinkSidebarWrapper onClick={onClick}>
                             <S.LinkSidebarContent href={elements.href}>
                             <S.ImageContent>
                                     <S.Image src={elements.image} />
