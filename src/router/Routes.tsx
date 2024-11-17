@@ -10,12 +10,14 @@ import { DashboardColab } from "../pages/Administrador/DashboardColab/DashboardC
 import { CadastroColaborador } from "../pages/Administrador/CadastroColaborador/CadastroColaborador";
 import { CadastroEPI } from "../pages/Administrador/CadastroEPI/CadastroEPI";
 import { Usuarios } from "../pages/Usuarios/Usuarios";
+import { EsqueciSenha } from "../pages/EsqueciSenha/EsqueciSennha";
 
 export const Router = () => {
     return(
         <Routes>
             <Route index path="/" element={<Usuarios/>} />
             <Route path="/login" element={<Login/>} />
+            <Route path="/esqueciSenha" element={<EsqueciSenha/>} />
             <Route path="/funcionario" element={<FuncAlmoxLayout />}>
                 <Route path="solicitarEPI" element={<SolicitarEPI />} />
             </Route>
