@@ -13,6 +13,7 @@ import { Solicitacoes } from "../pages/Administrador/Solicitacoes/Solicitacoes";
 import { ConsultColab } from "../pages/Almoxarifado/ConsultColab/ConsultColab";
 import { ConsultEPI } from "../pages/Almoxarifado/ConsultEPI/ConsultEPI";
 import { Usuarios } from "../pages/Usuarios/Usuarios";
+import { SolicitacoesFunc } from "../pages/Funcionario/SolicitacoesFunc/SolicitacoesFunc";
 
 export const Router = () => {
     return(
@@ -20,7 +21,7 @@ export const Router = () => {
             <Route index path="/" element={<Usuarios/>} />
             <Route path="/login" element={<Login/>} />
             <Route path="/funcionario" element={<FuncLayout />}>
-                <Route path="solicitacoes" element={<Solicitacoes />} />
+                <Route path="solicitacoes" element={<SolicitacoesFunc />} />
                 <Route path="solicitarEPI" element={<SolicitarEPI />} />
             </Route>
             <Route path="/almoxarifado" element={<AlmoxLayout />} >
