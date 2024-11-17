@@ -112,5 +112,6 @@ export const Logout = styled.a`
 `
 
 export interface SidebarProps {
-    links: { title: string; href: string; image: string }[]
+    links: { title: string; href: string; image: string }[];
+    onClick?: () => void;
   }
