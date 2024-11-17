@@ -13,6 +13,7 @@ import { Solicitacoes } from "../pages/Administrador/Solicitacoes/Solicitacoes";
 import { ConsultColab } from "../pages/Almoxarifado/ConsultColab/ConsultColab";
 import { ConsultEPI } from "../pages/Almoxarifado/ConsultEPI/ConsultEPI";
 import { Usuarios } from "../pages/Usuarios/Usuarios";
+import { SolicitacoesFunc } from "../pages/Funcionario/SolicitacoesFunc/SolicitacoesFunc";
 import { EsqueciSenha } from "../pages/EsqueciSenha/EsqueciSennha";
 
 export const Router = () => {
@@ -22,9 +23,9 @@ export const Router = () => {
             <Route path="/login" element={<Login/>} />
             <Route path="/esqueciSenha" element={<EsqueciSenha/>} />
             <Route path="/funcionario" element={<FuncLayout />}>
-                <Route path="solicitacoes" element={<Solicitacoes />} />
-                <Route path="solicitarEPI" element={<SolicitarEPI />} />
+                <Route path="solicitacoes" element={<SolicitacoesFunc />} />
             </Route>
+            <Route path="/funcionario/solicitarEPI" element={<SolicitarEPI />} />
             <Route path="/almoxarifado" element={<AlmoxLayout />} >
                 <Route path="dashboardAlmox" element={<DashboardAlmox />} />
                 <Route path="consultColab" element={<ConsultColab />} />
