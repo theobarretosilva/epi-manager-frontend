@@ -9,11 +9,13 @@ import { DashboardEPI } from "../pages/Administrador/DashboardEPI/DashboardEPI";
 import { DashboardColab } from "../pages/Administrador/DashboardColab/DashboardColab";
 import { CadastroColaborador } from "../pages/Administrador/CadastroColaborador/CadastroColaborador";
 import { CadastroEPI } from "../pages/Administrador/CadastroEPI/CadastroEPI";
+import { Usuarios } from "../pages/Usuarios/Usuarios";
 
 export const Router = () => {
     return(
         <Routes>
-            <Route index path="/" element={<Login/>} />
+            <Route index path="/" element={<Usuarios/>} />
+            <Route path="/login" element={<Login/>} />
             <Route path="/funcionario" element={<FuncAlmoxLayout />}>
                 <Route path="solicitarEPI" element={<SolicitarEPI />} />
             </Route>

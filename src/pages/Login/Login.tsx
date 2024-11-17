@@ -24,12 +24,12 @@ export const Login = () => {
                     <S.TituloBox>Bem-vindo(a) de volta!</S.TituloBox>
                     <S.SubtituloBox>Insira seus dados nos campos abaixo para logar:</S.SubtituloBox>
                     <form>
-                        <InputStyled titulo='Matrícula' tipo='text' placeholder='XXXXXX' />
+                        <InputStyled titulo='Matrícula' tipo='text' placeholder='' />
                         <InputStyled titulo='Senha' tipo='password' placeholder='' />
                         <S.PEsqueciSenha onClick={() => navigate('/esqueci_senha')}>Esqueci a senha</S.PEsqueciSenha>
                         <FormControl>
-                            <FormLabel id="demo-controlled-radio-buttons-group">Tipo de acesso</FormLabel>
-                            <RadioGroup
+                            {/* <FormLabel id="demo-controlled-radio-buttons-group">Tipo de acesso</FormLabel> */}
+                            {/* <RadioGroup
                                 row
                                 aria-labelledby="demo-controlled-radio-buttons-group"
                                 name="controlled-radio-buttons-group"
@@ -38,7 +38,7 @@ export const Login = () => {
                                     <FormControlLabel value="funcionario" control={<Radio />} label="Funcionário" />
                                     <FormControlLabel value="almoxarifado" control={<Radio />} label="Almoxarifado" />
                                     <FormControlLabel value="administrador" control={<Radio />} label="Administrador" />
-                                </RadioGroup>
+                                </RadioGroup> */}
                         </FormControl>
                         <BtnStyled text='Entrar' />
                     </form>
