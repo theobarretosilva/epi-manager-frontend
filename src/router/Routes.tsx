@@ -10,16 +10,21 @@ import { CadastroEPI } from "../pages/Administrador/CadastroEPI/CadastroEPI";
 import { FuncLayout } from "../layout/FuncLayout/FuncLayout";
 import { AlmoxLayout } from "../layout/AlmoxLayout/AlmoxLayout";
 import { Solicitacoes } from "../pages/Administrador/Solicitacoes/Solicitacoes";
+import { ConsultColab } from "../pages/Almoxarifado/ConsultColab/ConsultColab";
+import { ConsultEPI } from "../pages/Almoxarifado/ConsultEPI/ConsultEPI";
 
 export const Router = () => {
     return(
         <Routes>
             <Route index path="/" element={<Login/>} />
             <Route path="/funcionario" element={<FuncLayout />}>
+                <Route path="solicitacoes" element={<Solicitacoes />} />
                 <Route path="solicitarEPI" element={<SolicitarEPI />} />
             </Route>
             <Route path="/almoxarifado" element={<AlmoxLayout />} >
                 <Route path="dashboardAlmox" element={<DashboardAlmox />} />
+                <Route path="consultColab" element={<ConsultColab />} />
+                <Route path="consultEPI" element={<ConsultEPI />} />
             </Route>
             <Route path="/administrador" element={<AdminLayout />} >
                 <Route path="solicitacoes" element={<Solicitacoes />} />
