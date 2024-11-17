@@ -12,11 +12,13 @@ import { AlmoxLayout } from "../layout/AlmoxLayout/AlmoxLayout";
 import { Solicitacoes } from "../pages/Administrador/Solicitacoes/Solicitacoes";
 import { ConsultColab } from "../pages/Almoxarifado/ConsultColab/ConsultColab";
 import { ConsultEPI } from "../pages/Almoxarifado/ConsultEPI/ConsultEPI";
+import { Usuarios } from "../pages/Usuarios/Usuarios";
 
 export const Router = () => {
     return(
         <Routes>
-            <Route index path="/" element={<Login/>} />
+            <Route index path="/" element={<Usuarios/>} />
+            <Route path="/login" element={<Login/>} />
             <Route path="/funcionario" element={<FuncLayout />}>
                 <Route path="solicitacoes" element={<Solicitacoes />} />
                 <Route path="solicitarEPI" element={<SolicitarEPI />} />
