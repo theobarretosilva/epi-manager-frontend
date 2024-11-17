@@ -13,12 +13,14 @@ import { Solicitacoes } from "../pages/Administrador/Solicitacoes/Solicitacoes";
 import { ConsultColab } from "../pages/Almoxarifado/ConsultColab/ConsultColab";
 import { ConsultEPI } from "../pages/Almoxarifado/ConsultEPI/ConsultEPI";
 import { Usuarios } from "../pages/Usuarios/Usuarios";
+import { EsqueciSenha } from "../pages/EsqueciSenha/EsqueciSennha";
 
 export const Router = () => {
     return(
         <Routes>
             <Route index path="/" element={<Usuarios/>} />
             <Route path="/login" element={<Login/>} />
+            <Route path="/esqueciSenha" element={<EsqueciSenha/>} />
             <Route path="/funcionario" element={<FuncLayout />}>
                 <Route path="solicitacoes" element={<Solicitacoes />} />
                 <Route path="solicitarEPI" element={<SolicitarEPI />} />
