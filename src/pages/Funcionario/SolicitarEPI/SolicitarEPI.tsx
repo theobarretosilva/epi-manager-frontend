@@ -41,28 +41,8 @@ export const SolicitarEPI = () => {
 
 
     return(
-        <S.MainStyled>
-            <Searchbar placeholder='Pesquise sua solicitação...' />
-            {/* <S.BoxSolEPI>
-                <S.TituloBox>Solicitar EPI</S.TituloBox>
-                <S.LinhaTituloBox>‎</S.LinhaTituloBox>
-                <InputStyled titulo='Código' tipo='number' placeholder='' />
-                <InputStyled titulo='Quantidade' tipo='number' placeholder='' />
-                <InputStyled titulo='Prioridade' tipo='text' placeholder='' />
-                <br />
-                <BtnStyled text='Solicitar' />
-            </S.BoxSolEPI> */}
-            {/* <S.BoxSolicitacoes> */}
-                <Paper sx={{ height: '100%', width: '100%', fontSize: 5 }}>
-                    <DataGrid
-                        rows={rows}
-                        columns={columns}
-                        initialState={{ pagination: { paginationModel } }}
-                        pageSizeOptions={[5, 10]}
-                        sx={{ border: 0 }}
-                    />
-                </Paper>
-            {/* </S.BoxSolicitacoes> */}
-        </S.MainStyled>
+        <>
+        
+        </>
     )
 }
