@@ -1,8 +1,8 @@
 export const CadastroEPI = () => {
-    return(
-        <>
-            TELA DE CADASTRO DE EPI
-            SOMENTE ADMINISTRADOR
-        </>
-    )
+  return(
+      <>
+          TELA DE solicitacoes
+          SOMENTE ADMINISTRADOR
+      </>
+  )
 }
