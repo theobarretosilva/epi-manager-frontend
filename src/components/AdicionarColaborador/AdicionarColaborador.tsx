@@ -1,11 +1,14 @@
 
 import React, { useState } from "react";
 import * as S from "./AdicionarColaborador.styles"; 
+import { toast} from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { InputStyled } from "../InputStyled/InputStyled";
 import { BtnStyled } from "../BtnStyled/BtnStyled";
 
 
-const AdicionarColaborador = () => {
+
+const AdicionarColaborador= () => {
 
   const [nome, setNome] = useState("");
   const [matricula, setMatricula] = useState("");
@@ -43,11 +46,17 @@ const AdicionarColaborador = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!nome ||  !setor || !cargo || !email || !senha) {
-      alert("Por favor, preencha todos os campos.");
+    if (!nome || !matricula ||  !setor || !cargo || !email || !senha) {
+      toast.warning("Por favor, preencha todos os campos.", {
+        autoClose: 6000,
+        closeOnClick: true,
+      });
     } else {
       console.log({ nome, matricula, setor, cargo, email, senha });
-      alert("Colaborador adicionado com sucesso!");
+      toast.success("Ação realizada com sucesso!", {
+        autoClose: 6000,
+        closeOnClick: true,
+      });
     }
   };
 
