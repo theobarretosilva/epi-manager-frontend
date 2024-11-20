@@ -3,13 +3,23 @@ import AdicionarColaborador from "../../../components/AdicionarColaborador/Adici
 import { useState } from "react";
 import * as S from './DashboardColab.styles'
 import { ToastContainer } from "react-toastify";
+import ExcluirColaborador from "../../../components/ExcluirColaborador/ExcluirColaborador";
 
 export const DashboardColab = () => {
-    const [modalIsOpen, setModalIsOpen] = useState(false);
+    const [modalIsOpenAddColaborador, setModalIsOpenAddColaborador] = useState(false);
+    const [modalIsOpenDelete, setModalIsOpenDelete] = useState(false);
+    const [idColaborador, setIdColaborador] = useState(0);
+
+
 
     const openModal = () => {
-        setModalIsOpen(true); //chamada para abrir o modal
+        setModalIsOpenAddColaborador(true); //chamada para abrir o modal
        //espaço para lógica de edição após inclusão da tabela
+    }
+
+    const openModalDelete = (id: number) => {
+        setModalIsOpenDelete(true); //chamada para abrir o modal
+        setIdColaborador(id)
     }
 
     const customStyles = {
@@ -28,24 +38,40 @@ export const DashboardColab = () => {
         },
     };
 
+    ReactModal.setAppElement('#root');
+
     return(
         <>
      <ToastContainer position="top-right" />  {/* não apagar */}
 
         <S.Button onClick={()=> openModal()}>Abrir modal</S.Button>
+        <S.Button onClick={()=> openModalDelete(1)}>Abrir modal de Delete</S.Button> {/* passar o params.row.id do colaborador */}
 
         <ReactModal
-        isOpen={modalIsOpen}
-        onRequestClose={() => setModalIsOpen(false)}
+        isOpen={modalIsOpenDelete}
+        onRequestClose={() => setModalIsOpenDelete(false)}
         style={customStyles}
         >
             <S.MainWrapper>
-                <S.ImageContent onClick={() => setModalIsOpen(false)}>
+                <S.ImageContent onClick={() => setModalIsOpenDelete(false)}>
                     <S.Image  src="../../src/assets/svg/Close.svg" />
                 </S.ImageContent>
-                <AdicionarColaborador />
+                <ExcluirColaborador setModalIsOpen={setModalIsOpenDelete} colaboradorId={ idColaborador } /> 
             </S.MainWrapper>
 
+        </ReactModal>
+
+        <ReactModal
+        isOpen={modalIsOpenAddColaborador}
+        onRequestClose={() => setModalIsOpenAddColaborador(false)}
+        style={customStyles}
+        >
+            <S.MainWrapper>
+                <S.ImageContent onClick={() => setModalIsOpenAddColaborador(false)}>
+                    <S.Image  src="../../src/assets/svg/Close.svg" />
+                </S.ImageContent>
+                <AdicionarColaborador setModalIsOpen={setModalIsOpenAddColaborador} />
+            </S.MainWrapper>
         </ReactModal>
         </>
     )
