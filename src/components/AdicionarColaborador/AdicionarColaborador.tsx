@@ -8,7 +8,7 @@ import { BtnStyled } from "../BtnStyled/BtnStyled";
 
 
 
-const AdicionarColaborador= () => {
+const AdicionarColaborador: React.FC<S.AddColaboradorProps> = ({setModalIsOpen}) => {
 
   const [nome, setNome] = useState("");
   const [matricula, setMatricula] = useState("");
@@ -57,6 +57,7 @@ const AdicionarColaborador= () => {
         autoClose: 6000,
         closeOnClick: true,
       });
+      setModalIsOpen(false)
     }
   };
 

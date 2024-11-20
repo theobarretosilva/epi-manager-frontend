@@ -28,6 +28,6 @@ export const DivWrapper = styled.div`
 
 
 export interface AddColaboradorProps {
-  modalOpen: boolean;
+  setModalIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
