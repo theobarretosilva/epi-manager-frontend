@@ -2,10 +2,11 @@ import * as S from './BtnStyled.styles'
 
 interface BtnStyledProps {
     text: string;
+    onClick: () => void;
 }
 
-export const BtnStyled = ({ text }: BtnStyledProps) => {
+export const BtnStyled = ({ text, onClick }: BtnStyledProps) => {
     return(
-        <S.ButtonStyled>{text}</S.ButtonStyled>
+        <S.ButtonStyled onClick={onClick}>{text}</S.ButtonStyled>
     )
 }

@@ -4,7 +4,7 @@ export const DivGeral = styled.div`
     display: flex;
     flex-direction: row;
 
-    @media (max-width: 450px) {
+    @media (max-width: 880px) {
         display: flex;
         flex-direction: column;
     }
@@ -12,11 +12,10 @@ export const DivGeral = styled.div`
 
 export const ImgAside = styled.img`
     width: 49.7vw;
-    height: 100vh;
     object-fit: cover;
 
-    @media (max-width: 450px) {
-        display: none;
+    @media (max-width: 880px) {
+    width: 100vw;
     }
 `
 
@@ -25,8 +24,10 @@ export const LinhaDivisao = styled.div`
     width: 0.3vw;
     background-color: black;
 
-    @media (max-width: 450px) {
-        display: none;
+    @media (max-width: 880px) {
+        display: flex;
+        height: 0.5vh;
+        width: 100vw;
     }
 `
 
@@ -36,12 +37,11 @@ export const MainStyled = styled.main`
     align-items: center;
     justify-content: center;
     gap: 8vh;
-    width: 49.7vw;
-    height: 100vh;
+    width: 50vw;
     background: linear-gradient(#FCFCFC, #5EB1BF);
 
-    @media (max-width: 450px) {
-        height: 100vh;
+
+    @media (max-width: 880px) {
         width: 100vw;
         gap: 4vh;
     }
@@ -67,11 +67,13 @@ export const BoxForm = styled.div`
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
     border-radius: 15px;
     padding: 4vh 2vw 4vh 2vw;
+    margin-bottom: 4vh;
+    margin-left: 6vw;
+    margin-right: 6vw;
 
     @media (max-width: 450px) {
-        width: 85vw;
-        height: 65vh;
         padding: 4vh 4vw 4vh 4vw;
+
     }
 `
 

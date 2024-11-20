@@ -1,36 +1,120 @@
-import { Paper } from '@mui/material'
-// import { BtnStyled } from '../../../components/BtnStyled/BtnStyled'
-// import { InputStyled } from '../../../components/InputStyled/InputStyled'
-import * as S from './SolicitarEPI.styles'
-import { Searchbar } from '../../../components/Searchbar/Searchbar'
-// import { DataGrid } from '@mui/x-data-grid'
+import { useEffect } from 'react';
+import { BtnStyled } from '../../../components/BtnStyled/BtnStyled';
+import { InputStyled } from '../../../components/InputStyled/InputStyled';
+import { SelectCodStyled } from '../../../components/SelectCodStyled/SelectCodStyled';
+import * as S from './SolicitarEPI.styles';
+import { SelectStyled } from '../../../components/SelectStyled/SelectStyled';
+import { useNavigate } from 'react-router';
+import useHandleFormSolicitarEPI from '../../../hooks/useHandleFormSolicitarEPI';
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export const SolicitarEPI = () => {
-    // const paginationModel = { page: 0, pageSize: 5 };
+    const navigate = useNavigate();
+    const { formData, updateField, submitForm } = useHandleFormSolicitarEPI();
 
-    return(
+    const usuarioLogado = {
+        id: '01',
+        nome: 'Théo Barreto Silva', 
+        matricula: '544', 
+        setor: 'Solda', 
+        cargo: 'Soldador', 
+        email: 'barretotheo25@gmail.com', 
+        hash: '', 
+        salt: ''
+    };
+    sessionStorage.setItem('UserLogado', JSON.stringify(usuarioLogado));
+    const userLogado = JSON.parse(sessionStorage.getItem('UserLogado') || '{}');
+
+    const EPIsCadastrados = [
+        { descricao: 'Capacete de proteção', codigo: 'COD-01', CA: '15122', validade: '20/05/2026' },
+        { descricao: 'Óculos de proteção', codigo: 'COD-02', CA: '13544', validade: '12/07/2025' },
+        { descricao: 'Luva de borracha', codigo: 'COD-03', CA: '44475', validade: '07/02/2025' },
+        { descricao: 'Teste', codigo: 'COD-03', CA: '44475', validade: '07/02/2025' }
+    ];
+    sessionStorage.setItem('EPIs cadastrados', JSON.stringify(EPIsCadastrados));
+
+    const EPIList = JSON.parse(sessionStorage.getItem('EPIs cadastrados') || '[]');
+    const options = EPIList.map((epi: { descricao: string; codigo: string }) => ({
+        label: epi.descricao,
+        value: epi.codigo,
+    }));
+
+    const generateUniqueID = () => {
+        const now = new Date();
+        return `SOL-${now.getFullYear()}-${now.getMonth() + 1}-${now.getDate()}-${now.getHours()}${now.getMinutes()}${now.getSeconds()}`;
+    };
+
+    useEffect(() => {
+        const newId = generateUniqueID();
+        updateField('id', newId);
+        updateField('solicitante', userLogado.nome);
+    }, [updateField, userLogado.nome]);
+
+    const handleSubmit = () => {
+        if (!formData.item || !formData.codigoEPI || !formData.prioridade || !formData.quantidade) {
+            toast.error('Por favor, preencha todos os campos.');
+            return;
+        }
+
+        submitForm();
+        toast.success('EPI solicitado com sucesso!');
+        navigate('/funcionario/solicitacoes');
+    };
+
+    return (
         <S.MainStyled>
-            <Searchbar placeholder='Pesquise sua solicitação...' />
-            {/* <S.BoxSolEPI>
-                <S.TituloBox>Solicitar EPI</S.TituloBox>
-                <S.LinhaTituloBox>‎</S.LinhaTituloBox>
-                <InputStyled titulo='Código' tipo='number' placeholder='' />
-                <InputStyled titulo='Quantidade' tipo='number' placeholder='' />
-                <InputStyled titulo='Prioridade' tipo='text' placeholder='' />
+            <S.DivMainSolicitar>
+                <S.DivFlex>
+                    <InputStyled 
+                        disabled={true}
+                        tipo='text'
+                        titulo='ID da Solicitação'
+                        value={formData.id}  // O valor será o código gerado
+                        onChange={e => updateField('id', e.target.value)}
+                    />
+                    <InputStyled 
+                        disabled={true}
+                        tipo='text'
+                        titulo='Solicitante'
+                        value={userLogado.nome}
+                    />
+                </S.DivFlex>
+                <S.DivFlex>
+                    <SelectCodStyled 
+                        titulo="Escolha um item"
+                        value={formData.item}
+                        options={options}
+                        onChange={option => {
+                            updateField('item', option.label);
+                            updateField('codigoEPI', option.value);
+                        }}
+                    />
+                    <InputStyled 
+                        tipo='text'
+                        titulo='Código'
+                        disabled={true}
+                        value={formData.codigoEPI}
+                    />
+                </S.DivFlex>
+                <S.DivFlex>
+                    <SelectStyled
+                        titulo="Prioridade" 
+                        value={formData.prioridade} 
+                        options={['Alta', 'Média', 'Baixa']} 
+                        onChange={value => updateField('prioridade', value)} 
+                    />
+                    <InputStyled 
+                        tipo='number'
+                        titulo='Quantidade'
+                        value={formData.quantidade}
+                        onChange={e => updateField('quantidade', parseInt(e.target.value) || 0)}
+                    />
+                </S.DivFlex>
                 <br />
-                <BtnStyled text='Solicitar' />
-            </S.BoxSolEPI> */}
-            <S.BoxSolicitacoes>
-                <Paper sx={{ height: '100%', width: '100%' }}>
-                    {/* <DataGrid
-                        rows={}
-                        columns={}
-                        initialState={{ pagination: { paginationModel } }}
-                        pageSizeOptions={[5, 10]}
-                        sx={{ border: 0 }}
-                    /> */}
-                </Paper>
-            </S.BoxSolicitacoes>
+                <BtnStyled text='Solicitar' onClick={handleSubmit} />
+                <S.PVoltar onClick={() => navigate('/funcionario/solicitacoes')}>Voltar</S.PVoltar>
+            </S.DivMainSolicitar>
         </S.MainStyled>
-    )
-}
+    );
+};

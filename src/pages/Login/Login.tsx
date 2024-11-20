@@ -18,7 +18,7 @@ export const Login = () => {
                     <S.SubtituloBox>Insira seus dados nos campos abaixo para logar:</S.SubtituloBox>
                     <br />
                     <form>
-                        <InputStyled titulo='Matrícula' tipo='text' placeholder='XXXXXX' />
+                        <InputStyled titulo='Matrícula' tipo='text' placeholder='' />
                         <InputStyled titulo='Senha' tipo='password' placeholder='' />
                         <S.PEsqueciSenha onClick={() => navigate('/esqueci_senha')}>Esqueci a senha</S.PEsqueciSenha>
                         <br />
