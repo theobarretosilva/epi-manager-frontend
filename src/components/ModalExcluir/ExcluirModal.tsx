@@ -1,20 +1,20 @@
+import { ExcluirProps } from "./ExcluirModal.styles";
+import * as S from "./ExcluirModal.styles"
 
-import * as S from "./ExcluirColaborador.styles"
-
-interface ExcluirColaboradorProps {
-  colaboradorId: number; 
-  setModalIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
-}
-
-const ExcluirColaborador: React.FC<ExcluirColaboradorProps> = ({ colaboradorId, setModalIsOpen }) => {
+export const ExcluirModal: React.FC<ExcluirProps> = ({ Id, setModalIsOpen, tipo }) => {
 
   const handleClose = () => {
     setModalIsOpen(false);
   };
 
   const handleDelete = () => {
-    // onDelete(colaboradorId);
-    console.log(colaboradorId);
+    if ( tipo = "colaborador") {
+    console.log("Colaborador excluído: "+Id);
+      
+    } else {
+    console.log("EPI excluído: "+Id);
+      
+    }
     
     setModalIsOpen(false); 
   };
@@ -32,4 +32,3 @@ const ExcluirColaborador: React.FC<ExcluirColaboradorProps> = ({ colaboradorId, 
   );
 };
 
-export default ExcluirColaborador;

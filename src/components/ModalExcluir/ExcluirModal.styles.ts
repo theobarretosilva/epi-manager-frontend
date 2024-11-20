@@ -65,3 +65,9 @@ export const ButtonDelete = styled.button`
     border: none;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 `
+
+export interface ExcluirProps {
+  Id: number; 
+  tipo: "colaborador" | "epi";
+  setModalIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+}
