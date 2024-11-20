@@ -3,7 +3,7 @@ import AdicionarColaborador from "../../../components/AdicionarColaborador/Adici
 import { useState } from "react";
 import * as S from './DashboardColab.styles'
 import { ToastContainer } from "react-toastify";
-import ExcluirColaborador from "../../../components/ExcluirColaborador/ExcluirColaborador";
+import { ExcluirModal } from "../../../components/ModalExcluir/ExcluirModal";
 
 export const DashboardColab = () => {
     const [modalIsOpenAddColaborador, setModalIsOpenAddColaborador] = useState(false);
@@ -38,7 +38,6 @@ export const DashboardColab = () => {
         },
     };
 
-    ReactModal.setAppElement('#root');
 
     return(
         <>
@@ -56,7 +55,7 @@ export const DashboardColab = () => {
                 <S.ImageContent onClick={() => setModalIsOpenDelete(false)}>
                     <S.Image  src="../../src/assets/svg/Close.svg" />
                 </S.ImageContent>
-                <ExcluirColaborador setModalIsOpen={setModalIsOpenDelete} colaboradorId={ idColaborador } /> 
+                <ExcluirModal setModalIsOpen={setModalIsOpenDelete} Id={ idColaborador } tipo="colaborador" /> 
             </S.MainWrapper>
 
         </ReactModal>
