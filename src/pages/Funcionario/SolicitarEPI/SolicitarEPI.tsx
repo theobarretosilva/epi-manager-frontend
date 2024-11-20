@@ -40,17 +40,15 @@ export const SolicitarEPI = () => {
         value: epi.codigo,
     }));
 
-    // Função para gerar um código único para a solicitação
     const generateUniqueID = () => {
         const now = new Date();
         return `SOL-${now.getFullYear()}-${now.getMonth() + 1}-${now.getDate()}-${now.getHours()}${now.getMinutes()}${now.getSeconds()}`;
     };
 
-    // Inicializa os valores no estado do formulário
     useEffect(() => {
         const newId = generateUniqueID();
-        updateField('id', newId);  // Gera um código único para a solicitação
-        updateField('solicitante', userLogado.nome);  // Preenche automaticamente o solicitante
+        updateField('id', newId);
+        updateField('solicitante', userLogado.nome);
     }, [updateField, userLogado.nome]);
 
     const handleSubmit = () => {
