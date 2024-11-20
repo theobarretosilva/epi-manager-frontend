@@ -42,24 +42,3 @@ export const BoxSolicitacoes = styled.div`
     height: 35vh;
     padding: 1vh 1vw 1vh 1vw;
 `
-
-export const FundoModal = styled.div`
-    width: 100vw;
-    height: 100vh;
-    position: fixed;
-    z-index: 10;
-    background-color: red;
-`
-
-export const DivModal = styled.div`
-    width: 55vw;
-    height: 60vh;
-    background-color: white;
-    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-    border-radius: 20px;
-    padding: 2.5vh 2.5vw 2.5vh 2.5vw;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: 3vh;
-`

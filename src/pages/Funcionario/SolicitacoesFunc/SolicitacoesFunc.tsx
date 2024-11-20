@@ -69,26 +69,20 @@ export const SolicitacoesFunc = () => {
     };
 
     return (
-        <>
-            <S.FundoModal>
-                
-            </S.FundoModal>
-            <S.MainStyled>
-                <Searchbar onSearch={handleSearch}/>
-                <Paper sx={{ height: '100%', width: '100%', fontSize: 14, mt: 2 }}>
-                    <DataGrid
-                        rows={filteredRows}
-                        columns={columns}
-                        pageSizeOptions={[5, 10]}
-                        sx={{
-                            border: 0,
-                            '& .MuiDataGrid-cell': { textAlign: 'center' },
-                            '& .MuiDataGrid-columnHeaders': { backgroundColor: '#f5f5f5' },
-                        }}
-                    />
-                </Paper>
-            </S.MainStyled>
-        </>
-        
+        <S.MainStyled>
+            <Searchbar onSearch={handleSearch}/>
+            <Paper sx={{ height: '100%', width: '100%', fontSize: 14, mt: 2 }}>
+                <DataGrid
+                    rows={filteredRows}
+                    columns={columns}
+                    pageSizeOptions={[5, 10]}
+                    sx={{
+                        border: 0,
+                        '& .MuiDataGrid-cell': { textAlign: 'center' },
+                        '& .MuiDataGrid-columnHeaders': { backgroundColor: '#f5f5f5' },
+                    }}
+                />
+            </Paper>
+        </S.MainStyled>
     );
 };
