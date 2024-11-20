@@ -1,32 +1,70 @@
-import { useState } from 'react'
-import { BtnStyled } from '../../../components/BtnStyled/BtnStyled'
-import { InputStyled } from '../../../components/InputStyled/InputStyled'
-import { SelectCodStyled } from '../../../components/SelectCodStyled/SelectCodStyled'
-import * as S from './SolicitarEPI.styles'
-import { SelectStyled } from '../../../components/SelectStyled/SelectStyled'
+import { useEffect } from 'react';
+import { BtnStyled } from '../../../components/BtnStyled/BtnStyled';
+import { InputStyled } from '../../../components/InputStyled/InputStyled';
+import { SelectCodStyled } from '../../../components/SelectCodStyled/SelectCodStyled';
+import * as S from './SolicitarEPI.styles';
+import { SelectStyled } from '../../../components/SelectStyled/SelectStyled';
+import { useNavigate } from 'react-router';
+import useHandleFormSolicitarEPI from '../../../hooks/useHandleFormSolicitarEPI';
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export const SolicitarEPI = () => {
-    const [selectedOption, setSelectedOption] = useState({ label: '', value: '' });
-    const [codigo, setCodigo] = useState('');
-    const handleSelectChange = (option: { label: string; value: string }) => {
-        console.log('Selecionado:', option);
-        setSelectedOption(option);
-        setCodigo(option.value);
-    };
+    const navigate = useNavigate();
+    const { formData, updateField, submitForm } = useHandleFormSolicitarEPI();
 
-    const [selectedPrioridade, setSelectedPrioridade] = useState('');
-    const handleSelectPrioridadeChange = (value: string) => {
-        console.log('Selecionado:', value);
-        setSelectedPrioridade(value);
+    const usuarioLogado = {
+        id: '01',
+        nome: 'Théo Barreto Silva', 
+        matricula: '544', 
+        setor: 'Solda', 
+        cargo: 'Soldador', 
+        email: 'barretotheo25@gmail.com', 
+        hash: '', 
+        salt: ''
     };
+    sessionStorage.setItem('UserLogado', JSON.stringify(usuarioLogado));
+    const userLogado = JSON.parse(sessionStorage.getItem('UserLogado') || '{}');
 
-    const options = [
-        { label: 'Capacete de proteção', value: 'COD-01' },
-        { label: 'Óculos de proteção', value: 'COD-02' },
-        { label: 'Luva de borracha', value: 'COD-03' }
+    const EPIsCadastrados = [
+        { descricao: 'Capacete de proteção', codigo: 'COD-01', CA: '15122', validade: '20/05/2026' },
+        { descricao: 'Óculos de proteção', codigo: 'COD-02', CA: '13544', validade: '12/07/2025' },
+        { descricao: 'Luva de borracha', codigo: 'COD-03', CA: '44475', validade: '07/02/2025' },
+        { descricao: 'Teste', codigo: 'COD-03', CA: '44475', validade: '07/02/2025' }
     ];
+    sessionStorage.setItem('EPIs cadastrados', JSON.stringify(EPIsCadastrados));
 
-    return(
+    const EPIList = JSON.parse(sessionStorage.getItem('EPIs cadastrados') || '[]');
+    const options = EPIList.map((epi: { descricao: string; codigo: string }) => ({
+        label: epi.descricao,
+        value: epi.codigo,
+    }));
+
+    // Função para gerar um código único para a solicitação
+    const generateUniqueID = () => {
+        const now = new Date();
+        return `SOL-${now.getFullYear()}-${now.getMonth() + 1}-${now.getDate()}-${now.getHours()}${now.getMinutes()}${now.getSeconds()}`;
+    };
+
+    // Inicializa os valores no estado do formulário
+    useEffect(() => {
+        const newId = generateUniqueID();
+        updateField('id', newId);  // Gera um código único para a solicitação
+        updateField('solicitante', userLogado.nome);  // Preenche automaticamente o solicitante
+    }, [updateField, userLogado.nome]);
+
+    const handleSubmit = () => {
+        if (!formData.item || !formData.codigoEPI || !formData.prioridade || !formData.quantidade) {
+            toast.error('Por favor, preencha todos os campos.');
+            return;
+        }
+
+        submitForm();
+        toast.success('EPI solicitado com sucesso!');
+        navigate('/funcionario/solicitacoes');
+    };
+
+    return (
         <S.MainStyled>
             <S.DivMainSolicitar>
                 <S.DivFlex>
@@ -34,45 +72,51 @@ export const SolicitarEPI = () => {
                         disabled={true}
                         tipo='text'
                         titulo='ID da Solicitação'
-                        value='SOL-24-1'
+                        value={formData.id}  // O valor será o código gerado
+                        onChange={e => updateField('id', e.target.value)}
                     />
                     <InputStyled 
                         disabled={true}
                         tipo='text'
                         titulo='Solicitante'
-                        value='Felipe Soares de Oliveira'
+                        value={userLogado.nome}
                     />
                 </S.DivFlex>
                 <S.DivFlex>
                     <SelectCodStyled 
                         titulo="Escolha um item"
-                        value={selectedOption.value}
+                        value={formData.item}
                         options={options}
-                        onChange={handleSelectChange}
+                        onChange={option => {
+                            updateField('item', option.label);
+                            updateField('codigoEPI', option.value);
+                        }}
                     />
                     <InputStyled 
                         tipo='text'
                         titulo='Código'
                         disabled={true}
-                        value={codigo}
+                        value={formData.codigoEPI}
                     />
                 </S.DivFlex>
                 <S.DivFlex>
                     <SelectStyled
                         titulo="Prioridade" 
-                        value={selectedPrioridade} 
+                        value={formData.prioridade} 
                         options={['Alta', 'Média', 'Baixa']} 
-                        onChange={handleSelectPrioridadeChange} 
+                        onChange={value => updateField('prioridade', value)} 
                     />
                     <InputStyled 
                         tipo='number'
                         titulo='Quantidade'
+                        value={formData.quantidade}
+                        onChange={e => updateField('quantidade', parseInt(e.target.value) || 0)}
                     />
                 </S.DivFlex>
                 <br />
-                <BtnStyled text='Solicitar' />
-                <S.PVoltar>Voltar</S.PVoltar>
+                <BtnStyled text='Solicitar' onClick={handleSubmit} />
+                <S.PVoltar onClick={() => navigate('/funcionario/solicitacoes')}>Voltar</S.PVoltar>
             </S.DivMainSolicitar>
         </S.MainStyled>
-    )
-}
+    );
+};
