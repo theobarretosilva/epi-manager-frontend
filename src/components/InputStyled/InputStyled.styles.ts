@@ -16,7 +16,7 @@ export const NameInput = styled.p`
 
 export const InputStyled = styled.input`
     background-color: white;
-    border: 2px solid black;
+    border: 1.5px solid black;
     height: 5vh;
     border-radius: 6px;
     margin-top: 0;
