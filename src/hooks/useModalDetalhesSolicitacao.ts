@@ -23,7 +23,6 @@ export const useModalDetalhesSolicitacao = () => {
   const [codigoEPI, setCodigoEPI] = useState("");
   const [numeroPatrimonio, setNumeroPatrimonio] = useState("");
   const [prioridade, setPrioridade] = useState("");
-
   const openModal = ({ item, id, status, dataSolicitacao, solicitante, quantidade, codigoEPI, numeroPatrimonio, prioridade }: ModalProps) => {
     setItem(item);
     setId(id);

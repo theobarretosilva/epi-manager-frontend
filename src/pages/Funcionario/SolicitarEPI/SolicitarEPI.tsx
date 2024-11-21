@@ -70,8 +70,8 @@ export const SolicitarEPI = () => {
                         disabled={true}
                         tipo='text'
                         titulo='ID da Solicitação'
-                        value={formData.id}  // O valor será o código gerado
-                        onChange={e => updateField('id', e.target.value)}
+                        value={formData.id}
+                        handle={e => updateField('id', e.target.value)}
                     />
                     <InputStyled 
                         disabled={true}
@@ -108,7 +108,7 @@ export const SolicitarEPI = () => {
                         tipo='number'
                         titulo='Quantidade'
                         value={formData.quantidade}
-                        onChange={e => updateField('quantidade', parseInt(e.target.value) || 0)}
+                        handle={e => updateField('quantidade', parseInt(e.target.value) || 0)}
                     />
                 </S.DivFlex>
                 <br />
