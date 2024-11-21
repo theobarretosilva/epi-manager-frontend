@@ -4,6 +4,9 @@ import { Searchbar } from '../../../components/Searchbar/Searchbar';
 import { DataGrid, GridActionsCellItem, GridColDef, GridRowParams } from '@mui/x-data-grid';
 import { OpenModalIcon } from '../../../components/OpenModalIcon/OpenModalIcon';
 import { useState } from 'react';
+import ReactModal from 'react-modal';
+import { InputDisable } from '../../../components/InputDisable/InputDisable';
+import { SelectInput } from '../../../components/SelectInput/SelectInput';
 
 interface SolicitacaoProps {
     id: string;
@@ -20,6 +23,36 @@ interface EPIProps {
 }
 
 export const SolicitacoesFunc = () => {
+    const [paginationModel, setPaginationModel] = useState({ page: 0, pageSize: 6 });
+    const [modalIsOpen, setModalIsOpen] = useState(false);
+    const [modalDescricao, setModalDescricao] = useState("");
+    const [modalId, setModalId] = useState("");
+    const [modalStatus, setModalStatus] = useState("");
+    const [modalValidade, setModalValidade] = useState("");
+
+
+    const openModal = (descricaoItem: string, id: string, status: string, validadeEPI: string) => {
+        setModalIsOpen(true);
+        setModalDescricao(descricaoItem);
+        setModalId(id);
+        setModalStatus(status);
+        setModalValidade(validadeEPI);
+    }
+
+    const customStyles = {
+        overlay: {
+          backgroundColor: "rgba(0, 0, 0, 0.5)", // Altere a opacidade aqui (0.7 é 70% de opacidade)
+        },
+        content: {
+          top: "50%",
+          left: "50%",
+          right: "auto",
+          bottom: "auto",
+          transform: "translate(-50%, -50%)",
+          padding: "25px",
+          borderRadius: "10px",
+          backgroundColor: "#FCFCFC",
+        },
     const solicitacoes = JSON.parse(sessionStorage.getItem('Solicitacoes') || '[]');
     const EPIsCadastrados = JSON.parse(sessionStorage.getItem('EPIs cadastrados') || '[]');
 
@@ -38,7 +71,7 @@ export const SolicitacoesFunc = () => {
                     key={0}
                     icon={<OpenModalIcon />}
                     label='Abrir'
-                    onClick={() => console.log('Abrindo modal para', params.row.id)}
+                    onClick={() =>  openModal(params.row.descricaoItem, params.row.id, params.row.status, params.row.validadeEPI)}
                 />
             ],
             width: 100
@@ -83,6 +116,32 @@ export const SolicitacoesFunc = () => {
                     }}
                 />
             </Paper>
+            <ReactModal 
+            isOpen={modalIsOpen}
+            onRequestClose={() => setModalIsOpen(false)}
+            style={customStyles}
+        >
+            <S.MainWrapper>
+                <S.ImageContent onClick={() => setModalIsOpen(false)}>
+                    <S.Image  src="../../src/assets/svg/Close.svg" />
+                </S.ImageContent>
+                <S.DivWrapper>
+                    <InputDisable  text='12/05/2024' title="Data de Abertura" type="text"/>
+                    <InputDisable  text='-' title="Data de Conclusão" type="text"/>
+                    <InputDisable  text={modalStatus} title="Status" type="text"/>
+                    <InputDisable  text={modalId} title="ID da Solicitação" type="text"/>
+                    <InputDisable  text='Oliveira' title="Solicitante" type="text"/>
+                    <InputDisable  text='Oliveira' title="Responsável" type="text"/>
+                    <InputDisable  text="2" title="Quantidade" type="number"/>
+                    <InputDisable  text={modalDescricao} title="Descrição do Item" type="text"/>
+                    <InputDisable  text="326348" title="Código" type="text"/>
+                    <SelectInput disable={true} text='Normal' title='Prioridade' />
+                    <InputDisable  text='-' title="CA" type="text"/>
+                    <InputDisable  text='' title="Data de Validade" type="text"/>
+                    <InputDisable  text="-" title="Número de Patrimônio" type="text"/>
+                </S.DivWrapper>
+            </S.MainWrapper>
+        </ReactModal>
         </S.MainStyled>
     );
 };

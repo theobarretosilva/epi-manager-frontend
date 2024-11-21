@@ -8,8 +8,8 @@ export const Sidebar: React.FC<SidebarProps> = ({links, onClick}) => {
                 <S.SidebarTitle>Atividades</S.SidebarTitle>
                 <S.SidebarHr/>
                 <ul>
-                {links.map((elements)=> (
-                        <S.LinkSidebarWrapper onClick={onClick}>
+                {links.map((elements, index)=> (
+                        <S.LinkSidebarWrapper key={index} onClick={onClick}>
                             <S.LinkSidebarContent href={elements.href}>
                             <S.ImageContent>
                                     <S.Image src={elements.image} />
