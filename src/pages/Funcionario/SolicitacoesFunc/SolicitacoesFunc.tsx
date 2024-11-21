@@ -29,6 +29,13 @@ export const SolicitacoesFunc = () => {
   const solicitacoes = JSON.parse(sessionStorage.getItem('Solicitacoes') || '[]');
   const EPIsCadastrados = JSON.parse(sessionStorage.getItem('EPIs cadastrados') || '[]');
 
+    const getCAEPI = (cod: string) => {
+        console.log(cod);
+        const epi = EPIsCadastrados.find((epi: EPIProps) => epi.codigo === cod);
+        console.log(epi)
+        return epi.CA;
+    }
+
   const getValidadeEPI = (cod: string) => {
     const epi = EPIsCadastrados.find((epi: EPIProps) => epi.codigo === cod);
     return epi ? epi.validade : 'N/A';
@@ -127,7 +134,7 @@ export const SolicitacoesFunc = () => {
             <InputDisable text={item} title="Item" type="text" />
             <InputDisable text={codigoEPI} title="Código" type="text" />
             <SelectInput disable={true} text="Normal" title="Prioridade" />
-            <InputDisable text="-" title="CA" type="text" />
+            <InputDisable text={getCAEPI(codigoEPI)} title="CA" type="text" />
             <InputDisable text={getValidadeEPI(codigoEPI)} title="Data de Validade" type="text" />
             <InputDisable text="-" title="Número de Patrimônio" type="text" />
           </S.DivWrapper>
