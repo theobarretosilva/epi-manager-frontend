@@ -4,11 +4,11 @@ interface ModalProps {
   item: string;
   id: string;
   status: string;
-  validadeEPI: string;
   dataSolicitacao: string;
   solicitante: string;
   quantidade: string;
   codigoEPI: string;
+  numeroPatrimonio: string;
 }
 
 export const useModalDetalhesSolicitacao = () => {
@@ -16,21 +16,21 @@ export const useModalDetalhesSolicitacao = () => {
   const [item, setItem] = useState("");
   const [id, setId] = useState("");
   const [status, setStatus] = useState("");
-  const [validade, setValidade] = useState("");
   const [dataSolicitacao, setdataSolicitacao] = useState("");
   const [solicitante, setSolicitante] = useState("");
   const [quantidade, setQuantidade] = useState("");
   const [codigoEPI, setCodigoEPI] = useState("");
+  const [numeroPatrimonio, setNumeroPatrimonio] = useState("");
 
-  const openModal = ({ item, id, status, validadeEPI, dataSolicitacao, solicitante, quantidade, codigoEPI }: ModalProps) => {
+  const openModal = ({ item, id, status, dataSolicitacao, solicitante, quantidade, codigoEPI, numeroPatrimonio }: ModalProps) => {
     setItem(item);
     setId(id);
     setStatus(status);
-    setValidade(validadeEPI);
     setdataSolicitacao(dataSolicitacao);
     setSolicitante(solicitante);
     setQuantidade(quantidade);
     setCodigoEPI(codigoEPI);
+    setNumeroPatrimonio(numeroPatrimonio)
     setIsOpen(true);
   };
 
@@ -43,11 +43,11 @@ export const useModalDetalhesSolicitacao = () => {
     item,
     id,
     status,
-    validade,
     dataSolicitacao,
     solicitante,
     quantidade,
     codigoEPI,
+    numeroPatrimonio,
     openModal,
     closeModal,
   };

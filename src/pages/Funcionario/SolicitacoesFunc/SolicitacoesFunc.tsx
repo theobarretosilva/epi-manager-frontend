@@ -24,25 +24,38 @@ interface EPIProps {
 }
 
 export const SolicitacoesFunc = () => {
-  const { isOpen, item, id, status, validade, dataSolicitacao, solicitante, quantidade, codigoEPI, openModal, closeModal } = useModalDetalhesSolicitacao();
+  const { 
+    isOpen,
+    item,
+    id,
+    status,
+    dataSolicitacao,
+    solicitante,
+    quantidade,
+    codigoEPI,
+    numeroPatrimonio,
+    openModal,
+    closeModal 
+  } = useModalDetalhesSolicitacao();
 
   const solicitacoes = JSON.parse(sessionStorage.getItem('Solicitacoes') || '[]');
   const EPIsCadastrados = JSON.parse(sessionStorage.getItem('EPIs cadastrados') || '[]');
-
-    const getCAEPI = (cod: string) => {
-        console.log(cod);
-        const epi = EPIsCadastrados.find((epi: EPIProps) => epi.codigo === cod);
-        console.log(epi)
-        return epi.CA;
-    }
 
   const getValidadeEPI = (cod: string) => {
     const epi = EPIsCadastrados.find((epi: EPIProps) => epi.codigo === cod);
     return epi ? epi.validade : 'N/A';
   };
 
+  const getCAEPI = (cod: string) => {
+    console.log('aiai uiui');
+    console.log("codigo do epi", cod)
+    const epi = EPIsCadastrados.find((epi: EPIProps) => epi.codigo === cod);
+    console.log(epi)
+    return epi.CA;
+  }
+
   const getSolicitacao = (params: SolicitacaoProps) => {
-    const solicitacao = solicitacoes.find((solicitacao) => solicitacao.id == params.id);
+    const solicitacao = solicitacoes.find((solicitacao: SolicitacaoProps) => solicitacao.id == params.id);
     console.log(solicitacao)
     return solicitacao;
   }
@@ -136,7 +149,7 @@ export const SolicitacoesFunc = () => {
             <SelectInput disable={true} text="Normal" title="Prioridade" />
             <InputDisable text={getCAEPI(codigoEPI)} title="CA" type="text" />
             <InputDisable text={getValidadeEPI(codigoEPI)} title="Data de Validade" type="text" />
-            <InputDisable text="-" title="Número de Patrimônio" type="text" />
+            <InputDisable text={numeroPatrimonio} title="Número de Patrimônio" type="text" />
           </S.DivWrapper>
         </S.MainWrapper>
       </ReactModal>
