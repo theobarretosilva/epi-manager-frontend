@@ -53,6 +53,7 @@ export const SolicitacoesFunc = () => {
           borderRadius: "10px",
           backgroundColor: "#FCFCFC",
         },
+    }
     const solicitacoes = JSON.parse(sessionStorage.getItem('Solicitacoes') || '[]');
     const EPIsCadastrados = JSON.parse(sessionStorage.getItem('EPIs cadastrados') || '[]');
 
