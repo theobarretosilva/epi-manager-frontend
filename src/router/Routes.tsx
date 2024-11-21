@@ -24,8 +24,8 @@ export const Router = () => {
             <Route path="/esqueciSenha" element={<EsqueciSenha/>} />
             <Route path="/funcionario" element={<FuncLayout />}>
                 <Route path="solicitacoes" element={<SolicitacoesFunc />} />
+                <Route path="solicitarEPI" element={<SolicitarEPI />} />
             </Route>
-            <Route path="/funcionario/solicitarEPI" element={<SolicitarEPI />} />
             <Route path="/almoxarifado" element={<AlmoxLayout />} >
                 <Route path="dashboardAlmox" element={<DashboardAlmox />} />
                 <Route path="consultColab" element={<ConsultColab />} />

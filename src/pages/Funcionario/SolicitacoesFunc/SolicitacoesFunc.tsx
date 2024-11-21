@@ -8,6 +8,20 @@ import ReactModal from 'react-modal';
 import { InputDisable } from '../../../components/InputDisable/InputDisable';
 import { SelectInput } from '../../../components/SelectInput/SelectInput';
 
+interface SolicitacaoProps {
+    id: string;
+    item: string;
+    status: string;
+    codigoEPI: string;
+}
+
+interface EPIProps {
+    descricao: string;
+    codigo: string;
+    CA: string;
+    validade: string;
+}
+
 export const SolicitacoesFunc = () => {
     const [paginationModel, setPaginationModel] = useState({ page: 0, pageSize: 6 });
     const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -39,6 +53,12 @@ export const SolicitacoesFunc = () => {
           borderRadius: "10px",
           backgroundColor: "#FCFCFC",
         },
+    const solicitacoes = JSON.parse(sessionStorage.getItem('Solicitacoes') || '[]');
+    const EPIsCadastrados = JSON.parse(sessionStorage.getItem('EPIs cadastrados') || '[]');
+
+    const getValidadeEPI = (cod: string) => {
+        const epi = EPIsCadastrados.find((epi: EPIProps) => epi.codigo === cod);
+        return epi ? epi.validade : 'N/A';
     };
 
     const columns: GridColDef[] = [
@@ -62,13 +82,12 @@ export const SolicitacoesFunc = () => {
         { field: 'validadeEPI', headerName: 'Validade EPI', width: 220, align: 'center', headerAlign: 'center' },
     ];
 
-    const rows = [
-        { id: 'SOL-24-01', descricaoItem: 'Abafadores de som', status: 'Pendente', validadeEPI: '17/11/2024' },
-        { id: 'SOL-24-02', descricaoItem: 'Capacete de segurança', status: 'Aprovado', validadeEPI: '20/12/2024' },
-        { id: 'SOL-24-03', descricaoItem: 'Óculos de proteção', status: 'Rejeitado', validadeEPI: '01/01/2025' },
-        { id: 'SOL-24-04', descricaoItem: 'Luvas térmicas', status: 'Pendente', validadeEPI: '15/08/2025' },
-        { id: 'SOL-24-05', descricaoItem: 'Máscaras respiratórias', status: 'Pendente', validadeEPI: '30/09/2025' },
-    ];
+    const rows = solicitacoes.map((solicitacao: SolicitacaoProps) => ({
+        id: solicitacao.id,
+        descricaoItem: solicitacao.item,
+        status: solicitacao.status,
+        validadeEPI: getValidadeEPI(solicitacao.codigoEPI),
+    }));
 
     const [searchTerm, setSearchTerm] = useState('');
     const [filteredRows, setFilteredRows] = useState(rows);
@@ -89,8 +108,6 @@ export const SolicitacoesFunc = () => {
                 <DataGrid
                     rows={filteredRows}
                     columns={columns}
-                    paginationModel={paginationModel}
-                    onPaginationModelChange={setPaginationModel}
                     pageSizeOptions={[5, 10]}
                     sx={{
                         border: 0,

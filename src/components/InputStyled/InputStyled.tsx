@@ -4,16 +4,17 @@ interface InputStyledProps {
     titulo: string;
     tipo: string;
     placeholder?: string;
-    value?: string;
+    value?: string | number;
     name?: string;
-    handle?: (event: React.ChangeEvent<HTMLInputElement>) => void;
+    disabled?: boolean;
+    handle?: (event: React.ChangeEvent<HTMLInputElement>) => void;   
 }
 
-export const InputStyled = ({ titulo, tipo, placeholder, name, value, handle}: InputStyledProps) => {
+export const InputStyled = ({ titulo, tipo, placeholder, name, value, handle, disabled}: InputStyledProps) => {
     return (
         <S.DivGeral>
             <S.NameInput>{titulo}</S.NameInput>
-            <S.InputStyled name={name}  type={tipo} placeholder={placeholder} value={value} onChange={handle} />
+            <S.InputStyled disabled={disabled} name={name}  type={tipo} placeholder={placeholder} value={value} onChange={handle} />
         </S.DivGeral>
     );
 };
