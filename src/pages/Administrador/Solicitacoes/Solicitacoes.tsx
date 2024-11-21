@@ -23,8 +23,8 @@ interface SolicitacaoProps {
 interface EPIProps {
     descricao: string;
     codigo: string;
-    CA: string;
     validade: string;
+    certificadoAprovacao: string;
 }
 
 export const Solicitacoes = () => {
@@ -56,7 +56,7 @@ export const Solicitacoes = () => {
         console.log("codigo do epi", cod)
         const epi = EPIsCadastrados.find((epi: EPIProps) => epi.codigo === cod);
         console.log(epi)
-        return epi ? epi.CA : 'N/A';
+        return epi ? epi.certificadoAprovacao : 'N/A';
     }
 
     const getSolicitacao = (params: SolicitacaoProps) => {
@@ -191,7 +191,7 @@ export const Solicitacoes = () => {
                     <InputDisable text={item} title="Item" type="text" />
                     <InputDisable text={codigoEPI} title="Código" type="text" />
                     <SelectInput disable={true} text={prioridade} title="Prioridade" />
-                    <InputDisable text='{getCAEPI(codigoEPI)}' title="CA" type="text" />
+                    <InputDisable text={getCAEPI(codigoEPI)} title="CA" type="text" />
                     <InputDisable text={getValidadeEPI(codigoEPI)} title="Validade do EPI" type="text" />
                     <InputDisable text={numeroPatrimonio} title="Número de Patrimônio" type="text" />
                 </S.DivWrapper>
