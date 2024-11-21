@@ -9,4 +9,3 @@ export const MainStyled = styled.main`
     padding: 7vh 3vw 7vh 3vw;
     margin-left: 25.4vw;
 `
-
