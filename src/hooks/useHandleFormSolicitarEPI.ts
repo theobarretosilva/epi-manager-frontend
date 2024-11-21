@@ -1,3 +1,4 @@
+import moment from 'moment';
 import { useState, useEffect } from 'react';
 
 interface FormData {
@@ -8,6 +9,8 @@ interface FormData {
     prioridade: string;
     quantidade: number;
     status: string;
+    dataSolicitacao: string;
+    dataConclusao: string;
 }
 
 const useHandleFormSolicitarEPI = () => {
@@ -18,7 +21,9 @@ const useHandleFormSolicitarEPI = () => {
         codigoEPI: '',
         prioridade: '',
         quantidade: 0,
-        status: 'Pendente'
+        status: 'Pendente',
+        dataSolicitacao: moment().format('DD/MM/YYYY'),
+        dataConclusao: '-'
     });
 
     const generateUniqueID = () => {
