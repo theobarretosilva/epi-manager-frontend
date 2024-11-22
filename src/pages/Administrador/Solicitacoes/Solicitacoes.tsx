@@ -178,23 +178,23 @@ export const Solicitacoes = () => {
             </Paper>
             <ReactModal isOpen={isOpen} onRequestClose={closeModal} style={customStyles}>
                 <S.MainWrapper>
-                <S.ImageContent onClick={closeModal}>
-                    <S.Image src="../../src/assets/svg/Close.svg" />
-                </S.ImageContent>
-                <S.DivWrapper>
-                    <InputDisable text={dataSolicitacao} title="Data de Abertura" type="text" />
-                    <InputDisable text="-" title="Data de Conclusão" type="text" />
-                    <InputDisable text={status} title="Status" type="text" />
-                    <InputDisable text={id} title="ID da Solicitação" type="text" />
-                    <InputDisable text={solicitante} title="Solicitante" type="text" />
-                    <InputDisable text={quantidade} title="Quantidade" type="number" />
-                    <InputDisable text={item} title="Item" type="text" />
-                    <InputDisable text={codigoEPI} title="Código" type="text" />
-                    <SelectInput disable={true} text={prioridade} title="Prioridade" />
-                    <InputDisable text={getCAEPI(codigoEPI)} title="CA" type="text" />
-                    <InputDisable text={getValidadeEPI(codigoEPI)} title="Validade do EPI" type="text" />
-                    <InputDisable text={numeroPatrimonio} title="Número de Patrimônio" type="text" />
-                </S.DivWrapper>
+                    <S.ImageContent onClick={closeModal}>
+                        <S.Image src="../../src/assets/svg/Close.svg" />
+                    </S.ImageContent>
+                    <S.DivWrapper>
+                        <InputDisable text={dataSolicitacao} title="Data de Abertura" type="text" />
+                        <InputDisable text="-" title="Data de Conclusão" type="text" />
+                        <InputDisable text={status} title="Status" type="text" />
+                        <InputDisable text={id} title="ID da Solicitação" type="text" />
+                        <InputDisable text={solicitante} title="Solicitante" type="text" />
+                        <InputDisable text={quantidade} title="Quantidade" type="number" />
+                        <InputDisable text={item} title="Item" type="text" />
+                        <InputDisable text={codigoEPI} title="Código" type="text" />
+                        <SelectInput disable={true} text={prioridade} title="Prioridade" />
+                        <InputDisable text={getCAEPI(codigoEPI)} title="CA" type="text" />
+                        <InputDisable text={getValidadeEPI(codigoEPI)} title="Validade do EPI" type="text" />
+                        <InputDisable text={numeroPatrimonio} title="Número de Patrimônio" type="text" />
+                    </S.DivWrapper>
                 </S.MainWrapper>
             </ReactModal>
         </S.MainStyled>

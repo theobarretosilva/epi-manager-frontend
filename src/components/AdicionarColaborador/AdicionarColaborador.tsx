@@ -107,7 +107,7 @@ const AdicionarColaborador: React.FC<S.AddColaboradorProps> = ({setModalIsOpen})
           handle={handleChange}
         />
       </S.DivWrapper>
-        <BtnStyled type="submit" text="Salvar" />
+        <BtnStyled onClick={() => {}} type="submit" text="Salvar" />
     </S.FormContainer>
   );
 };

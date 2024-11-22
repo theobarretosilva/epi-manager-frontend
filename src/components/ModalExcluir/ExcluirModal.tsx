@@ -8,7 +8,7 @@ export const ExcluirModal: React.FC<ExcluirProps> = ({ Id, setModalIsOpen, tipo 
   };
 
   const handleDelete = () => {
-    if ( tipo = "colaborador") {
+    if ( tipo == "colaborador") {
     console.log("Colaborador excluído: "+Id);
       
     } else {

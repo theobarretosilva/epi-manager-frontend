@@ -27,7 +27,7 @@ export const DashboardColab = () => {
     const [modalIsOpenDelete, setModalIsOpenDelete] = useState(false);
     const [idColaborador, setIdColaborador] = useState(0);
 
-    const openModal = () => {
+    const openModal = (id: string) => {
         setModalIsOpenAddColaborador(true); //chamada para abrir o modal
        //espaço para lógica de edição após inclusão da tabela
     }
@@ -63,7 +63,7 @@ export const DashboardColab = () => {
                     key={0}
                     icon={<EditColabIcon />}
                     label="Abrir"
-                    // onClick={() => openModal(getSolicitacao(params.row))}
+                    onClick={() => openModal(params.row.id)}
                 />,
             ],
             width: 80,
@@ -81,7 +81,7 @@ export const DashboardColab = () => {
                     key={0}
                     icon={<DeleteIcon />}
                     label="Download"
-                    // onClick={() => generatePDF(getSolicitacao(params.row))}
+                    onClick={()=> openModalDelete(params.row.id)}
                 />,
             ],
             width: 80,
@@ -128,10 +128,6 @@ export const DashboardColab = () => {
                 </Paper>
             </S.MainStyled>
             <ToastContainer position="top-right" />  {/* não apagar */}
-
-            <S.Button onClick={()=> openModal()}>Abrir modal</S.Button>
-            <S.Button onClick={()=> openModalDelete(1)}>Abrir modal de Delete</S.Button> {/* passar o params.row.id do colaborador */}
-
             <ReactModal
                 isOpen={modalIsOpenDelete}
                 onRequestClose={() => setModalIsOpenDelete(false)}
@@ -143,9 +139,7 @@ export const DashboardColab = () => {
                     </S.ImageContent>
                     <ExcluirModal setModalIsOpen={setModalIsOpenDelete} Id={ idColaborador } tipo="colaborador" /> 
                 </S.MainWrapper>
-
             </ReactModal>
-
             <ReactModal
                 isOpen={modalIsOpenAddColaborador}
                 onRequestClose={() => setModalIsOpenAddColaborador(false)}
