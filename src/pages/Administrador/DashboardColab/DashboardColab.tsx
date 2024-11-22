@@ -113,7 +113,7 @@ export const DashboardColab = () => {
     return(
         <>
             <S.MainStyled>
-                <Searchbar onSearch={handleSearch} />
+                <Searchbar onSearch={handleSearch} placeholder="Pesquise pela matrícula ou nome" />
                 <Paper sx={{ height: '100%', width: '100%', fontSize: 14, mt: 2 }}>
                     <DataGrid
                         rows={filteredRows}
