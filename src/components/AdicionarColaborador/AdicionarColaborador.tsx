@@ -89,7 +89,7 @@ const AdicionarColaborador: React.FC<S.AddColaboradorProps> = ({setModalIsOpen})
         setModalIsOpen(false);
       } catch (error) {
         console.error("Erro ao gerar o hash:", error);
-        toast.error("Ocorreu um erro ao salvar o colaborador.");
+        toast.error("Ocorreu um erro ao salvar o colaborador");
       }
     }
   };

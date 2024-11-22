@@ -35,7 +35,6 @@ export const ExcluirModal: React.FC<ExcluirProps> = ({ Id, setModalIsOpen, tipo,
           <S.ButtonDelete onClick={handleDelete}>Deletar</S.ButtonDelete>
           <S.ButtonCancel onClick={handleClose} >Cancelar</S.ButtonCancel>
         </S.DivButton>
-
       </S.DivContainer>
   );
 };

@@ -124,7 +124,7 @@ export const DashboardEPI = () => {
         <>
             <S.MainStyled>
                 <Searchbar placeholder="Pesquise pela nome ou código" onSearch={handleSearch} />
-                <S.ButtonStyled onClick={() => openModal()} >+ Adicionar EPI</S.ButtonStyled>
+                <S.ButtonStyled onClick={() => setModalIsOpenAddEpi(true)} >+ Adicionar EPI</S.ButtonStyled>
                 <Paper sx={{ height: '100%', width: '100%', fontSize: 14, mt: 2 }}>
                     <DataGrid
                         rows={filteredRows}
