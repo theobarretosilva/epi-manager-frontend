@@ -31,6 +31,5 @@ export const DivWrapper = styled.div`
 
 export interface AddColaboradorProps {
   setModalIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  onAddColaborador: (e) => void;
 }
 

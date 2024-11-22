@@ -5,7 +5,6 @@ import { SolicitarEPI } from "../pages/Funcionario/SolicitarEPI/SolicitarEPI";
 import { DashboardAlmox } from "../pages/Almoxarifado/DashboardAlmox/DashboardAlmox";
 import { DashboardEPI } from "../pages/Administrador/DashboardEPI/DashboardEPI";
 import { DashboardColab } from "../pages/Administrador/DashboardColab/DashboardColab";
-import { CadastroColaborador } from "../pages/Administrador/CadastroColaborador/CadastroColaborador";
 import { CadastroEPI } from "../pages/Administrador/CadastroEPI/CadastroEPI";
 import { FuncLayout } from "../layout/FuncLayout/FuncLayout";
 import { AlmoxLayout } from "../layout/AlmoxLayout/AlmoxLayout";
@@ -35,7 +34,6 @@ export const Router = () => {
                 <Route path="solicitacoes" element={<Solicitacoes />} />
                 <Route path="dashboardEPI" element={<DashboardEPI />} />
                 <Route path="dashboardFuncionario" element={<DashboardColab />} />
-                <Route path="cadastroColab" element={<CadastroColaborador />} />
                 <Route path="cadastroEPI" element={<CadastroEPI />} />
             </Route>
         </Routes>

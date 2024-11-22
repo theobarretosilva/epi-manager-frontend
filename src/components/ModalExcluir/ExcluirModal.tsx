@@ -4,6 +4,7 @@ import * as S from "./ExcluirModal.styles"
 
 export const ExcluirModal: React.FC<ExcluirProps> = ({ Id, setModalIsOpen, tipo, onDelete }) => {
   const colaboradores = JSON.parse(sessionStorage.getItem('ColaboradoresCadastrados') || '[]');
+  const EPIList = JSON.parse(sessionStorage.getItem('EPIsCadastrados') || '[]');
 
   const handleClose = () => {
     setModalIsOpen(false);
@@ -17,8 +18,11 @@ export const ExcluirModal: React.FC<ExcluirProps> = ({ Id, setModalIsOpen, tipo,
       onDelete(Id);
       toast.success('Colaborador deletado com sucesso!')      
     } else {
+      const episAtualizados = EPIList.filter((epi: { codigo: string }) => epi.codigo !== Id);
+      sessionStorage.setItem('EPIsCadastrados', JSON.stringify(episAtualizados));
       console.log("EPI excluído: "+Id);
-      
+      onDelete(Id)
+      toast.success('EPI deletado com sucesso!')   
     }
     setModalIsOpen(false); 
   };
