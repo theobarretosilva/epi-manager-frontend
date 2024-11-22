@@ -1,7 +1,9 @@
+import { toast } from "react-toastify";
 import { ExcluirProps } from "./ExcluirModal.styles";
 import * as S from "./ExcluirModal.styles"
 
-export const ExcluirModal: React.FC<ExcluirProps> = ({ Id, setModalIsOpen, tipo }) => {
+export const ExcluirModal: React.FC<ExcluirProps> = ({ Id, setModalIsOpen, tipo, onDelete }) => {
+  const colaboradores = JSON.parse(sessionStorage.getItem('ColaboradoresCadastrados') || '[]');
 
   const handleClose = () => {
     setModalIsOpen(false);
@@ -9,13 +11,15 @@ export const ExcluirModal: React.FC<ExcluirProps> = ({ Id, setModalIsOpen, tipo 
 
   const handleDelete = () => {
     if ( tipo == "colaborador") {
-    console.log("Colaborador excluído: "+Id);
-      
+      const colaboradoresAtualizados = colaboradores.filter((colaborador: { id: string }) => colaborador.id !== Id);
+      sessionStorage.setItem('ColaboradoresCadastrados', JSON.stringify(colaboradoresAtualizados));
+      console.log("Colaborador excluído: " + Id);
+      onDelete(Id);
+      toast.success('Colaborador deletado com sucesso!')      
     } else {
-    console.log("EPI excluído: "+Id);
+      console.log("EPI excluído: "+Id);
       
     }
-    
     setModalIsOpen(false); 
   };
 

@@ -1,6 +1,6 @@
 import ReactModal from "react-modal";
 import AdicionarColaborador from "../../../components/AdicionarColaborador/AdicionarColaborador"
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import * as S from './DashboardColab.styles'
 import { ToastContainer } from "react-toastify";
 import { ExcluirModal } from "../../../components/ModalExcluir/ExcluirModal";
@@ -22,20 +22,22 @@ interface ColaboradorProps {
 }
 
 export const DashboardColab = () => {
-    const colaboradores = JSON.parse(sessionStorage.getItem('Colaboradores cadastrados') || '{}');
     const [modalIsOpenAddColaborador, setModalIsOpenAddColaborador] = useState(false);
     const [modalIsOpenDelete, setModalIsOpenDelete] = useState(false);
-    const [idColaborador, setIdColaborador] = useState(0);
+    const [idColaborador, setIdColaborador] = useState('0');
 
     const openModal = (id: string) => {
-        setModalIsOpenAddColaborador(true); //chamada para abrir o modal
-       //espaço para lógica de edição após inclusão da tabela
-    }
-
-    const openModalDelete = (id: number) => {
-        setModalIsOpenDelete(true); //chamada para abrir o modal
+        setModalIsOpenAddColaborador(true);
         setIdColaborador(id)
     }
+
+    const openModalDelete = (id: string) => {
+        setModalIsOpenDelete(true);
+        setIdColaborador(id)
+    }
+    const handleDeleteColaborador = (id: string) => {
+        setRows(rows.filter(row => row.id !== id));
+    };
 
     const customStyles = {
         overlay: {
@@ -62,7 +64,7 @@ export const DashboardColab = () => {
                 <GridActionsCellItem
                     key={0}
                     icon={<EditColabIcon />}
-                    label="Abrir"
+                    label="Editar"
                     onClick={() => openModal(params.row.id)}
                 />,
             ],
@@ -73,14 +75,14 @@ export const DashboardColab = () => {
         { field: 'cargo', headerName: 'Cargo', width: 200, align: 'center', headerAlign: 'center'},
         { field: 'setor', headerName: 'Setor', width: 200, align: 'center', headerAlign: 'center' },
         { 
-            field: 'excluir',
+            field: 'deletar',
             type: 'actions',
             headerName: 'Deletar', 
             getActions: (params: GridRowParams) => [
                 <GridActionsCellItem
                     key={0}
                     icon={<DeleteIcon />}
-                    label="Download"
+                    label="Deletar"
                     onClick={()=> openModalDelete(params.row.id)}
                 />,
             ],
@@ -90,13 +92,25 @@ export const DashboardColab = () => {
         }
     ];
 
-    const rows = colaboradores.map((colaborador: ColaboradorProps) => ({
-        id: colaborador.id,
-        matricula: colaborador.matricula,
-        nome: colaborador.nome,
-        cargo: colaborador.cargo,
-        setor: colaborador.setor,
-    }));
+    const [colaboradores, setColaboradores] = useState(() => {
+        const storedData = sessionStorage.getItem("ColaboradoresCadastrados");
+        return storedData ? JSON.parse(storedData) : []; // Retorna um array vazio se o dado não existir
+    });
+
+    const [rows, setRows] = useState(() => {
+        return colaboradores.map((colaborador: ColaboradorProps) => ({
+            id: colaborador.id,
+            matricula: colaborador.matricula,
+            nome: colaborador.nome,
+            cargo: colaborador.cargo,
+            setor: colaborador.setor,
+        }));
+    });
+
+    useEffect(() => {
+        setFilteredRows(rows);
+    }, [rows, colaboradores]);
+    
 
     const [searchTerm, setSearchTerm] = useState('');
     const [filteredRows, setFilteredRows] = useState(rows);
@@ -114,6 +128,7 @@ export const DashboardColab = () => {
         <>
             <S.MainStyled>
                 <Searchbar onSearch={handleSearch} placeholder="Pesquise pela matrícula ou nome" />
+                <S.ButtonStyled onClick={() => setModalIsOpenAddColaborador(true)}>+ Adicionar Colaborador</S.ButtonStyled>
                 <Paper sx={{ height: '100%', width: '100%', fontSize: 14, mt: 2 }}>
                     <DataGrid
                         rows={filteredRows}
@@ -137,7 +152,7 @@ export const DashboardColab = () => {
                     <S.ImageContent onClick={() => setModalIsOpenDelete(false)}>
                         <S.Image  src="../../src/assets/svg/Close.svg" />
                     </S.ImageContent>
-                    <ExcluirModal setModalIsOpen={setModalIsOpenDelete} Id={ idColaborador } tipo="colaborador" /> 
+                    <ExcluirModal onDelete={handleDeleteColaborador} setModalIsOpen={setModalIsOpenDelete} Id={ idColaborador } tipo="colaborador" /> 
                 </S.MainWrapper>
             </ReactModal>
             <ReactModal

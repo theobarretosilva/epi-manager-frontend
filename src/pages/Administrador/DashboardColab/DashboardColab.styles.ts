@@ -10,6 +10,21 @@ export const MainStyled = styled.main`
     margin-left: 25.4vw;
 `
 
+export const ButtonStyled = styled.button`
+    background-color: #FFDD4A;
+    width: auto;
+    height: 4.9vh;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    border-radius: 5px;
+    align-self: flex-start;
+    border: none;
+    font-size: 1.15rem;
+    font-weight: 600;
+    cursor: pointer;
+    padding-left: 1.5vw;
+    padding-right: 1.5vw;
+`
+
 export const Button = styled.button`
   margin-left: 50vw;
 `;
