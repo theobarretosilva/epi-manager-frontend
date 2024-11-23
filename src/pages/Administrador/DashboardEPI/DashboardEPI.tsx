@@ -161,11 +161,11 @@ export const DashboardEPI = () => {
                         />
                     </Paper>
                 ) : (
-                    <NoDataToShow mainText="EPI's" />
+                    <NoDataToShow mainText="Não foram adicionados EPI's!" />
                 )}
                 
             </S.MainStyled>
-            <ToastContainer position="top-right" />  {/* não apagar */}
+            <ToastContainer position="top-right" />
             <ReactModal
                 isOpen={modalIsOpenDelete}
                 onRequestClose={() => setModalIsOpenDelete(false)}

@@ -7,7 +7,7 @@ interface NoDataToShowProps {
 export const NoDataToShow = ({ mainText }: NoDataToShowProps) => {
     return(
         <>
-            <S.PNoData>Não foram adicionados {mainText} ainda!</S.PNoData>
+            <S.PNoData>{mainText}</S.PNoData>
             <S.ImgNoData src='../../src/assets/svg/add_information.svg' />
         </>
     )

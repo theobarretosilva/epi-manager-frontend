@@ -174,7 +174,7 @@ export const DashboardColab = () => {
                         />
                     </Paper>
                 ) : (
-                    <NoDataToShow mainText="colaboradores" />
+                    <NoDataToShow mainText="Não foram adicionados colaboradores!" />
                 )}
             </S.MainStyled>
             <ToastContainer position="top-right" />
