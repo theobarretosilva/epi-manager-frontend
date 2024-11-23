@@ -11,7 +11,7 @@ const AdicionarColaborador: React.FC<S.AddColaboradorProps> = ({setModalIsOpen})
   const [nome, setNome] = useState("");
   const [matricula, setMatricula] = useState("");
   const [setor, setSetor] = useState("");
-  const [cargo, setCargo] = useState("Administrador" || "Almoxarifado" || "Colaborador");
+  const [cargo, setCargo] = useState("");
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
 
@@ -47,7 +47,6 @@ const AdicionarColaborador: React.FC<S.AddColaboradorProps> = ({setModalIsOpen})
     const passwordBytes = encoder.encode(password);
     const combined = new Uint8Array([...passwordBytes, ...salt]);
 
-    // Gera o hash SHA-256
     const hashBuffer = await crypto.subtle.digest("SHA-256", combined);
     const hashArray = Array.from(new Uint8Array(hashBuffer));
     const hashHex = hashArray.map((b) => b.toString(16).padStart(2, "0")).join("");
@@ -123,10 +122,9 @@ const AdicionarColaborador: React.FC<S.AddColaboradorProps> = ({setModalIsOpen})
           value={cargo}
           titulo="Cargo"
           name="cargo"
-          onChange={handleChange}
+          onChange={(value) => setCargo(value)}
           options={["Administrador", "Almoxarifado", "Colaborador"]}
-        >
-        </SelectStyled>
+        />
         <InputStyled 
           value={email}
           tipo="email"
