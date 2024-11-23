@@ -34,7 +34,7 @@ export const Login = () => {
 
         const hash = await calculateHash(senha, user.salt);
         if (hash === user.hash) {
-            sessionStorage.setItem("TipoAcesso", user.cargo); // Armazena o tipo de acesso
+            sessionStorage.setItem("TipoAcesso", user.cargo);
             return user.cargo;
         } else {
             throw new Error("Senha incorreta.");
@@ -45,8 +45,6 @@ export const Login = () => {
         e.preventDefault();
         try {
             const cargo = await handleLogin(matricula, senha);
-
-            // Navegação com base no cargo
             switch (cargo) {
                 case 'Administrador':
                     toast.success("Logado com sucesso! Redirecionando...");
