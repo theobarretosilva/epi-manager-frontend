@@ -22,6 +22,11 @@ export const DashboardEPI = () => {
     const [modalIsOpenAddEpi, setModalIsOpenAddEpi] = useState(false);
     const [modalIsOpenDelete, setModalIsOpenDelete] = useState(false);
     const [idEpi, setIdEpi] = useState('0');
+    
+    const [epis, setEpis] = useState(() => {
+        const storedData = sessionStorage.getItem("EPIsCadastrados");
+        return storedData ? JSON.parse(storedData) : [];
+    });
 
     const [rows, setRows] = useState(() => {
         return EPIList.map((epi: EPIProps) => ({
@@ -117,6 +122,25 @@ export const DashboardEPI = () => {
         );
     };
 
+    const handleAddEPI = (epi: EPIProps) => {
+        const storedData = sessionStorage.getItem("EPIsCadastrados");
+        const episList = storedData ? JSON.parse(storedData) : [];
+        
+        episList.push(epi);
+
+        sessionStorage.setItem("ColaboradoresCadastrados", JSON.stringify(EPIList));
+
+        setEpis(episList);
+
+        setRows(episList.map((epi: EPIProps) => ({
+            id: epi.codigo,
+            codigo: epi.codigo,
+            descricaoItem: epi.descricaoItem,
+            certificadoAprovacao: epi.certificadoAprovacao,
+            validade: epi.validade
+        })));
+    }
+
     return(
         <>
             <S.MainStyled>
@@ -158,7 +182,7 @@ export const DashboardEPI = () => {
                     <S.ImageContent onClick={() => setModalIsOpenAddEpi(false)}>
                         <S.Image  src="../../src/assets/svg/Close.svg" />
                     </S.ImageContent>
-                    <AdicionarEpi setModalIsOpen={setModalIsOpenAddEpi} />
+                    <AdicionarEpi onAdd={handleAddEPI} setModalIsOpen={setModalIsOpenAddEpi} />
                 </S.MainWrapper>
             </ReactModal>
         </>

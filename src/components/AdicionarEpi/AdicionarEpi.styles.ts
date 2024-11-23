@@ -24,6 +24,14 @@ export const DivWrapper = styled.div`
   }
 `;
 
-export interface AddColaboradorProps {
+interface EPIProps {
+  descricaoItem: string;
+  codigo: string;
+  certificadoAprovacao: string;
+  validade: string;
+}
+
+export interface AddEPIProps {
   setModalIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  onAdd: (epi: EPIProps) => void;
 }

@@ -37,14 +37,11 @@ export const DashboardColab = () => {
     }
 
     const handleDeleteColaborador = (id: string) => {
-        // Atualiza os colaboradores no sessionStorage
         const updatedColaboradores = colaboradores.filter((colaborador: ColaboradorProps) => colaborador.id !== id);
         sessionStorage.setItem("ColaboradoresCadastrados", JSON.stringify(updatedColaboradores));
         
-        // Atualiza o estado para re-renderizar a tabela
         setColaboradores(updatedColaboradores);
 
-        // Atualiza as linhas da DataGrid
         setRows(updatedColaboradores.map((colaborador: ColaboradorProps) => ({
             id: colaborador.id,
             matricula: colaborador.matricula,
@@ -55,20 +52,15 @@ export const DashboardColab = () => {
     };
 
     const handleAddColaborador = (colaborador: ColaboradorProps) => {
-        // Recupera os colaboradores do sessionStorage
         const storedData = sessionStorage.getItem("ColaboradoresCadastrados");
         const colaboradoresList = storedData ? JSON.parse(storedData) : [];
         
-        // Adiciona o novo colaborador
         colaboradoresList.push(colaborador);
 
-        // Atualiza o sessionStorage
         sessionStorage.setItem("ColaboradoresCadastrados", JSON.stringify(colaboradoresList));
 
-        // Atualiza o estado para re-renderizar a tabela
         setColaboradores(colaboradoresList);
 
-        // Atualiza as linhas da DataGrid
         setRows(colaboradoresList.map((colaborador: ColaboradorProps) => ({
             id: colaborador.id,
             matricula: colaborador.matricula,

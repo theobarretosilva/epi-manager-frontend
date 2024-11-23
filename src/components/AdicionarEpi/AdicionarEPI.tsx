@@ -4,7 +4,7 @@ import * as S from "./AdicionarEpi.styles"
 import { toast } from "react-toastify";
 import { InputStyled } from "../InputStyled/InputStyled";
 
-const AdicionarEpi: React.FC<S.AddColaboradorProps> = ({setModalIsOpen}) => {
+const AdicionarEpi: React.FC<S.AddEPIProps> = ({setModalIsOpen, onAdd}) => {
   const [descricaoItem, setDescricaoItem] = useState("");
   const [codigo, setCodigo] = useState("");
   const [certificadoAprovacao, setCertificadoAprovacao] = useState("");
@@ -46,6 +46,7 @@ const AdicionarEpi: React.FC<S.AddColaboradorProps> = ({setModalIsOpen}) => {
           certificadoAprovacao,
           validade
         }
+        onAdd(epi);
 
         const epis = JSON.parse(sessionStorage.getItem("EPIsCadastrados") || "[]");
         epis.push(epi);
