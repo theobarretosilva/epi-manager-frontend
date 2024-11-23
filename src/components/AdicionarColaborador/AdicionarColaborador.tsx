@@ -5,12 +5,13 @@ import { toast} from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { InputStyled } from "../InputStyled/InputStyled";
 import { BtnStyled } from "../BtnStyled/BtnStyled";
+import { SelectStyled } from "../SelectStyled/SelectStyled";
 
 const AdicionarColaborador: React.FC<S.AddColaboradorProps> = ({setModalIsOpen}) => {
   const [nome, setNome] = useState("");
   const [matricula, setMatricula] = useState("");
   const [setor, setSetor] = useState("");
-  const [cargo, setCargo] = useState("");
+  const [cargo, setCargo] = useState("Administrador" || "Almoxarifado" || "Colaborador");
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
 
@@ -57,7 +58,7 @@ const AdicionarColaborador: React.FC<S.AddColaboradorProps> = ({setModalIsOpen})
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!nome || !matricula ||  !setor || !cargo || !email || !senha) {
+    if (!nome || !matricula || !setor || !cargo || !email || !senha) {
       toast.warning("Por favor, preencha todos os campos.", {
         autoClose: 6000,
         closeOnClick: true,
@@ -118,13 +119,14 @@ const AdicionarColaborador: React.FC<S.AddColaboradorProps> = ({setModalIsOpen})
           name="setor"
           handle={handleChange}
         />
-        <InputStyled 
+        <SelectStyled 
           value={cargo}
-          tipo="text"
           titulo="Cargo"
           name="cargo"
-          handle={handleChange}
-        />
+          onChange={handleChange}
+          options={["Administrador", "Almoxarifado", "Colaborador"]}
+        >
+        </SelectStyled>
         <InputStyled 
           value={email}
           tipo="email"
