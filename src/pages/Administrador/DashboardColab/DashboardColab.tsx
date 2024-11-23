@@ -1,7 +1,7 @@
 import ReactModal from "react-modal";
-import AdicionarColaborador from "../../../components/AdicionarColaborador/AdicionarColaborador"
+import AdicionarColaborador from "../../../components/AdicionarColaborador/AdicionarColaborador";
 import { useEffect, useState } from "react";
-import * as S from './DashboardColab.styles'
+import * as S from './DashboardColab.styles';
 import { ToastContainer } from "react-toastify";
 import { ExcluirModal } from "../../../components/ModalExcluir/ExcluirModal";
 import { Searchbar } from "../../../components/Searchbar/Searchbar";
@@ -28,15 +28,54 @@ export const DashboardColab = () => {
 
     const openModal = (id: string) => {
         setModalIsOpenAddColaborador(true);
-        setIdColaborador(id)
+        setIdColaborador(id);
     }
 
     const openModalDelete = (id: string) => {
         setModalIsOpenDelete(true);
-        setIdColaborador(id)
+        setIdColaborador(id);
     }
+
     const handleDeleteColaborador = (id: string) => {
-        setRows(rows.filter(row => row.id !== id));
+        // Atualiza os colaboradores no sessionStorage
+        const updatedColaboradores = colaboradores.filter((colaborador: ColaboradorProps) => colaborador.id !== id);
+        sessionStorage.setItem("ColaboradoresCadastrados", JSON.stringify(updatedColaboradores));
+        
+        // Atualiza o estado para re-renderizar a tabela
+        setColaboradores(updatedColaboradores);
+
+        // Atualiza as linhas da DataGrid
+        setRows(updatedColaboradores.map((colaborador: ColaboradorProps) => ({
+            id: colaborador.id,
+            matricula: colaborador.matricula,
+            nome: colaborador.nome,
+            cargo: colaborador.cargo,
+            setor: colaborador.setor,
+        })));
+    };
+
+    const handleAddColaborador = (colaborador: ColaboradorProps) => {
+        // Recupera os colaboradores do sessionStorage
+        const storedData = sessionStorage.getItem("ColaboradoresCadastrados");
+        const colaboradoresList = storedData ? JSON.parse(storedData) : [];
+        
+        // Adiciona o novo colaborador
+        colaboradoresList.push(colaborador);
+
+        // Atualiza o sessionStorage
+        sessionStorage.setItem("ColaboradoresCadastrados", JSON.stringify(colaboradoresList));
+
+        // Atualiza o estado para re-renderizar a tabela
+        setColaboradores(colaboradoresList);
+
+        // Atualiza as linhas da DataGrid
+        setRows(colaboradoresList.map((colaborador: ColaboradorProps) => ({
+            id: colaborador.id,
+            matricula: colaborador.matricula,
+            nome: colaborador.nome,
+            cargo: colaborador.cargo,
+            setor: colaborador.setor,
+        })));
     };
 
     const customStyles = {
@@ -54,7 +93,7 @@ export const DashboardColab = () => {
           backgroundColor: "#FCFCFC",
         },
     };
-    
+
     const columns: GridColDef[] = [
         {
             field: 'editar',
@@ -83,7 +122,7 @@ export const DashboardColab = () => {
                     key={0}
                     icon={<DeleteIcon />}
                     label="Deletar"
-                    onClick={()=> openModalDelete(params.row.id)}
+                    onClick={() => openModalDelete(params.row.id)}
                 />,
             ],
             width: 80,
@@ -110,7 +149,6 @@ export const DashboardColab = () => {
     useEffect(() => {
         setFilteredRows(rows);
     }, [rows, colaboradores]);
-    
 
     const [searchTerm, setSearchTerm] = useState('');
     const [filteredRows, setFilteredRows] = useState(rows);
@@ -124,7 +162,7 @@ export const DashboardColab = () => {
         );
     };
 
-    return(
+    return (
         <>
             <S.MainStyled>
                 <Searchbar onSearch={handleSearch} placeholder="Pesquise pela matrícula ou nome" />
@@ -142,7 +180,7 @@ export const DashboardColab = () => {
                     />
                 </Paper>
             </S.MainStyled>
-            <ToastContainer position="top-right" />  {/* não apagar */}
+            <ToastContainer position="top-right" />
             <ReactModal
                 isOpen={modalIsOpenDelete}
                 onRequestClose={() => setModalIsOpenDelete(false)}
@@ -150,9 +188,9 @@ export const DashboardColab = () => {
             >
                 <S.MainWrapper>
                     <S.ImageContent onClick={() => setModalIsOpenDelete(false)}>
-                        <S.Image  src="../../src/assets/svg/Close.svg" />
+                        <S.Image src="../../src/assets/svg/Close.svg" />
                     </S.ImageContent>
-                    <ExcluirModal onDelete={handleDeleteColaborador} setModalIsOpen={setModalIsOpenDelete} Id={ idColaborador } tipo="colaborador" /> 
+                    <ExcluirModal onDelete={handleDeleteColaborador} setModalIsOpen={setModalIsOpenDelete} Id={idColaborador} tipo="colaborador" />
                 </S.MainWrapper>
             </ReactModal>
             <ReactModal
@@ -162,11 +200,11 @@ export const DashboardColab = () => {
             >
                 <S.MainWrapper>
                     <S.ImageContent onClick={() => setModalIsOpenAddColaborador(false)}>
-                        <S.Image  src="../../src/assets/svg/Close.svg" />
+                        <S.Image src="../../src/assets/svg/Close.svg" />
                     </S.ImageContent>
-                    <AdicionarColaborador setModalIsOpen={setModalIsOpenAddColaborador} />
+                    <AdicionarColaborador onAdd={handleAddColaborador} setModalIsOpen={setModalIsOpenAddColaborador} />
                 </S.MainWrapper>
             </ReactModal>
         </>
-    )
-}
+    );
+};

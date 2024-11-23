@@ -7,7 +7,7 @@ import { InputStyled } from "../InputStyled/InputStyled";
 import { BtnStyled } from "../BtnStyled/BtnStyled";
 import { SelectStyled } from "../SelectStyled/SelectStyled";
 
-const AdicionarColaborador: React.FC<S.AddColaboradorProps> = ({setModalIsOpen}) => {
+const AdicionarColaborador: React.FC<S.AddColaboradorProps> = ({setModalIsOpen, onAdd}) => {
   const [nome, setNome] = useState("");
   const [matricula, setMatricula] = useState("");
   const [setor, setSetor] = useState("");
@@ -76,9 +76,12 @@ const AdicionarColaborador: React.FC<S.AddColaboradorProps> = ({setModalIsOpen})
           hash,
           salt,
         };
+        onAdd(colaborador);
 
         const colaboradores = JSON.parse(sessionStorage.getItem("ColaboradoresCadastrados") || "[]");
         colaboradores.push(colaborador);
+        console.log(colaborador);
+        
         sessionStorage.setItem("ColaboradoresCadastrados", JSON.stringify(colaboradores));
 
         toast.success("Colaborador adicionado com sucesso!", {

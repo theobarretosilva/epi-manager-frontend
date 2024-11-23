@@ -28,8 +28,20 @@ export const DivWrapper = styled.div`
   }
 `;
 
+export interface Colaborador {
+  id: string;
+  nome: string;
+  matricula: string;
+  setor: string;
+  cargo: string;
+  email: string;
+  hash: string;
+  salt: string;
+}
+
 
 export interface AddColaboradorProps {
   setModalIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  onAdd: (e: Colaborador) => void;
 }
 
