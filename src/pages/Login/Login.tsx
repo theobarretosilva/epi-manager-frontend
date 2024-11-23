@@ -13,34 +13,28 @@ export const Login = () => {
     const [error, setError] = useState('');
     const navigate = useNavigate();
     const colaboradores = JSON.parse(sessionStorage.getItem("ColaboradoresCadastrados") || "[]");
-    const tipoAcesso = JSON.parse(sessionStorage.getItem("TipoAcesso") || "");
 
     const calculateHash = async (password: string, salt: string) => {
         const encoder = new TextEncoder();
         const passwordBytes = encoder.encode(password);
-    
         const saltBytes = new Uint8Array(
             salt.match(/.{1,2}/g)!.map((byte) => parseInt(byte, 16))
         );
-    
         const combined = new Uint8Array([...passwordBytes, ...saltBytes]);
-    
         const hashBuffer = await crypto.subtle.digest("SHA-256", combined);
         const hashArray = Array.from(new Uint8Array(hashBuffer));
         return hashArray.map((b) => b.toString(16).padStart(2, "0")).join("");
     };
 
     const handleLogin = async (matricula: string, senha: string) => {
-        const user = colaboradores.find((u) => u.matricula === matricula);
-    
+        const user = colaboradores.find((u: { matricula: string }) => u.matricula === matricula);
         if (!user) {
             throw new Error("Usuário não encontrado.");
         }
-    
+
         const hash = await calculateHash(senha, user.salt);
-    
-        if (hash === user.hash && user.tipoAcesso === tipoAcesso) {
-            console.log("Autenticação bem-sucedida!");
+        if (hash === user.hash) {
+            sessionStorage.setItem("TipoAcesso", user.cargo); // Armazena o tipo de acesso
             return user.cargo;
         } else {
             throw new Error("Senha incorreta.");
@@ -51,27 +45,31 @@ export const Login = () => {
         e.preventDefault();
         try {
             const cargo = await handleLogin(matricula, senha);
+
+            // Navegação com base no cargo
             switch (cargo) {
                 case 'Administrador':
-                    navigate('/administrador/dashboardEPI');
+                    toast.success("Logado com sucesso! Redirecionando...");
+                    navigate('/administrador/solicitacoes');
                     break;
                 case 'Colaborador':
+                    toast.success("Logado com sucesso! Redirecionando...");
                     navigate('/funcionario/solicitacoes');
                     break;
                 case 'Almoxarifado':
+                    toast.success("Logado com sucesso! Redirecionando...");
                     navigate('/almoxarifado/dashboardAlmox');
                     break;
                 default:
-                    navigate('/');
+                    toast.error("Cargo não reconhecido.");
             }
-            toast.success("Logado com sucesso! Redirecionando para página inicial")
-        } catch (err) {
+        } catch (err: any) {
             setError(err.message);
-            toast.error(error);
+            toast.error(err.message);
         }
     };
 
-    return(
+    return (
         <S.DivGeral>
             <S.ImgAside src={asideImage} />
             <S.LinhaDivisao>‎</S.LinhaDivisao>
@@ -81,28 +79,30 @@ export const Login = () => {
                     <S.TituloBox>Bem-vindo(a) de volta!</S.TituloBox>
                     <S.SubtituloBox>Insira seus dados nos campos abaixo para logar:</S.SubtituloBox>
                     <br />
-                    <form>
+                    <form onSubmit={onSubmit}>
                         <InputStyled
                             titulo='Matrícula'
                             tipo='text'
                             placeholder=''
                             value={matricula}
-                            onChange={(e) => setMatricula(e.target.value)}
+                            handle={(e) => setMatricula(e.target.value)}
                         />
                         <InputStyled
                             titulo='Senha'
                             tipo='password'
-                            placeholder='' 
+                            placeholder=''
                             value={senha}
-                            onChange={(e) => setSenha(e.target.value)}
+                            handle={(e) => setSenha(e.target.value)}
                         />
-                        <S.PEsqueciSenha onClick={() => navigate('esqueciSenha')}>Esqueci a senha</S.PEsqueciSenha>
+                        <S.PEsqueciSenha onClick={() => navigate('/funcionario/esqueciSenha')}>
+                            Esqueci a senha
+                        </S.PEsqueciSenha>
                         {error && <S.ErrorMessage>{error}</S.ErrorMessage>}
                         <br />
-                        <BtnStyled onClick={() => onSubmit} text='Entrar' />
+                        <BtnStyled text='Entrar' type='submit' />
                     </form>
                 </S.BoxForm>
             </S.MainStyled>
         </S.DivGeral>
-    )
-}
+    );
+};
