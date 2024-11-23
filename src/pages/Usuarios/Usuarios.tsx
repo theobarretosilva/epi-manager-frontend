@@ -28,7 +28,7 @@ export const Usuarios = () => {
                         <S.Button
                             key={role}
                             onClick={() => {
-                                sessionStorage.setItem('TipoAcesso', role);
+                                sessionStorage.setItem('TipoAcesso', JSON.stringify(role));
                                 navigate("/login");
                             }}
                         >
