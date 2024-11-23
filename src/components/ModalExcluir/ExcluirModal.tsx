@@ -1,21 +1,29 @@
+import { toast } from "react-toastify";
 import { ExcluirProps } from "./ExcluirModal.styles";
 import * as S from "./ExcluirModal.styles"
 
-export const ExcluirModal: React.FC<ExcluirProps> = ({ Id, setModalIsOpen, tipo }) => {
+export const ExcluirModal: React.FC<ExcluirProps> = ({ Id, setModalIsOpen, tipo, onDelete }) => {
+  const colaboradores = JSON.parse(sessionStorage.getItem('ColaboradoresCadastrados') || '[]');
+  const EPIList = JSON.parse(sessionStorage.getItem('EPIsCadastrados') || '[]');
 
   const handleClose = () => {
     setModalIsOpen(false);
   };
 
   const handleDelete = () => {
-    if ( tipo = "colaborador") {
-    console.log("Colaborador excluído: "+Id);
-      
+    if ( tipo == "colaborador") {
+      const colaboradoresAtualizados = colaboradores.filter((colaborador: { id: string }) => colaborador.id !== Id);
+      sessionStorage.setItem('ColaboradoresCadastrados', JSON.stringify(colaboradoresAtualizados));
+      console.log("Colaborador excluído: " + Id);
+      onDelete(Id);
+      toast.success('Colaborador deletado com sucesso!')      
     } else {
-    console.log("EPI excluído: "+Id);
-      
+      const episAtualizados = EPIList.filter((epi: { codigo: string }) => epi.codigo !== Id);
+      sessionStorage.setItem('EPIsCadastrados', JSON.stringify(episAtualizados));
+      console.log("EPI excluído: "+Id);
+      onDelete(Id)
+      toast.success('EPI deletado com sucesso!')   
     }
-    
     setModalIsOpen(false); 
   };
 
@@ -27,7 +35,6 @@ export const ExcluirModal: React.FC<ExcluirProps> = ({ Id, setModalIsOpen, tipo 
           <S.ButtonDelete onClick={handleDelete}>Deletar</S.ButtonDelete>
           <S.ButtonCancel onClick={handleClose} >Cancelar</S.ButtonCancel>
         </S.DivButton>
-
       </S.DivContainer>
   );
 };

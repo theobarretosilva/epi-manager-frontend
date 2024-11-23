@@ -6,17 +6,13 @@ import "react-toastify/dist/ReactToastify.css";
 import { InputStyled } from "../InputStyled/InputStyled";
 import { BtnStyled } from "../BtnStyled/BtnStyled";
 
-
-
 const AdicionarColaborador: React.FC<S.AddColaboradorProps> = ({setModalIsOpen}) => {
-
   const [nome, setNome] = useState("");
   const [matricula, setMatricula] = useState("");
   const [setor, setSetor] = useState("");
   const [cargo, setCargo] = useState("");
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
-
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -44,7 +40,22 @@ const AdicionarColaborador: React.FC<S.AddColaboradorProps> = ({setModalIsOpen})
     }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const generateHashWithSalt = async (password: string) => {
+    const encoder = new TextEncoder();
+    const salt = crypto.getRandomValues(new Uint8Array(16));
+    const passwordBytes = encoder.encode(password);
+    const combined = new Uint8Array([...passwordBytes, ...salt]);
+
+    // Gera o hash SHA-256
+    const hashBuffer = await crypto.subtle.digest("SHA-256", combined);
+    const hashArray = Array.from(new Uint8Array(hashBuffer));
+    const hashHex = hashArray.map((b) => b.toString(16).padStart(2, "0")).join("");
+    const saltHex = Array.from(salt).map((b) => b.toString(16).padStart(2, "0")).join("");
+
+    return { hash: hashHex, salt: saltHex };
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!nome || !matricula ||  !setor || !cargo || !email || !senha) {
       toast.warning("Por favor, preencha todos os campos.", {
@@ -52,12 +63,34 @@ const AdicionarColaborador: React.FC<S.AddColaboradorProps> = ({setModalIsOpen})
         closeOnClick: true,
       });
     } else {
-      console.log({ nome, matricula, setor, cargo, email, senha });
-      toast.success("Ação realizada com sucesso!", {
-        autoClose: 6000,
-        closeOnClick: true,
-      });
-      setModalIsOpen(false)
+      try {
+        const { hash, salt } = await generateHashWithSalt(senha);
+
+        const colaborador = {
+          id: matricula,
+          nome,
+          matricula,
+          setor,
+          cargo,
+          email,
+          hash,
+          salt,
+        };
+
+        const colaboradores = JSON.parse(sessionStorage.getItem("ColaboradoresCadastrados") || "[]");
+        colaboradores.push(colaborador);
+        sessionStorage.setItem("ColaboradoresCadastrados", JSON.stringify(colaboradores));
+
+        toast.success("Colaborador adicionado com sucesso!", {
+          autoClose: 6000,
+          closeOnClick: true,
+        });
+
+        setModalIsOpen(false);
+      } catch (error) {
+        console.error("Erro ao gerar o hash:", error);
+        toast.error("Ocorreu um erro ao salvar o colaborador");
+      }
     }
   };
 
@@ -107,7 +140,7 @@ const AdicionarColaborador: React.FC<S.AddColaboradorProps> = ({setModalIsOpen})
           handle={handleChange}
         />
       </S.DivWrapper>
-        <BtnStyled type="submit" text="Salvar" />
+        <BtnStyled onClick={() => {}} type="submit" text="Salvar" />
     </S.FormContainer>
   );
 };

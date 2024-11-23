@@ -53,6 +53,7 @@ export const ButtonCancel = styled.button`
     font-weight: 600;
     border: none;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    cursor: pointer;
 `
 
 export const ButtonDelete = styled.button`
@@ -64,10 +65,12 @@ export const ButtonDelete = styled.button`
     font-weight: 600;
     border: none;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    cursor: pointer;
 `
 
 export interface ExcluirProps {
-  Id: number; 
+  Id: string; 
   tipo: "colaborador" | "epi";
   setModalIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  onDelete: (e: string) => void;
 }
