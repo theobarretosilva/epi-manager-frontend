@@ -21,8 +21,8 @@ export const Router = () => {
         <Routes>
             <Route index path="/" element={<Usuarios/>} />
             <Route path="/login" element={<Login/>} />
+            <Route path="/esqueciSenha" element={<EsqueciSenha/>} />
             <Route path="/funcionario" element={<ProtectedRoute element={<FuncLayout />} roles={['Colaborador']} />}>
-                <Route path="/esqueciSenha" element={<EsqueciSenha/>} />
                 <Route path="solicitacoes" element={<SolicitacoesFunc />} />
                 <Route path="solicitarEPI" element={<SolicitarEPI />} />
             </Route>
