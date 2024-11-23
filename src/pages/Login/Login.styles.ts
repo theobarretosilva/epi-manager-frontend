@@ -62,7 +62,8 @@ export const ImgLogo = styled.img`
 
 export const BoxForm = styled.div`
     background-color: white;
-    /* height: 58vh; */
+    width: 30vw;
+    height: 52vh;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
     border-radius: 15px;
     padding: 4vh 2vw 4vh 2vw;

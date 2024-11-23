@@ -9,7 +9,6 @@ export const HeaderStyled = styled.header`
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    margin-bottom: 2vh;
 `
 
 export const ImgLogo = styled.img`

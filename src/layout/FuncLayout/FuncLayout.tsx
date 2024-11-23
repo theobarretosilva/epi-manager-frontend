@@ -1,6 +1,7 @@
 import { Outlet } from "react-router";
 import { Headerbar } from "../../components/Headerbar/Headerbar";
 import { Sidebar } from "../../components/Sidebar/Sidebar";
+import * as S from './FuncLayout.styles' 
 
 export function FuncLayout() {
     const linksFuncLayout = [
@@ -11,8 +12,10 @@ export function FuncLayout() {
     return(
         <>
             <Headerbar />
-            <Sidebar links={linksFuncLayout} />
-            <Outlet />
+            <S.DivRow>
+                <Sidebar links={linksFuncLayout} />
+                <Outlet />
+            </S.DivRow>
         </>
     )
 }
