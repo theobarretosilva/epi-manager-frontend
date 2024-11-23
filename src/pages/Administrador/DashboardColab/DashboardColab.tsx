@@ -9,6 +9,7 @@ import { Paper } from "@mui/material";
 import { DataGrid, GridActionsCellItem, GridColDef, GridRowParams } from "@mui/x-data-grid";
 import { EditColabIcon } from "../../../components/EditColabIcon/EditColabIcon";
 import { DeleteIcon } from "../../../components/DeleteIcon/DeleteIcon";
+import { NoDataToShow } from "../../../components/NoDataToShow/NoDataToShow";
 
 interface ColaboradorProps {
     id: string;
@@ -125,7 +126,7 @@ export const DashboardColab = () => {
 
     const [colaboradores, setColaboradores] = useState(() => {
         const storedData = sessionStorage.getItem("ColaboradoresCadastrados");
-        return storedData ? JSON.parse(storedData) : []; // Retorna um array vazio se o dado não existir
+        return storedData ? JSON.parse(storedData) : [];
     });
 
     const [rows, setRows] = useState(() => {
@@ -159,18 +160,22 @@ export const DashboardColab = () => {
             <S.MainStyled>
                 <Searchbar onSearch={handleSearch} placeholder="Pesquise pela matrícula ou nome" />
                 <S.ButtonStyled onClick={() => setModalIsOpenAddColaborador(true)}>+ Adicionar Colaborador</S.ButtonStyled>
-                <Paper sx={{ height: '100%', width: '100%', fontSize: 14, mt: 2 }}>
-                    <DataGrid
-                        rows={filteredRows}
-                        columns={columns}
-                        pageSizeOptions={[5, 10]}
-                        sx={{
-                            border: 0,
-                            '& .MuiDataGrid-cell': { textAlign: 'center' },
-                            '& .MuiDataGrid-columnHeaders': { backgroundColor: '#f5f5f5' },
-                        }}
-                    />
-                </Paper>
+                    {filteredRows === "[]" ? (
+                        <Paper sx={{ height: '100%', width: '100%', fontSize: 14, mt: 2 }}>
+                        <DataGrid
+                            rows={filteredRows}
+                            columns={columns}
+                            pageSizeOptions={[5, 10]}
+                            sx={{
+                                border: 0,
+                                '& .MuiDataGrid-cell': { textAlign: 'center' },
+                                '& .MuiDataGrid-columnHeaders': { backgroundColor: '#f5f5f5' },
+                            }}
+                        />
+                    </Paper>
+                ) : (
+                    <NoDataToShow mainText="colaboradores" />
+                )}
             </S.MainStyled>
             <ToastContainer position="top-right" />
             <ReactModal

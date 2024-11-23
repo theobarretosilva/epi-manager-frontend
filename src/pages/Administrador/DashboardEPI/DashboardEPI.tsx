@@ -9,6 +9,7 @@ import { Paper } from "@mui/material";
 import { DataGrid, GridActionsCellItem, GridColDef, GridRowParams } from "@mui/x-data-grid";
 import { EditColabIcon } from "../../../components/EditColabIcon/EditColabIcon";
 import { DeleteIcon } from "../../../components/DeleteIcon/DeleteIcon";
+import { NoDataToShow } from "../../../components/NoDataToShow/NoDataToShow";
 
 interface EPIProps {
     descricaoItem: string;
@@ -146,18 +147,23 @@ export const DashboardEPI = () => {
             <S.MainStyled>
                 <Searchbar placeholder="Pesquise pela nome ou código" onSearch={handleSearch} />
                 <S.ButtonStyled onClick={() => setModalIsOpenAddEpi(true)} >+ Adicionar EPI</S.ButtonStyled>
-                <Paper sx={{ height: '100%', width: '100%', fontSize: 14, mt: 2 }}>
-                    <DataGrid
-                        rows={filteredRows}
-                        columns={columns}
-                        pageSizeOptions={[5, 10]}
-                        sx={{
-                            border: 0,
-                            '& .MuiDataGrid-cell': { textAlign: 'center' },
-                            '& .MuiDataGrid-columnHeaders': { backgroundColor: '#f5f5f5' },
-                        }}
-                    />
-                </Paper>
+                {filteredRows === "[]" ? (
+                    <Paper sx={{ height: '100%', width: '100%', fontSize: 14, mt: 2 }}>
+                        <DataGrid
+                            rows={filteredRows}
+                            columns={columns}
+                            pageSizeOptions={[5, 10]}
+                            sx={{
+                                border: 0,
+                                '& .MuiDataGrid-cell': { textAlign: 'center' },
+                                '& .MuiDataGrid-columnHeaders': { backgroundColor: '#f5f5f5' },
+                            }}
+                        />
+                    </Paper>
+                ) : (
+                    <NoDataToShow mainText="EPI's" />
+                )}
+                
             </S.MainStyled>
             <ToastContainer position="top-right" />  {/* não apagar */}
             <ReactModal

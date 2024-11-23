@@ -76,7 +76,7 @@ const AdicionarColaborador: React.FC<S.AddColaboradorProps> = ({setModalIsOpen, 
           hash,
           salt,
         };
-        onAdd(colaborador);
+        onAdd(colaborador)
 
         const colaboradores = JSON.parse(sessionStorage.getItem("ColaboradoresCadastrados") || "[]");
         colaboradores.push(colaborador);
