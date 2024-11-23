@@ -51,9 +51,10 @@ export const Login = () => {
         e.preventDefault();
         try {
             const cargo = await handleLogin(matricula, senha);
+            console.log(cargo)
             switch (cargo) {
                 case 'Administrador':
-                    navigate('/administrador/dashboardEPI');
+                    navigate('/administrador/solicitacoes');
                     break;
                 case 'Colaborador':
                     navigate('/funcionario/solicitacoes');
@@ -81,25 +82,25 @@ export const Login = () => {
                     <S.TituloBox>Bem-vindo(a) de volta!</S.TituloBox>
                     <S.SubtituloBox>Insira seus dados nos campos abaixo para logar:</S.SubtituloBox>
                     <br />
-                    <form>
+                    <form onSubmit={onSubmit}>
                         <InputStyled
                             titulo='Matrícula'
                             tipo='text'
                             placeholder=''
                             value={matricula}
-                            onChange={(e) => setMatricula(e.target.value)}
+                            handle={(e) => setMatricula(e.target.value)}
                         />
                         <InputStyled
                             titulo='Senha'
                             tipo='password'
                             placeholder='' 
                             value={senha}
-                            onChange={(e) => setSenha(e.target.value)}
+                            handle={(e) => setSenha(e.target.value)}
                         />
                         <S.PEsqueciSenha onClick={() => navigate('esqueciSenha')}>Esqueci a senha</S.PEsqueciSenha>
                         {error && <S.ErrorMessage>{error}</S.ErrorMessage>}
                         <br />
-                        <BtnStyled onClick={() => onSubmit} text='Entrar' />
+                        <BtnStyled text='Entrar' />
                     </form>
                 </S.BoxForm>
             </S.MainStyled>
