@@ -11,7 +11,7 @@ import { EditColabIcon } from "../../../components/EditColabIcon/EditColabIcon";
 import { DeleteIcon } from "../../../components/DeleteIcon/DeleteIcon";
 
 interface EPIProps {
-    descricao: string;
+    descricaoItem: string;
     codigo: string;
     certificadoAprovacao: string;
     validade: string;
@@ -26,7 +26,8 @@ export const DashboardEPI = () => {
     const [rows, setRows] = useState(() => {
         return EPIList.map((epi: EPIProps) => ({
             id: epi.codigo,
-            descricaoItem: epi.descricao,
+            codigo: epi.codigo,
+            descricaoItem: epi.descricaoItem,
             certificadoAprovacao: epi.certificadoAprovacao,
             validade: epi.validade
         }));
@@ -45,14 +46,10 @@ export const DashboardEPI = () => {
         setRows(rows.filter(row => row.id !== id));
     };
 
-    const [epis, setEpi] = useState(() => {
-        const storedData = sessionStorage.getItem('EPIsCadastrados');
-        return storedData ? JSON.parse(storedData) : [];
-    })
-
     useEffect(() => {
         setFilteredRows(rows);
-    }, [rows, epis]);
+        sessionStorage.setItem('EPIsCadastrados', JSON.stringify(rows));
+    }, [rows]);
 
     const customStyles = {
         overlay: {
