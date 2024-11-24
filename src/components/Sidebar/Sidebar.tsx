@@ -1,7 +1,14 @@
+import { useNavigate } from "react-router";
 import { SidebarProps } from "./Sidebar.styles"
 import * as S from "./Sidebar.styles"
 
 export const Sidebar: React.FC<SidebarProps> = ({links, onClick}) => {
+    const navigate = useNavigate();
+
+    const closeSession = () => {
+        sessionStorage.removeItem("TipoAcesso");
+        navigate('/')
+    }
     return (
         <S.SidebarWrapper>
             <S.SidebarContent>
@@ -20,7 +27,7 @@ export const Sidebar: React.FC<SidebarProps> = ({links, onClick}) => {
                         </S.LinkSidebarWrapper>
                 ))}
                 </ul>
-            <S.Logout>Encerrar Sessão</S.Logout> 
+            <S.Logout onClick={()=> closeSession()}>Encerrar Sessão</S.Logout> 
             </S.SidebarContent>
         </S.SidebarWrapper>
     )

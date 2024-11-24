@@ -8,6 +8,7 @@ import ReactModal from 'react-modal';
 import { InputDisable } from '../../../components/InputDisable/InputDisable';
 import { SelectInput } from '../../../components/SelectInput/SelectInput';
 import { useModalDetalhesSolicitacao } from '../../../hooks/useModalDetalhesSolicitacao';
+import { BtnStyled } from '../../../components/BtnStyled/BtnStyled';
 import { NoDataToShow } from '../../../components/NoDataToShow/NoDataToShow';
 
 interface SolicitacaoProps {
@@ -48,16 +49,21 @@ export const SolicitacoesFunc = () => {
   } = useModalDetalhesSolicitacao();
 
   const solicitacoes = JSON.parse(sessionStorage.getItem('Solicitacoes') || '[]');
-  const EPIsCadastrados = JSON.parse(sessionStorage.getItem('EPIsCadastrados') || '[]');
+
+  const [dataEpi] = useState(() => {
+    const savedData = sessionStorage.getItem('EPIsCadastrados');
+    return savedData ? JSON.parse(savedData) : [{}]; 
+  });
 
   const getValidadeEPI = (cod: string) => {
-    const epi = EPIsCadastrados.find((epi: EPIProps) => epi.codigo === cod);
+    const epi = dataEpi.find((epi: EPIProps) => epi.codigo === cod);
     return epi ? epi.validade : 'N/A';
   };
 
   const getCAEPI = (cod: string) => {
-    const epi = EPIsCadastrados.find((epi: EPIProps) => epi.codigo === cod);
-    return epi ? epi.certificadoAprovacao : 'N/A';
+    const epi = dataEpi.find((epi: EPIProps) => epi.codigo === cod);
+    console.log(epi)
+    return epi.certificadoAprovacao;
   }
 
   const getSolicitacao = (params: SolicitacaoProps) => {
