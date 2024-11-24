@@ -144,8 +144,11 @@ export const ConsultEPI = () => {
     return(
         <S.MainStyled>
             <S.ButtonStyled onClick={() => setModalIsOpenAddEpi(true)}>+ Adicionar EPI</S.ButtonStyled>
-            {/* {filteredRows === "[]" ? ( */}
-                {/* <> */}
+            {/* {filteredRows === "[]" ? (
+                <NoDataToShow mainText="Não foram adicionados EPI's!"  />
+
+            ) : (
+                <> */}
                     <Searchbar placeholder='Pesquise pelo código ou nome' onSearch={handleSearch} />
                     <Paper sx={{ height: '100%', width: '100%', fontSize: 14, mt: 2 }}>
                         <DataGrid
@@ -163,8 +166,6 @@ export const ConsultEPI = () => {
                         />
                     </Paper>
                 {/* </>
-            ) : (
-                <NoDataToShow mainText="Não foram adicionados EPI's!"  />
             )} */}
             <ReactModal
                 isOpen={modalIsOpenDelete}
