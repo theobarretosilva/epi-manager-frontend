@@ -25,14 +25,6 @@ interface EPIProps {
 }
 
 export const SolicitacoesFunc = () => {
-  const MockEPIs = [
-    { descricaoItem: 'Capacete de proteção', codigo: 'COD-01', certificadoAprovacao: '15122', validade: '20/05/2026' },
-    { descricaoItem: 'Óculos de proteção', codigo: 'COD-02', certificadoAprovacao: '13544', validade: '12/07/2025' },
-    { descricaoItem: 'Luva de borracha', codigo: 'COD-03', certificadoAprovacao: '44475', validade: '07/02/2025' },
-    { descricaoItem: 'Teste', codigo: 'COD-04', certificadoAprovacao: '44475', validade: '10/02/2025' }
-  ];
-  sessionStorage.setItem('EPIs cadastrados', JSON.stringify(MockEPIs));
-
   const { 
     isOpen,
     descricaoItem,
@@ -124,7 +116,7 @@ export const SolicitacoesFunc = () => {
 
   return (
     <S.MainStyled>
-      {filteredRows === "[]" ? (
+      {filteredRows.length > 0 ? (
         <>
           <Searchbar onSearch={handleSearch} />
           <Paper sx={{ height: '100%', width: '100%', fontSize: 14, mt: 2 }}>
