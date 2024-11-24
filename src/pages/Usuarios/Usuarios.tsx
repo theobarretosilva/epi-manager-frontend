@@ -26,7 +26,10 @@ export const Usuarios = () => {
                 setor: 'Soldagem'
             };
             sessionStorage.setItem("UserLogado", JSON.stringify(defaultAdmin));
-            sessionStorage.setItem("ColaboradoresCadastrados", JSON.stringify([defaultAdmin])); // Alterado para array
+    
+            const colaboradoresList = JSON.parse(sessionStorage.getItem("ColaboradoresCadastrados") || "[]");
+            
+            sessionStorage.setItem("ColaboradoresCadastrados", JSON.stringify([...colaboradoresList, defaultAdmin]));
         }
     }, []);
     

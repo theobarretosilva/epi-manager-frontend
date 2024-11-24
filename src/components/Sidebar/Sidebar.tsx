@@ -6,7 +6,7 @@ export const Sidebar: React.FC<SidebarProps> = ({links, onClick}) => {
     const navigate = useNavigate();
 
     const logout = () => {
-        sessionStorage.clear();
+        sessionStorage.setItem('TipoAcesso', "");
         navigate("/");
     };
 
