@@ -1,16 +1,16 @@
 import * as S from './SelectCodStyled.styles';
 
 interface Option {
-    label: string; // Texto visível no dropdown
-    value: string; // Código associado ao item
+    label: string;
+    value: string;
 }
 
 interface SelectCodStyledProps {
-    titulo: string; // Título do dropdown
-    value?: string; // Valor atual selecionado
-    disabled?: boolean; // Desabilitar dropdown
-    options: Array<Option>; // Lista de opções
-    onChange?: (selectedOption: Option) => void; // Função chamada ao mudar valor
+    titulo: string;
+    value?: string;
+    disabled?: boolean;
+    options: Array<Option>;
+    onChange?: (selectedOption: Option) => void;
 }
 
 export const SelectCodStyled = ({ titulo, value, disabled, options, onChange }: SelectCodStyledProps) => {

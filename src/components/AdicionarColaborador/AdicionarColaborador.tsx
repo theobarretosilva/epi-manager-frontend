@@ -5,8 +5,9 @@ import { toast} from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { InputStyled } from "../InputStyled/InputStyled";
 import { BtnStyled } from "../BtnStyled/BtnStyled";
+import { SelectStyled } from "../SelectStyled/SelectStyled";
 
-const AdicionarColaborador: React.FC<S.AddColaboradorProps> = ({setModalIsOpen}) => {
+const AdicionarColaborador: React.FC<S.AddColaboradorProps> = ({setModalIsOpen, onAdd}) => {
   const [nome, setNome] = useState("");
   const [matricula, setMatricula] = useState("");
   const [setor, setSetor] = useState("");
@@ -46,7 +47,6 @@ const AdicionarColaborador: React.FC<S.AddColaboradorProps> = ({setModalIsOpen})
     const passwordBytes = encoder.encode(password);
     const combined = new Uint8Array([...passwordBytes, ...salt]);
 
-    // Gera o hash SHA-256
     const hashBuffer = await crypto.subtle.digest("SHA-256", combined);
     const hashArray = Array.from(new Uint8Array(hashBuffer));
     const hashHex = hashArray.map((b) => b.toString(16).padStart(2, "0")).join("");
@@ -57,7 +57,7 @@ const AdicionarColaborador: React.FC<S.AddColaboradorProps> = ({setModalIsOpen})
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!nome || !matricula ||  !setor || !cargo || !email || !senha) {
+    if (!nome || !matricula || !setor || !cargo || !email || !senha) {
       toast.warning("Por favor, preencha todos os campos.", {
         autoClose: 6000,
         closeOnClick: true,
@@ -76,9 +76,12 @@ const AdicionarColaborador: React.FC<S.AddColaboradorProps> = ({setModalIsOpen})
           hash,
           salt,
         };
+        onAdd(colaborador)
 
         const colaboradores = JSON.parse(sessionStorage.getItem("ColaboradoresCadastrados") || "[]");
         colaboradores.push(colaborador);
+        console.log(colaborador);
+        
         sessionStorage.setItem("ColaboradoresCadastrados", JSON.stringify(colaboradores));
 
         toast.success("Colaborador adicionado com sucesso!", {
@@ -118,12 +121,12 @@ const AdicionarColaborador: React.FC<S.AddColaboradorProps> = ({setModalIsOpen})
           name="setor"
           handle={handleChange}
         />
-        <InputStyled 
+        <SelectStyled 
           value={cargo}
-          tipo="text"
           titulo="Cargo"
           name="cargo"
-          handle={handleChange}
+          onChange={(value) => setCargo(value)}
+          options={["Administrador", "Almoxarifado", "Colaborador"]}
         />
         <InputStyled 
           value={email}
