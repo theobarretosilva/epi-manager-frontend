@@ -19,7 +19,6 @@ export const useHandleLogin = () => {
             return;
         }
 
-        // Simulação de autenticação (substitua pela lógica real de autenticação, por exemplo, via API)
         const usuarioAutenticado = {
             matricula: '544',
             nome: 'Théo Barreto Silva',
@@ -28,10 +27,10 @@ export const useHandleLogin = () => {
             email: 'barretotheo25@gmail.com',
         };
 
-        if (matricula === usuarioAutenticado.matricula && senha === '12345') {  // Aqui você substitui pela validação real
+        if (matricula === usuarioAutenticado.matricula && senha === '12345') {
             sessionStorage.setItem('UserLogado', JSON.stringify(usuarioAutenticado));
             toast.success('Login bem-sucedido!');
-            navigate('/dashboard'); // Navegue para a página desejada após o login
+            navigate('/dashboard');
         } else {
             toast.error('Matrícula ou senha inválidos.');
         }

@@ -9,6 +9,7 @@ import { Paper } from "@mui/material";
 import { DataGrid, GridActionsCellItem, GridColDef, GridRowParams } from "@mui/x-data-grid";
 import { EditColabIcon } from "../../../components/EditColabIcon/EditColabIcon";
 import { DeleteIcon } from "../../../components/DeleteIcon/DeleteIcon";
+import { NoDataToShow } from "../../../components/NoDataToShow/NoDataToShow";
 
 interface EPIProps {
     descricaoItem: string;
@@ -22,6 +23,11 @@ export const DashboardEPI = () => {
     const [modalIsOpenAddEpi, setModalIsOpenAddEpi] = useState(false);
     const [modalIsOpenDelete, setModalIsOpenDelete] = useState(false);
     const [idEpi, setIdEpi] = useState('0');
+    
+    const [epis, setEpis] = useState(() => {
+        const storedData = sessionStorage.getItem("EPIsCadastrados");
+        return storedData ? JSON.parse(storedData) : [];
+    });
 
     const [rows, setRows] = useState(() => {
         return EPIList.map((epi: EPIProps) => ({
@@ -36,6 +42,10 @@ export const DashboardEPI = () => {
     const openModal = (id: string) => {
         setModalIsOpenAddEpi(true);
         setIdEpi(id);
+    }
+    const closeModal = () => {
+        setModalIsOpenAddEpi(false);
+        setIdEpi("");
     }
 
     const openModalDelete = (id: string) => {
@@ -117,25 +127,54 @@ export const DashboardEPI = () => {
         );
     };
 
+    const handleAddEPI = (epi: EPIProps) => {
+        const storedData = sessionStorage.getItem("EPIsCadastrados");
+        const episList: EPIProps[] = storedData ? JSON.parse(storedData) : [];
+        
+        const existingIndex = episList.findIndex(e => e.codigo === epi.codigo);
+        
+        if (existingIndex !== -1) {
+            episList[existingIndex] = epi;
+        } else {
+            episList.push(epi);
+        }
+        
+        setEpis(episList);
+        sessionStorage.setItem("EPIsCadastrados", JSON.stringify(episList));
+    
+        setRows(episList.map((epi: EPIProps) => ({
+            id: epi.codigo,
+            codigo: epi.codigo,
+            descricaoItem: epi.descricaoItem,
+            certificadoAprovacao: epi.certificadoAprovacao,
+            validade: epi.validade
+        })));
+    };
+
     return(
         <>
             <S.MainStyled>
                 <Searchbar placeholder="Pesquise pela nome ou código" onSearch={handleSearch} />
                 <S.ButtonStyled onClick={() => setModalIsOpenAddEpi(true)} >+ Adicionar EPI</S.ButtonStyled>
-                <Paper sx={{ height: '100%', width: '100%', fontSize: 14, mt: 2 }}>
-                    <DataGrid
-                        rows={filteredRows}
-                        columns={columns}
-                        pageSizeOptions={[5, 10]}
-                        sx={{
-                            border: 0,
-                            '& .MuiDataGrid-cell': { textAlign: 'center' },
-                            '& .MuiDataGrid-columnHeaders': { backgroundColor: '#f5f5f5' },
-                        }}
-                    />
-                </Paper>
+                {filteredRows.length > 0 ? (
+                    <Paper sx={{ height: '100%', width: '100%', fontSize: 14, mt: 2 }}>
+                        <DataGrid
+                            rows={filteredRows}
+                            columns={columns}
+                            pageSizeOptions={[5, 10]}
+                            sx={{
+                                border: 0,
+                                '& .MuiDataGrid-cell': { textAlign: 'center' },
+                                '& .MuiDataGrid-columnHeaders': { backgroundColor: '#f5f5f5' },
+                            }}
+                        />
+                    </Paper>
+                ) : (
+                    <NoDataToShow mainText="Não foram adicionados EPI's!" />
+                )}
+                
             </S.MainStyled>
-            <ToastContainer position="top-right" />  {/* não apagar */}
+            <ToastContainer position="top-right" />
             <ReactModal
                 isOpen={modalIsOpenDelete}
                 onRequestClose={() => setModalIsOpenDelete(false)}
@@ -155,10 +194,10 @@ export const DashboardEPI = () => {
                 style={customStyles}
             >
                 <S.MainWrapper>
-                    <S.ImageContent onClick={() => setModalIsOpenAddEpi(false)}>
+                    <S.ImageContent onClick={() => closeModal()}>
                         <S.Image  src="../../src/assets/svg/Close.svg" />
                     </S.ImageContent>
-                    <AdicionarEpi setModalIsOpen={setModalIsOpenAddEpi} />
+                    <AdicionarEpi modalIsOpen={modalIsOpenAddEpi} idEpi={idEpi} onAdd={handleAddEPI} setModalIsOpen={setModalIsOpenAddEpi} />
                 </S.MainWrapper>
             </ReactModal>
         </>

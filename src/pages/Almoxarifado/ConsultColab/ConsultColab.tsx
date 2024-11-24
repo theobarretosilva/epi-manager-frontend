@@ -52,7 +52,7 @@ export const ConsultColab = () => {
         <>
             <S.MainStyled>
                 <Searchbar placeholder='Pesquise pela matricula ou nome' onSearch={handleSearch} />
-                {filteredRows === "[]" ? (
+                {filteredRows.length > 0 ? (
                     <Paper sx={{ height: '100%', width: '100%', fontSize: 14, mt: 2 }}>
                         <DataGrid
                             rows={filteredRows}

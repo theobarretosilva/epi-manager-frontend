@@ -27,8 +27,8 @@ export const SolicitarEPI = () => {
     const userLogado = JSON.parse(sessionStorage.getItem('UserLogado') || '{}');
 
     const EPIList = JSON.parse(sessionStorage.getItem('EPIsCadastrados') || '[]');
-    const options = EPIList.map((epi: { descricao: string; codigo: string }) => ({
-        label: epi.descricao,
+    const options = EPIList.map((epi: { descricaoItem: string; codigo: string }) => ({
+        label: epi.descricaoItem,
         value: epi.codigo,
     }));
 
