@@ -43,6 +43,10 @@ export const DashboardEPI = () => {
         setModalIsOpenAddEpi(true);
         setIdEpi(id);
     }
+    const closeModal = () => {
+        setModalIsOpenAddEpi(false);
+        setIdEpi("");
+    }
 
     const openModalDelete = (id: string) => {
         setModalIsOpenDelete(true);
@@ -125,14 +129,19 @@ export const DashboardEPI = () => {
 
     const handleAddEPI = (epi: EPIProps) => {
         const storedData = sessionStorage.getItem("EPIsCadastrados");
-        const episList = storedData ? JSON.parse(storedData) : [];
+        const episList: EPIProps[] = storedData ? JSON.parse(storedData) : [];
         
-        episList.push(epi);
-
-        sessionStorage.setItem("EPIsCadastrados", JSON.stringify(EPIList));
-
+        const existingIndex = episList.findIndex(e => e.codigo === epi.codigo);
+        
+        if (existingIndex !== -1) {
+            episList[existingIndex] = epi;
+        } else {
+            episList.push(epi);
+        }
+        
         setEpis(episList);
-
+        sessionStorage.setItem("EPIsCadastrados", JSON.stringify(episList));
+    
         setRows(episList.map((epi: EPIProps) => ({
             id: epi.codigo,
             codigo: epi.codigo,
@@ -140,7 +149,7 @@ export const DashboardEPI = () => {
             certificadoAprovacao: epi.certificadoAprovacao,
             validade: epi.validade
         })));
-    }
+    };
 
     return(
         <>
@@ -185,10 +194,10 @@ export const DashboardEPI = () => {
                 style={customStyles}
             >
                 <S.MainWrapper>
-                    <S.ImageContent onClick={() => setModalIsOpenAddEpi(false)}>
+                    <S.ImageContent onClick={() => closeModal()}>
                         <S.Image  src="../../src/assets/svg/Close.svg" />
                     </S.ImageContent>
-                    <AdicionarEpi onAdd={handleAddEPI} setModalIsOpen={setModalIsOpenAddEpi} />
+                    <AdicionarEpi modalIsOpen={modalIsOpenAddEpi} idEpi={idEpi} onAdd={handleAddEPI} setModalIsOpen={setModalIsOpenAddEpi} />
                 </S.MainWrapper>
             </ReactModal>
         </>
