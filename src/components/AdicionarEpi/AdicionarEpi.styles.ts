@@ -34,4 +34,6 @@ interface EPIProps {
 export interface AddEPIProps {
   setModalIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
   onAdd: (epi: EPIProps) => void;
+  idEpi?: string;
+  modalIsOpen: boolean;
 }
