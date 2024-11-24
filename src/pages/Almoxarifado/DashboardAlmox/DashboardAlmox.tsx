@@ -3,7 +3,11 @@ import { Searchbar } from '../../../components/Searchbar/Searchbar'
 import * as S from './DashboardAlmox.styles'
 import { DataGrid, GridActionsCellItem, GridColDef, GridRowParams } from '@mui/x-data-grid'
 import { OpenModalIcon } from '../../../components/OpenModalIcon/OpenModalIcon'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import ReactModal from 'react-modal'
+import { InputDisable } from '../../../components/InputDisable/InputDisable'
+import { useModalDetalhesSolicitacao } from '../../../hooks/useModalDetalhesSolicitacao'
+import { SelectInput } from '../../../components/SelectInput/SelectInput'
 
 interface SolicitacaoProps {
     id: string;
@@ -29,13 +33,62 @@ interface RowProps {
 }
 
 export const DashboardAlmox = () => {
+    const { 
+        isOpen,
+        item,
+        id,
+        status,
+        dataSolicitacao,
+        solicitante,
+        quantidade,
+        codigoEPI,
+        numeroPatrimonio,
+        openModal,
+        closeModal 
+      } = useModalDetalhesSolicitacao();
+    const [ca, setCa] = useState("");
+    
     const solicitacoes = JSON.parse(sessionStorage.getItem('Solicitacoes') || '[]');
-    const EPIsCadastrados = JSON.parse(sessionStorage.getItem('EPIs cadastrados') || '[]');
+
+    const [dataEpi] = useState(() => {
+        const savedData = sessionStorage.getItem('EPIsCadastrados');
+        return savedData ? JSON.parse(savedData) : [{}]; 
+      });
+
+    useEffect(() => {
+        sessionStorage.setItem('EPIsCadastrados', JSON.stringify(dataEpi));
+      }, [dataEpi]);
+
+    const customStyles = {
+        overlay: {
+          backgroundColor: "rgba(0, 0, 0, 0.5)",
+        },
+        content: {
+          top: "50%",
+          left: "50%",
+          right: "auto",
+          bottom: "auto",
+          transform: "translate(-50%, -50%)",
+          padding: "25px",
+          borderRadius: "10px",
+          backgroundColor: "#FCFCFC",
+        },
+    };
 
     const getValidadeEPI = (cod: string) => {
-        const epi = EPIsCadastrados.find((epi: EPIProps) => epi.codigo === cod);
+        const epi = dataEpi.find((epi: EPIProps) => epi.codigo === cod);
         return epi ? epi.validade : 'N/A';
     };
+
+    const getCAEPI = (cod: string) => {
+        const epi = dataEpi.find((epi: EPIProps) => epi.codigo === cod);
+        return epi ? epi.certificadoAprovacao : 'N/A';
+      }
+
+    const getSolicitacao = (params: SolicitacaoProps) => {
+        const solicitacao = solicitacoes.find((solicitacao: SolicitacaoProps) => solicitacao.id == params.id);
+        return solicitacao;
+      }
 
     const [paginationModel, setPaginationModel] = useState({ page: 0, pageSize: 6 });
     const columns: GridColDef[] = [
@@ -48,7 +101,7 @@ export const DashboardAlmox = () => {
                     key={0}
                     icon={<OpenModalIcon />}
                     label='Abrir'
-                    // onClick={() =>  openModal(params.row.descricaoItem, params.row.id, params.row.status, params.row.validadeEPI)}
+          onClick={() => openModal(getSolicitacao(params.row))}
                 />
             ],
             width: 80
@@ -98,6 +151,27 @@ export const DashboardAlmox = () => {
                         }}
                     />
                 </Paper>
+                <ReactModal isOpen={isOpen} onRequestClose={closeModal} style={customStyles}>
+                    <S.MainWrapper>
+                    <S.ImageContent onClick={closeModal}>
+                        <S.Image src="../../src/assets/svg/Close.svg" />
+                    </S.ImageContent>
+                    <S.DivWrapper>
+                        <InputDisable text={dataSolicitacao} title="Data de Abertura" type="text" />
+                        <InputDisable text="-" title="Data de Conclusão" type="text" />
+                        <InputDisable text={status} title="Status" type="text" />
+                        <InputDisable text={id} title="ID da Solicitação" type="text" />
+                        <InputDisable text={solicitante} title="Solicitante" type="text" />
+                        <InputDisable text={quantidade} title="Quantidade" type="number" />
+                        <InputDisable text={item} title="Item" type="text" />
+                        <InputDisable text={codigoEPI} title="Código" type="text" />
+                        <SelectInput disable  text="Normal" title="Prioridade" />
+                        <InputDisable text={getCAEPI(codigoEPI)} title="CA" type="text" />
+                        <InputDisable text={getValidadeEPI(codigoEPI)} title="Data de Validade" type="text" />
+                        <InputDisable text={numeroPatrimonio} title="Número de Patrimônio" type="text" />
+                    </S.DivWrapper>
+                    </S.MainWrapper>
+                </ReactModal>
             </S.MainStyled>
         </>
     )

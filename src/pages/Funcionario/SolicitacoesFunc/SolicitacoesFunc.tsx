@@ -39,17 +39,21 @@ export const SolicitacoesFunc = () => {
   } = useModalDetalhesSolicitacao();
 
   const solicitacoes = JSON.parse(sessionStorage.getItem('Solicitacoes') || '[]');
-  const EPIsCadastrados = JSON.parse(sessionStorage.getItem('EPIsCadastrados') || '[]');
+
+  const [dataEpi] = useState(() => {
+    const savedData = sessionStorage.getItem('EPIsCadastrados');
+    return savedData ? JSON.parse(savedData) : [{}]; 
+  });
 
   const getValidadeEPI = (cod: string) => {
-    const epi = EPIsCadastrados.find((epi: EPIProps) => epi.codigo === cod);
+    const epi = dataEpi.find((epi: EPIProps) => epi.codigo === cod);
     return epi ? epi.validade : 'N/A';
   };
 
   const getCAEPI = (cod: string) => {
     console.log('aiai uiui');
     console.log("codigo do epi", cod)
-    const epi = EPIsCadastrados.find((epi: EPIProps) => epi.codigo === cod);
+    const epi = dataEpi.find((epi: EPIProps) => epi.codigo === cod);
     console.log(epi)
     return epi.CA;
   }
@@ -147,7 +151,7 @@ export const SolicitacoesFunc = () => {
             <InputDisable text={item} title="Item" type="text" />
             <InputDisable text={codigoEPI} title="Código" type="text" />
             <SelectInput disable={true} text="Normal" title="Prioridade" />
-            <InputDisable text="{getCAEPI(codigoEPI)}" title="CA" type="text" />
+            <InputDisable text={getCAEPI(codigoEPI)} title="CA" type="text" />
             <InputDisable text={getValidadeEPI(codigoEPI)} title="Data de Validade" type="text" />
             <InputDisable text={numeroPatrimonio} title="Número de Patrimônio" type="text" />
           </S.DivWrapper>
