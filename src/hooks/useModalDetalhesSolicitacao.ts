@@ -10,6 +10,7 @@ interface ModalProps {
   codigoEPI: string;
   numeroPatrimonio: string;
   prioridade: string;
+  dataConclusao: string;
 }
 
 export const useModalDetalhesSolicitacao = () => {
@@ -23,7 +24,9 @@ export const useModalDetalhesSolicitacao = () => {
   const [codigoEPI, setCodigoEPI] = useState("");
   const [numeroPatrimonio, setNumeroPatrimonio] = useState("");
   const [prioridade, setPrioridade] = useState("");
-  const openModal = ({ descricaoItem, id, status, dataSolicitacao, solicitante, quantidade, codigoEPI, numeroPatrimonio, prioridade }: ModalProps) => {
+  const [dataConclusao, setDataConclusao] = useState("");
+
+  const openModal = ({ dataConclusao, descricaoItem, id, status, dataSolicitacao, solicitante, quantidade, codigoEPI, numeroPatrimonio, prioridade }: ModalProps) => {
     setDescricaoItem(descricaoItem);
     setId(id);
     setStatus(status);
@@ -33,6 +36,7 @@ export const useModalDetalhesSolicitacao = () => {
     setCodigoEPI(codigoEPI);
     setNumeroPatrimonio(numeroPatrimonio)
     setPrioridade(prioridade);
+    setDataConclusao(dataConclusao);
     setIsOpen(true);
   };
 
@@ -51,6 +55,7 @@ export const useModalDetalhesSolicitacao = () => {
     codigoEPI,
     numeroPatrimonio,
     prioridade,
+    dataConclusao,
     openModal,
     closeModal,
   };

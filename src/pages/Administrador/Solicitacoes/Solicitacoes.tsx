@@ -6,7 +6,6 @@ import { OpenModalIcon } from '../../../components/OpenModalIcon/OpenModalIcon';
 import { useState } from 'react';
 import { DownloadSoliciIcon } from '../../../components/DownloadSoliciIcon/DownloadSoliciIcon';
 import jsPDF from 'jspdf';
-import { generatePath } from 'react-router';
 import { useModalDetalhesSolicitacao } from '../../../hooks/useModalDetalhesSolicitacao';
 import ReactModal from 'react-modal';
 import { InputDisable } from '../../../components/InputDisable/InputDisable';
@@ -15,14 +14,14 @@ import { NoDataToShow } from '../../../components/NoDataToShow/NoDataToShow';
 
 interface SolicitacaoProps {
     id: string;
-    item: string;
+    descricaoItem: string;
     status: string;
     codigoEPI: string;
     prioridade: string;
 }
   
 interface EPIProps {
-    descricao: string;
+    descricaoItem: string;
     codigo: string;
     validade: string;
     certificadoAprovacao: string;
@@ -31,7 +30,7 @@ interface EPIProps {
 export const Solicitacoes = () => {
     const { 
         isOpen,
-        item,
+        descricaoItem,
         id,
         status,
         dataSolicitacao,
@@ -40,6 +39,7 @@ export const Solicitacoes = () => {
         codigoEPI,
         numeroPatrimonio,
         prioridade,
+        dataConclusao,
         openModal,
         closeModal 
     } = useModalDetalhesSolicitacao();
@@ -53,8 +53,6 @@ export const Solicitacoes = () => {
     };
 
     const getCAEPI = (cod: string) => {
-        console.log('aiai uiui');
-        console.log("codigo do epi", cod)
         const epi = EPIsCadastrados.find((epi: EPIProps) => epi.codigo === cod);
         console.log(epi)
         return epi ? epi.certificadoAprovacao : 'N/A';
@@ -62,7 +60,6 @@ export const Solicitacoes = () => {
 
     const getSolicitacao = (params: SolicitacaoProps) => {
         const solicitacao = solicitacoes.find((solicitacao: SolicitacaoProps) => solicitacao.id == params.id);
-        console.log(solicitacao)
         return solicitacao;
     }
 
@@ -74,7 +71,7 @@ export const Solicitacoes = () => {
 
         doc.setFontSize(12);
         doc.text(`ID: ${solicitacao.id}`, 10, 30);
-        doc.text(`Item: ${solicitacao.item}`, 10, 40);
+        doc.text(`Item: ${solicitacao.descricaoItem}`, 10, 40);
         doc.text(`Status: ${solicitacao.status}`, 10, 50);
         doc.text(`Código do EPI: ${solicitacao.codigoEPI}`, 10, 60);
         doc.text(`Prioridade: ${solicitacao.prioridade}`, 10, 70);
@@ -123,7 +120,7 @@ export const Solicitacoes = () => {
 
     const rows = solicitacoes.map((solicitacao: SolicitacaoProps) => ({
         id: solicitacao.id,
-        descricaoItem: solicitacao.item,
+        descricaoItem: solicitacao.descricaoItem,
         prioridade: solicitacao.prioridade,
         status: solicitacao.status,
         validadeEPI: getValidadeEPI(solicitacao.codigoEPI),
@@ -165,7 +162,7 @@ export const Solicitacoes = () => {
     return(
         <S.MainStyled>
             <Searchbar onSearch={handleSearch} />
-            {filteredRows === "[]" ? (
+            {filteredRows.length > 0 ? (
                 <Paper sx={{ height: '100%', width: '100%', fontSize: 14, mt: 2 }}>
                     <DataGrid
                         rows={filteredRows}
@@ -188,12 +185,12 @@ export const Solicitacoes = () => {
                     </S.ImageContent>
                     <S.DivWrapper>
                         <InputDisable text={dataSolicitacao} title="Data de Abertura" type="text" />
-                        <InputDisable text="-" title="Data de Conclusão" type="text" />
+                        <InputDisable text={dataConclusao} title="Data de Conclusão" type="text" />
                         <InputDisable text={status} title="Status" type="text" />
                         <InputDisable text={id} title="ID da Solicitação" type="text" />
                         <InputDisable text={solicitante} title="Solicitante" type="text" />
                         <InputDisable text={quantidade} title="Quantidade" type="number" />
-                        <InputDisable text={item} title="Item" type="text" />
+                        <InputDisable text={descricaoItem} title="Item" type="text" />
                         <InputDisable text={codigoEPI} title="Código" type="text" />
                         <SelectInput disable={true} text={prioridade} title="Prioridade" />
                         <InputDisable text={getCAEPI(codigoEPI)} title="CA" type="text" />
