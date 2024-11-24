@@ -1,8 +1,8 @@
 import * as S from './Searchbar.styles';
 
 interface SearchbarProps {
-    placeholder?: string; // Torna opcional, com valor padrão
-    onSearch?: (value: string) => void; // Callback para capturar a busca
+    placeholder?: string;
+    onSearch?: (value: string) => void;
 }
 
 export const Searchbar = ({ placeholder = "Pesquise sua solicitação...", onSearch }: SearchbarProps) => {

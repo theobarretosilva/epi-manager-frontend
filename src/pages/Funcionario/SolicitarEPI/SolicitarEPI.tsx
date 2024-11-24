@@ -26,14 +26,6 @@ export const SolicitarEPI = () => {
     sessionStorage.setItem('UserLogado', JSON.stringify(usuarioLogado));
     const userLogado = JSON.parse(sessionStorage.getItem('UserLogado') || '{}');
 
-    const EPIsCadastrados = [
-        { descricaoItem: 'Capacete de proteção', codigo: 'COD-01', certificadoAprovacao: '15122', validade: '20/05/2026' },
-        { descricaoItem: 'Óculos de proteção', codigo: 'COD-02', certificadoAprovacao: '13544', validade: '12/07/2025' },
-        { descricaoItem: 'Luva de borracha', codigo: 'COD-03', certificadoAprovacao: '44475', validade: '07/02/2025' },
-        { descricaoItem: 'Teste', codigo: 'COD-04', certificadoAprovacao: '44475', validade: '10/02/2025' }
-    ];
-    sessionStorage.setItem('EPIsCadastrados', JSON.stringify(EPIsCadastrados));
-
     const EPIList = JSON.parse(sessionStorage.getItem('EPIsCadastrados') || '[]');
     const options = EPIList.map((epi: { descricaoItem: string; codigo: string }) => ({
         label: epi.descricaoItem,
@@ -83,7 +75,7 @@ export const SolicitarEPI = () => {
                 </S.DivFlex>
                 <S.DivFlex>
                     <SelectCodStyled 
-                        titulo="Descrição do Item"
+                        titulo="Escolha um item"
                         value={formData.descricaoItem}
                         options={options}
                         onChange={option => {
