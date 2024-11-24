@@ -44,7 +44,7 @@ export const SolicitarEPI = () => {
     }, [updateField, userLogado.nome]);
 
     const handleSubmit = () => {
-        if (!formData.item || !formData.codigoEPI || !formData.prioridade || !formData.quantidade) {
+        if (!formData.descricaoItem || !formData.codigoEPI || !formData.prioridade || !formData.quantidade) {
             toast.error('Por favor, preencha todos os campos.');
             return;
         }
@@ -75,10 +75,10 @@ export const SolicitarEPI = () => {
                 <S.DivFlex>
                     <SelectCodStyled 
                         titulo="Escolha um item"
-                        value={formData.item}
+                        value={formData.descricaoItem}
                         options={options}
                         onChange={option => {
-                            updateField('item', option.label);
+                            updateField('descricaoItem', option.label);
                             updateField('codigoEPI', option.value);
                         }}
                     />
