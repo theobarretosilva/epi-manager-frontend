@@ -10,7 +10,6 @@ export const SelectInput: React.FC<SelectInputProps> = ({text , title, disable, 
                 <option value={"Baixa"}>Baixa</option>
                 <option value={"Normal"}>Normal</option>
                 <option value={"Alta"}>Alta</option>
-                <option value={"Urgente"}>Urgente</option>
             </S.InputStyled>
         </S.DivGeral>   
     )

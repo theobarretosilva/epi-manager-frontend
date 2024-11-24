@@ -19,7 +19,7 @@ interface SolicitacaoProps {
 }
   
 interface EPIProps {
-    descricao: string;
+    descricaoItem: string;
     codigo: string;
     CA: string;
     validade: string;
@@ -88,13 +88,15 @@ export const DashboardAlmox = () => {
         { field: 'validadeEPI', headerName: 'Validade EPI', width: 150, align: 'center', headerAlign: 'center' }
     ];
 
-    const rows = solicitacoes.map((solicitacao: SolicitacaoProps) => ({
-        id: solicitacao.id,
-        descricaoItem: solicitacao.descricaoItem,
-        prioridade: solicitacao.prioridade,
-        status: solicitacao.status,
-        validadeEPI: getValidadeEPI(solicitacao.codigoEPI),
-    }));
+    const [rows, setRows] = useState(() => {
+        return solicitacoes.map((solicitacao: SolicitacaoProps) => ({
+            id: solicitacao.id,
+            descricaoItem: solicitacao.descricaoItem,
+            prioridade: solicitacao.prioridade,
+            status: solicitacao.status,
+            validadeEPI: getValidadeEPI(solicitacao.codigoEPI),
+        }));
+    })
 
     const [searchTerm, setSearchTerm] = useState('');
     const [filteredRows, setFilteredRows] = useState(rows);
@@ -112,7 +114,6 @@ export const DashboardAlmox = () => {
         <>
             <S.MainStyled>
                 <Searchbar onSearch={handleSearch} />
-                {filteredRows === "[]" ? (
                     <Paper sx={{ height: '100%', width: '100%', fontSize: 14, mt: 2 }}>
                         <DataGrid
                             rows={filteredRows}
@@ -127,12 +128,7 @@ export const DashboardAlmox = () => {
                             }}
                         />
                     </Paper>
-                ) : (
-                    <NoDataToShow mainText='Não foram feitas solicitações!' />
-                )}
-                <button onClick={()=> setModalIsOpen(true)}>Abrir</button>
             </S.MainStyled>
-
             <ReactModal
                 isOpen={modalIsOpen}
                 onRequestClose={() => setModalIsOpen(false)}

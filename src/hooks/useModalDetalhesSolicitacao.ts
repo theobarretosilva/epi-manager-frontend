@@ -25,7 +25,6 @@ export const useModalDetalhesSolicitacao = () => {
   const [numeroPatrimonio, setNumeroPatrimonio] = useState("");
   const [prioridade, setPrioridade] = useState("");
   const [dataConclusao, setDataConclusao] = useState("");
-
   const openModal = ({ dataConclusao, descricaoItem, id, status, dataSolicitacao, solicitante, quantidade, codigoEPI, numeroPatrimonio, prioridade }: ModalProps) => {
     setDescricaoItem(descricaoItem);
     setId(id);
