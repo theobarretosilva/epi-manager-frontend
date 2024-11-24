@@ -1,7 +1,7 @@
 import * as S from './Searchbar.styles';
 
 interface SearchbarProps {
-    placeholder?: string; 
+    placeholder?: string;
     onSearch?: (value: string) => void;
 }
 
