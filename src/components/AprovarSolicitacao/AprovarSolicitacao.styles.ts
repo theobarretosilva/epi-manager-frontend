@@ -49,4 +49,5 @@ export const DivFlex = styled.div`
 export interface AprovarSolicitacoesProps {
     setModalIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
     id: string;
+    onEdit: (e) => void;
   }

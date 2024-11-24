@@ -17,7 +17,7 @@ interface SolicitacaoProps {
   prioridade: string;
 }
 
-export const AprovarSolicitacao: React.FC<AprovarSolicitacoesProps> = ({setModalIsOpen, id}) => {
+export const AprovarSolicitacao: React.FC<AprovarSolicitacoesProps> = ({setModalIsOpen, id, onEdit}) => {
   const solicitacoes = JSON.parse(sessionStorage.getItem("Solicitacoes") || "[]");
   const solicitacao = solicitacoes.filter((element: SolicitacaoProps)=> element.id == id);  
   const [status, setStatus] = useState("");
@@ -71,11 +71,11 @@ export const AprovarSolicitacao: React.FC<AprovarSolicitacoesProps> = ({setModal
             const updateSolicitacoes = [...updatedSolicitacoes, solicitacaoAtualizada];
 
             sessionStorage.setItem('Solicitacoes', JSON.stringify(updateSolicitacoes));
-
             toast.success("Solicitação Aprovada!", {
               autoClose: 6000,
               closeOnClick: true,
             });
+            onEdit(solicitacaoAtualizada);
             setModalIsOpen(false)
         }
         break;
@@ -107,6 +107,7 @@ export const AprovarSolicitacao: React.FC<AprovarSolicitacoesProps> = ({setModal
           autoClose: 6000,
           closeOnClick: true,
         });
+        onEdit(solicitacaoAtualizada);
         setModalIsOpen(false); }
     }
     };

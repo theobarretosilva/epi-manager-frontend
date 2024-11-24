@@ -58,7 +58,31 @@ export const DashboardAlmox = () => {
     const openModal = (id: string) => {
         setModalIsOpen(true);
         setId(id);
-    }    
+    }
+
+    const handleRowsUpdate = (solicitacaoAtualizada: SolicitacaoProps) => {
+        const storedData = sessionStorage.getItem("Solicitacoes");
+        const solicitacoesList: SolicitacaoProps[] = storedData ? JSON.parse(storedData) : [];
+        
+        const existingIndex = solicitacoesList.findIndex(solicitacao => solicitacao.id === solicitacaoAtualizada.id);
+        
+        if (existingIndex !== -1) {
+            solicitacoesList[existingIndex] = solicitacaoAtualizada;
+        } else {
+            solicitacoesList.push(solicitacaoAtualizada);
+        }
+    
+        sessionStorage.setItem("Solicitacoes", JSON.stringify(solicitacoesList));
+        
+        setRows(solicitacoesList.map((solicitacao: SolicitacaoProps) => ({
+            id: solicitacao.id,
+            descricaoItem: solicitacao.descricaoItem,
+            prioridade: solicitacao.prioridade,
+            status: solicitacao.status,
+            validadeEPI: getValidadeEPI(solicitacao.codigoEPI),
+        })));
+    
+    };
 
     const getValidadeEPI = (cod: string) => {
         const epi = EPIsCadastrados.find((epi: EPIProps) => epi.codigo === cod);
@@ -142,9 +166,9 @@ export const DashboardAlmox = () => {
                 style={customStyles}
             >
                 <S.ImageContent onClick={() => setModalIsOpen(false)}>
-                    <S.Image  src="../../src/assets/svg/Close.svg" />
+                    <S.Image src="../../src/assets/svg/Close.svg" />
                 </S.ImageContent>
-                <AprovarSolicitacao setModalIsOpen={setModalIsOpen} id={id}/>
+                <AprovarSolicitacao onEdit={handleRowsUpdate} setModalIsOpen={setModalIsOpen} id={id}/>
             </ReactModal>
         </>
     )

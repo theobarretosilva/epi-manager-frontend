@@ -85,6 +85,7 @@ export const SolicitarEPI = () => {
                         value={formData.prioridade} 
                         options={['Alta', 'Média', 'Baixa']} 
                         onChange={value => updateField('prioridade', value)} 
+                        name='prioridade'
                     />
                     <InputStyled 
                         tipo='number'
