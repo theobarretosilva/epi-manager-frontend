@@ -8,6 +8,7 @@ import ReactModal from 'react-modal';
 import { InputDisable } from '../../../components/InputDisable/InputDisable';
 import { SelectInput } from '../../../components/SelectInput/SelectInput';
 import { useModalDetalhesSolicitacao } from '../../../hooks/useModalDetalhesSolicitacao';
+import { BtnStyled } from '../../../components/BtnStyled/BtnStyled';
 
 interface SolicitacaoProps {
   id: string;
@@ -45,17 +46,18 @@ export const SolicitacoesFunc = () => {
     return savedData ? JSON.parse(savedData) : [{}]; 
   });
 
+  console.log();
+  
+
   const getValidadeEPI = (cod: string) => {
     const epi = dataEpi.find((epi: EPIProps) => epi.codigo === cod);
     return epi ? epi.validade : 'N/A';
   };
 
   const getCAEPI = (cod: string) => {
-    console.log('aiai uiui');
-    console.log("codigo do epi", cod)
     const epi = dataEpi.find((epi: EPIProps) => epi.codigo === cod);
     console.log(epi)
-    return epi.CA;
+    return epi.certificadoAprovacao;
   }
 
   const getSolicitacao = (params: SolicitacaoProps) => {
