@@ -17,7 +17,7 @@ function App() {
       email: 'admin_master@gmail.com',
       id: '01',
       nome: 'Administrador Master',
-      setor: 'Soldagem'
+      setor: 'TIC'
     };
 
     const colaboradores = JSON.parse(sessionStorage.getItem('ColaboradoresCadastrados') || '[]');
