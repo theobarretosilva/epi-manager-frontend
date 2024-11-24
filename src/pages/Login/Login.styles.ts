@@ -105,3 +105,9 @@ export const PEsqueciSenha = styled.p`
     cursor: pointer;
     margin-bottom: 1vh;
 `
+
+export const ErrorMessage = styled.p`
+    color: red;
+    font-weight: bold;
+    margin-top: 10px;
+`;

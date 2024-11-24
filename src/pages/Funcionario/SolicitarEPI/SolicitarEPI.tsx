@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { BtnStyled } from '../../../components/BtnStyled/BtnStyled';
 import { InputStyled } from '../../../components/InputStyled/InputStyled';
 import { SelectCodStyled } from '../../../components/SelectCodStyled/SelectCodStyled';
@@ -37,9 +37,10 @@ export const SolicitarEPI = () => {
         return `SOL-${now.getFullYear()}-${now.getMonth() + 1}-${now.getDate()}-${now.getHours()}${now.getMinutes()}${now.getSeconds()}`;
     };
 
+    const [id] = useState(() => generateUniqueID());
+    
     useEffect(() => {
-        const newId = generateUniqueID();
-        updateField('id', newId);
+        updateField('id', id);
         updateField('solicitante', userLogado.nome);
     }, [updateField, userLogado.nome]);
 

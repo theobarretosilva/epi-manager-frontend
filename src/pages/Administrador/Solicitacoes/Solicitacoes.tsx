@@ -23,8 +23,8 @@ interface SolicitacaoProps {
 interface EPIProps {
     descricao: string;
     codigo: string;
-    CA: string;
     validade: string;
+    certificadoAprovacao: string;
 }
 
 export const Solicitacoes = () => {
@@ -44,7 +44,7 @@ export const Solicitacoes = () => {
     } = useModalDetalhesSolicitacao();
 
     const solicitacoes = JSON.parse(sessionStorage.getItem('Solicitacoes') || '[]');
-    const EPIsCadastrados = JSON.parse(sessionStorage.getItem('EPIs cadastrados') || '[]');
+    const EPIsCadastrados = JSON.parse(sessionStorage.getItem('EPIsCadastrados') || '[]');
 
     const getValidadeEPI = (cod: string) => {
         const epi = EPIsCadastrados.find((epi: EPIProps) => epi.codigo === cod);
@@ -56,7 +56,7 @@ export const Solicitacoes = () => {
         console.log("codigo do epi", cod)
         const epi = EPIsCadastrados.find((epi: EPIProps) => epi.codigo === cod);
         console.log(epi)
-        return epi.CA;
+        return epi ? epi.certificadoAprovacao : 'N/A';
     }
 
     const getSolicitacao = (params: SolicitacaoProps) => {
@@ -67,22 +67,17 @@ export const Solicitacoes = () => {
 
     const generatePDF = (solicitacao: SolicitacaoProps) => {
         const doc = new jsPDF();
-    
-        const validadeEPI = getValidadeEPI(solicitacao.codigoEPI);
-        const caEPI = getCAEPI(solicitacao.codigoEPI);
-    
+
         doc.setFontSize(18);
         doc.text('Detalhes da Solicitação', 10, 10);
-    
+
         doc.setFontSize(12);
         doc.text(`ID: ${solicitacao.id}`, 10, 30);
         doc.text(`Item: ${solicitacao.item}`, 10, 40);
         doc.text(`Status: ${solicitacao.status}`, 10, 50);
         doc.text(`Código do EPI: ${solicitacao.codigoEPI}`, 10, 60);
         doc.text(`Prioridade: ${solicitacao.prioridade}`, 10, 70);
-        doc.text(`Validade do EPI: ${validadeEPI}`, 10, 80);
-        doc.text(`Código CA: ${caEPI}`, 10, 90);
-    
+
         doc.save(`Solicitacao-${solicitacao.id}.pdf`);
     };
 
@@ -116,7 +111,7 @@ export const Solicitacoes = () => {
                     key={0}
                     icon={<DownloadSoliciIcon />}
                     label="Download"
-                    onClick={() => generatePDF(params.row)}
+                    onClick={() => generatePDF(getSolicitacao(params.row))}
                 />,
             ],
             width: 80,
@@ -183,23 +178,23 @@ export const Solicitacoes = () => {
             </Paper>
             <ReactModal isOpen={isOpen} onRequestClose={closeModal} style={customStyles}>
                 <S.MainWrapper>
-                <S.ImageContent onClick={closeModal}>
-                    <S.Image src="../../src/assets/svg/Close.svg" />
-                </S.ImageContent>
-                <S.DivWrapper>
-                    <InputDisable text={dataSolicitacao} title="Data de Abertura" type="text" />
-                    <InputDisable text="-" title="Data de Conclusão" type="text" />
-                    <InputDisable text={status} title="Status" type="text" />
-                    <InputDisable text={id} title="ID da Solicitação" type="text" />
-                    <InputDisable text={solicitante} title="Solicitante" type="text" />
-                    <InputDisable text={quantidade} title="Quantidade" type="number" />
-                    <InputDisable text={item} title="Item" type="text" />
-                    <InputDisable text={codigoEPI} title="Código" type="text" />
-                    <SelectInput disable={true} text={prioridade} title="Prioridade" />
-                    <InputDisable text='{getCAEPI(codigoEPI)}' title="CA" type="text" />
-                    <InputDisable text={getValidadeEPI(codigoEPI)} title="Validade do EPI" type="text" />
-                    <InputDisable text={numeroPatrimonio} title="Número de Patrimônio" type="text" />
-                </S.DivWrapper>
+                    <S.ImageContent onClick={closeModal}>
+                        <S.Image src="../../src/assets/svg/Close.svg" />
+                    </S.ImageContent>
+                    <S.DivWrapper>
+                        <InputDisable text={dataSolicitacao} title="Data de Abertura" type="text" />
+                        <InputDisable text="-" title="Data de Conclusão" type="text" />
+                        <InputDisable text={status} title="Status" type="text" />
+                        <InputDisable text={id} title="ID da Solicitação" type="text" />
+                        <InputDisable text={solicitante} title="Solicitante" type="text" />
+                        <InputDisable text={quantidade} title="Quantidade" type="number" />
+                        <InputDisable text={item} title="Item" type="text" />
+                        <InputDisable text={codigoEPI} title="Código" type="text" />
+                        <SelectInput disable={true} text={prioridade} title="Prioridade" />
+                        <InputDisable text={getCAEPI(codigoEPI)} title="CA" type="text" />
+                        <InputDisable text={getValidadeEPI(codigoEPI)} title="Validade do EPI" type="text" />
+                        <InputDisable text={numeroPatrimonio} title="Número de Patrimônio" type="text" />
+                    </S.DivWrapper>
                 </S.MainWrapper>
             </ReactModal>
         </S.MainStyled>

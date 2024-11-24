@@ -12,6 +12,7 @@ interface FormData {
     dataSolicitacao: string;
     dataConclusao: string;
     numeroPatrimonio: string;
+    certificadoAprovacao: string;
 }
 
 const useHandleFormSolicitarEPI = () => {
@@ -25,7 +26,8 @@ const useHandleFormSolicitarEPI = () => {
         status: 'Pendente',
         dataSolicitacao: moment().format('DD/MM/YYYY'),
         dataConclusao: '-',
-        numeroPatrimonio: '-'
+        numeroPatrimonio: '-',
+        certificadoAprovacao: '',
     });
 
     const generateUniqueID = () => {

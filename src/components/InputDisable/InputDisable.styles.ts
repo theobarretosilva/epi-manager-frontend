@@ -33,4 +33,5 @@ export interface InputDisableProps {
     text: string; 
     title: string; 
     type: string;
+    name?: string;
   }
