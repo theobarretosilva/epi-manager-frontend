@@ -4,23 +4,23 @@ import * as S from "./AdicionarEpi.styles"
 import { toast } from "react-toastify";
 import { InputStyled } from "../InputStyled/InputStyled";
 
-const AdicionarEpi: React.FC<S.AddColaboradorProps> = ({setModalIsOpen}) => {
-  const [descricao, setDescricao] = useState("");
+const AdicionarEpi: React.FC<S.AddEPIProps> = ({setModalIsOpen, onAdd}) => {
+  const [descricaoItem, setDescricaoItem] = useState("");
   const [codigo, setCodigo] = useState("");
-  const [ca, setCa] = useState("");
+  const [certificadoAprovacao, setCertificadoAprovacao] = useState("");
   const [validade, setValidade] = useState("");
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     switch (name) {
-      case "descricao":
-        setDescricao(value);
+      case "descricaoItem":
+        setDescricaoItem(value);
         break;
       case "codigo":
         setCodigo(value);
         break;
-      case "ca":
-        setCa(value);
+      case "certificadoAprovacao":
+        setCertificadoAprovacao(value);
         break;
       case "validade":
         setValidade(value);
@@ -32,18 +32,33 @@ const AdicionarEpi: React.FC<S.AddColaboradorProps> = ({setModalIsOpen}) => {
 
   const handleSave = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!descricao || !codigo ||  !ca || !validade ) {
+    if (!descricaoItem || !codigo ||  !certificadoAprovacao || !validade ) {
       toast.warning("Por favor, preencha todos os campos.", {
         autoClose: 6000,
         closeOnClick: true,
       });
     } else {
-      console.log({ descricao, codigo, ca, validade });
-      toast.success("Ação realizada com sucesso!", {
-        autoClose: 6000,
-        closeOnClick: true,
-      });
-      setModalIsOpen(false)
+      try {
+        const epi = {
+          id: codigo,
+          descricaoItem,
+          codigo,
+          certificadoAprovacao,
+          validade
+        }
+        onAdd(epi);
+
+        const epis = JSON.parse(sessionStorage.getItem("EPIsCadastrados") || "[]");
+        epis.push(epi);
+        sessionStorage.setItem("EPIsCadastrados", JSON.stringify(epis));
+        toast.success("EPI adicionado com sucesso!", {
+          autoClose: 6000,
+          closeOnClick: true,
+        });
+        setModalIsOpen(false)
+      } catch (error) {
+        toast.error("Ocorreu um erro ao salvar o EPI");
+      }
     }
   };
 
@@ -51,10 +66,10 @@ const AdicionarEpi: React.FC<S.AddColaboradorProps> = ({setModalIsOpen}) => {
     <S.FormContainer onSubmit={handleSave}>
     <S.DivWrapper>
       <InputStyled 
-        value={descricao}
+        value={descricaoItem}
         tipo="text"
         titulo="Descrição do Item"
-        name="descricao"
+        name="descricaoItem"
         handle={handleChange}
       />
       <InputStyled 
@@ -65,10 +80,10 @@ const AdicionarEpi: React.FC<S.AddColaboradorProps> = ({setModalIsOpen}) => {
         handle={handleChange}
       />
       <InputStyled 
-        value={ca}
+        value={certificadoAprovacao}
         tipo="text"
-        titulo="CA"
-        name="ca"
+        titulo="Certificado de Aprovação"
+        name="certificadoAprovacao"
         handle={handleChange}
       />
       <InputStyled 
@@ -79,7 +94,7 @@ const AdicionarEpi: React.FC<S.AddColaboradorProps> = ({setModalIsOpen}) => {
         handle={handleChange}
       />
     </S.DivWrapper>
-      <BtnStyled type="submit" text="Salvar" />
+      <BtnStyled onClick={() => {}} type="submit" text="Salvar" />
   </S.FormContainer>
   );
 };

@@ -31,7 +31,7 @@ interface RowProps {
 
 export const DashboardAlmox = () => {
     const solicitacoes = JSON.parse(sessionStorage.getItem('Solicitacoes') || '[]');
-    const EPIsCadastrados = JSON.parse(sessionStorage.getItem('EPIs cadastrados') || '[]');
+    const EPIsCadastrados = JSON.parse(sessionStorage.getItem('EPIsCadastrados') || '[]');
 
     const getValidadeEPI = (cod: string) => {
         const epi = EPIsCadastrados.find((epi: EPIProps) => epi.codigo === cod);
