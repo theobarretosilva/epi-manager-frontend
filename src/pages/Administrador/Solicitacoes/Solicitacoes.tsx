@@ -11,6 +11,7 @@ import { useModalDetalhesSolicitacao } from '../../../hooks/useModalDetalhesSoli
 import ReactModal from 'react-modal';
 import { InputDisable } from '../../../components/InputDisable/InputDisable';
 import { SelectInput } from '../../../components/SelectInput/SelectInput';
+import { NoDataToShow } from '../../../components/NoDataToShow/NoDataToShow';
 
 interface SolicitacaoProps {
     id: string;
@@ -164,18 +165,22 @@ export const Solicitacoes = () => {
     return(
         <S.MainStyled>
             <Searchbar onSearch={handleSearch} />
-            <Paper sx={{ height: '100%', width: '100%', fontSize: 14, mt: 2 }}>
-                <DataGrid
-                    rows={filteredRows}
-                    columns={columns}
-                    pageSizeOptions={[5, 10]}
-                    sx={{
-                        border: 0,
-                        '& .MuiDataGrid-cell': { textAlign: 'center' },
-                        '& .MuiDataGrid-columnHeaders': { backgroundColor: '#f5f5f5' },
-                    }}
-                />
-            </Paper>
+            {filteredRows === "[]" ? (
+                <Paper sx={{ height: '100%', width: '100%', fontSize: 14, mt: 2 }}>
+                    <DataGrid
+                        rows={filteredRows}
+                        columns={columns}
+                        pageSizeOptions={[5, 10]}
+                        sx={{
+                            border: 0,
+                            '& .MuiDataGrid-cell': { textAlign: 'center' },
+                            '& .MuiDataGrid-columnHeaders': { backgroundColor: '#f5f5f5' },
+                        }}
+                    />
+                </Paper>
+            ) : (
+                <NoDataToShow mainText="Não foram adicionadas solicitações!" />
+            )}
             <ReactModal isOpen={isOpen} onRequestClose={closeModal} style={customStyles}>
                 <S.MainWrapper>
                     <S.ImageContent onClick={closeModal}>

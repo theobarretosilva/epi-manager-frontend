@@ -4,7 +4,7 @@ import * as S from "./AdicionarEpi.styles"
 import { toast } from "react-toastify";
 import { InputStyled } from "../InputStyled/InputStyled";
 
-const AdicionarEpi: React.FC<S.AddColaboradorProps> = ({setModalIsOpen}) => {
+const AdicionarEpi: React.FC<S.AddEPIProps> = ({setModalIsOpen, onAdd}) => {
   const [descricaoItem, setDescricaoItem] = useState("");
   const [codigo, setCodigo] = useState("");
   const [certificadoAprovacao, setCertificadoAprovacao] = useState("");
@@ -46,18 +46,17 @@ const AdicionarEpi: React.FC<S.AddColaboradorProps> = ({setModalIsOpen}) => {
           certificadoAprovacao,
           validade
         }
+        onAdd(epi);
 
         const epis = JSON.parse(sessionStorage.getItem("EPIsCadastrados") || "[]");
         epis.push(epi);
         sessionStorage.setItem("EPIsCadastrados", JSON.stringify(epis));
-        console.log({ descricaoItem, codigo, certificadoAprovacao, validade });
         toast.success("EPI adicionado com sucesso!", {
           autoClose: 6000,
           closeOnClick: true,
         });
         setModalIsOpen(false)
       } catch (error) {
-        console.log("Não foi possível salvar EPI", error);
         toast.error("Ocorreu um erro ao salvar o EPI");
       }
     }
