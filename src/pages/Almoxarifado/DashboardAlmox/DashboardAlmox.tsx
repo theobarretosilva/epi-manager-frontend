@@ -4,6 +4,7 @@ import * as S from './DashboardAlmox.styles'
 import { DataGrid, GridActionsCellItem, GridColDef, GridRowParams } from '@mui/x-data-grid'
 import { OpenModalIcon } from '../../../components/OpenModalIcon/OpenModalIcon'
 import { useState } from 'react'
+import { NoDataToShow } from '../../../components/NoDataToShow/NoDataToShow'
 import ReactModal from 'react-modal'
 import { AprovarSolicitacao } from '../../../components/AprovarSolicitacao/AprovarSolicitacao'
 import { ExcluirModal } from '../../../components/ModalExcluir/ExcluirModal'
@@ -34,10 +35,9 @@ interface RowProps {
 
 export const DashboardAlmox = () => {
     const solicitacoes = JSON.parse(sessionStorage.getItem('Solicitacoes') || '[]');
-    const EPIsCadastrados = JSON.parse(sessionStorage.getItem('EPIs cadastrados') || '[]');
+    const EPIsCadastrados = JSON.parse(sessionStorage.getItem('EPIsCadastrados') || '[]');
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const [id, setId] = useState('');
-
 
     const customStyles = {
         overlay: {
@@ -112,20 +112,24 @@ export const DashboardAlmox = () => {
         <>
             <S.MainStyled>
                 <Searchbar onSearch={handleSearch} />
-                <Paper sx={{ height: '100%', width: '100%', fontSize: 14, mt: 2 }}>
-                    <DataGrid
-                        rows={filteredRows}
-                        columns={columns}
-                        paginationModel={paginationModel}
-                        onPaginationModelChange={setPaginationModel}
-                        pageSizeOptions={[6, 10]}
-                        sx={{
-                            border: 0,
-                            '& .MuiDataGrid-cell': { textAlign: 'center' },
-                            '& .MuiDataGrid-columnHeaders': { backgroundColor: '#f5f5f5' },
-                        }}
-                    />
-                </Paper>
+                {filteredRows === "[]" ? (
+                    <Paper sx={{ height: '100%', width: '100%', fontSize: 14, mt: 2 }}>
+                        <DataGrid
+                            rows={filteredRows}
+                            columns={columns}
+                            paginationModel={paginationModel}
+                            onPaginationModelChange={setPaginationModel}
+                            pageSizeOptions={[6, 10]}
+                            sx={{
+                                border: 0,
+                                '& .MuiDataGrid-cell': { textAlign: 'center' },
+                                '& .MuiDataGrid-columnHeaders': { backgroundColor: '#f5f5f5' },
+                            }}
+                        />
+                    </Paper>
+                ) : (
+                    <NoDataToShow mainText='Não foram feitas solicitações!' />
+                )}
                 <button onClick={()=> setModalIsOpen(true)}>Abrir</button>
             </S.MainStyled>
 

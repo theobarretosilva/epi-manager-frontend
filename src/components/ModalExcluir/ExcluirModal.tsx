@@ -38,4 +38,3 @@ export const ExcluirModal: React.FC<ExcluirProps> = ({ Id, setModalIsOpen, tipo,
       </S.DivContainer>
   );
 };
-

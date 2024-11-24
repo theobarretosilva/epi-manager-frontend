@@ -38,6 +38,7 @@ export const ImageContent = styled.button`
 
 export const Image = styled.img`
     width: 100%;
+    cursor: pointer;
 `
 export const DivWrapper = styled.div`
     display: flex;
