@@ -129,7 +129,7 @@ export const DashboardEPI = () => {
         
         episList.push(epi);
 
-        sessionStorage.setItem("ColaboradoresCadastrados", JSON.stringify(EPIList));
+        sessionStorage.setItem("EPIsCadastrados", JSON.stringify(EPIList));
 
         setEpis(episList);
 
@@ -147,7 +147,7 @@ export const DashboardEPI = () => {
             <S.MainStyled>
                 <Searchbar placeholder="Pesquise pela nome ou código" onSearch={handleSearch} />
                 <S.ButtonStyled onClick={() => setModalIsOpenAddEpi(true)} >+ Adicionar EPI</S.ButtonStyled>
-                {filteredRows === "[]" ? (
+                {filteredRows.length > 0 ? (
                     <Paper sx={{ height: '100%', width: '100%', fontSize: 14, mt: 2 }}>
                         <DataGrid
                             rows={filteredRows}
