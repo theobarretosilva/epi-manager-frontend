@@ -3,6 +3,7 @@ import { Searchbar } from '../../../components/Searchbar/Searchbar'
 import * as S from './ConsultEPI.styles'
 import { DataGrid, GridColDef } from '@mui/x-data-grid'
 import { useState } from 'react'
+import { NoDataToShow } from '../../../components/NoDataToShow/NoDataToShow'
 // import ReactModal from 'react-modal'
 // import { InputDisable } from '../../../components/InputDisable/InputDisable'
 
@@ -16,12 +17,12 @@ interface EPIProps {
 export const ConsultEPI = () => {
     // const [modalIsOpen, setModalIsOpen] = useState(false);
     const [paginationModel, setPaginationModel] = useState({ page: 0, pageSize: 6 });
-    const EPIList = JSON.parse(sessionStorage.getItem('EPIs cadastrados') || '[]');
+    const EPIList = JSON.parse(sessionStorage.getItem('EPIsCadastrados') || '[]');
 
     const columns: GridColDef[] = [
         { field: 'id', headerName: 'Código', width: 150, align: 'center', headerAlign: 'center'},
         { field: 'descricaoItem', headerName: 'Descrição do Item', width: 350, align: 'center', headerAlign: 'center' },
-        { field: 'ca', headerName: 'CA', width: 250, align: 'center', headerAlign: 'center' },
+        { field: 'certificadoAprovacao', headerName: 'Certificado de Aprovação', width: 250, align: 'center', headerAlign: 'center' },
         { field: 'validade', headerName: 'Validade', width: 250, align: 'center', headerAlign: 'center'},
     ];
 
@@ -65,21 +66,26 @@ export const ConsultEPI = () => {
         <S.MainStyled>
             <Searchbar placeholder='Pesquise pelo código ou nome' onSearch={handleSearch} />
             <S.ButtonStyled>+ Adicionar EPI</S.ButtonStyled>
-            <Paper sx={{ height: '100%', width: '100%', fontSize: 14, mt: 2 }}>
-                <DataGrid
-                    rows={filteredRows}
-                    columns={columns}
-                    paginationModel={paginationModel}
-                    onPaginationModelChange={setPaginationModel}
-                    pageSizeOptions={[6, 10]}
-                    sx={{
-                        border: 0,
-                        '& .MuiDataGrid-cell': { textAlign: 'center' },
-                        '& .MuiDataGrid-columnHeaders': { backgroundColor: '#f5f5f5' },
-                        '& .MuiDataGrid-root': { fontSize: '0.875rem' }
-                    }}
-                />
-            </Paper>
+            {filteredRows === "[]" ? (
+                <Paper sx={{ height: '100%', width: '100%', fontSize: 14, mt: 2 }}>
+                    <DataGrid
+                        rows={filteredRows}
+                        columns={columns}
+                        paginationModel={paginationModel}
+                        onPaginationModelChange={setPaginationModel}
+                        pageSizeOptions={[6, 10]}
+                        sx={{
+                            border: 0,
+                            '& .MuiDataGrid-cell': { textAlign: 'center' },
+                            '& .MuiDataGrid-columnHeaders': { backgroundColor: '#f5f5f5' },
+                            '& .MuiDataGrid-root': { fontSize: '0.875rem' }
+                        }}
+                    />
+                </Paper>
+            ) : (
+                <NoDataToShow mainText="Não foram adicionados EPI's!"  />
+            )}
+            
             {/* <ReactModal 
                 isOpen={modalIsOpen}
                 onRequestClose={() => setModalIsOpen(false)}
