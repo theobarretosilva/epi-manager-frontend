@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 interface FormData {
     id: string;
     solicitante: string;
-    item: string;
+    descricaoItem: string;
     codigoEPI: string;
     prioridade: string;
     quantidade: number;
@@ -19,7 +19,7 @@ const useHandleFormSolicitarEPI = () => {
     const [formData, setFormData] = useState<FormData>({
         id: '',
         solicitante: '',
-        item: '',
+        descricaoItem: '',
         codigoEPI: '',
         prioridade: '',
         quantidade: 0,
@@ -59,7 +59,6 @@ const useHandleFormSolicitarEPI = () => {
 
             sessionStorage.setItem('Solicitacoes', JSON.stringify(updatedSolicitacoes));
 
-            console.log('Dados enviados com sucesso:', updatedSolicitacoes);
         } catch (error) {
             console.error('Erro ao salvar os dados:', error);
         }

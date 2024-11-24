@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 interface ModalProps {
-  item: string;
+  descricaoItem: string;
   id: string;
   status: string;
   dataSolicitacao: string;
@@ -14,7 +14,7 @@ interface ModalProps {
 
 export const useModalDetalhesSolicitacao = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [item, setItem] = useState("");
+  const [descricaoItem, setDescricaoItem] = useState("");
   const [id, setId] = useState("");
   const [status, setStatus] = useState("");
   const [dataSolicitacao, setdataSolicitacao] = useState("");
@@ -23,8 +23,8 @@ export const useModalDetalhesSolicitacao = () => {
   const [codigoEPI, setCodigoEPI] = useState("");
   const [numeroPatrimonio, setNumeroPatrimonio] = useState("");
   const [prioridade, setPrioridade] = useState("");
-  const openModal = ({ item, id, status, dataSolicitacao, solicitante, quantidade, codigoEPI, numeroPatrimonio, prioridade }: ModalProps) => {
-    setItem(item);
+  const openModal = ({ descricaoItem, id, status, dataSolicitacao, solicitante, quantidade, codigoEPI, numeroPatrimonio, prioridade }: ModalProps) => {
+    setDescricaoItem(descricaoItem);
     setId(id);
     setStatus(status);
     setdataSolicitacao(dataSolicitacao);
@@ -42,7 +42,7 @@ export const useModalDetalhesSolicitacao = () => {
 
   return {
     isOpen,
-    item,
+    descricaoItem,
     id,
     status,
     dataSolicitacao,
