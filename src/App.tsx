@@ -17,23 +17,33 @@ function App() {
       email: 'admin_master@gmail.com',
       id: '01',
       nome: 'Administrador Master',
-      setor: 'TIC'
+      setor: 'TI'
     };
 
-    const colaboradores = JSON.parse(sessionStorage.getItem('ColaboradoresCadastrados') || '[]');
+    const colaboradoresString = sessionStorage.getItem('ColaboradoresCadastrados');
+    let colaboradores = [];
 
-    if (!colaboradores.some((colaborador) => colaborador.matricula === defaultAdmin.matricula)) {
+    if (colaboradoresString) {
+      try {
+        colaboradores = JSON.parse(colaboradoresString);
+      } catch (e) {
+        console.error("Erro ao parsear colaboradores:", e);
+      }
+    }
+
+    if (Array.isArray(colaboradores) && !colaboradores.some((colaborador) => colaborador.matricula === defaultAdmin.matricula)) {
       sessionStorage.setItem(
         'ColaboradoresCadastrados',
         JSON.stringify([...colaboradores, defaultAdmin])
       );
     }
   }, []);
+  
   return (
     <BrowserRouter>
       <Router />
     </BrowserRouter>
-  )
+  );
 }
 
-export default App
+export default App;

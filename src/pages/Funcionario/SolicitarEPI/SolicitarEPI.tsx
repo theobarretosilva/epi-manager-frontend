@@ -13,17 +13,6 @@ export const SolicitarEPI = () => {
     const navigate = useNavigate();
     const { formData, updateField, submitForm } = useHandleFormSolicitarEPI();
 
-    const usuarioLogado = {
-        id: '01',
-        nome: 'Théo Barreto Silva', 
-        matricula: '544', 
-        setor: 'Solda', 
-        cargo: 'Soldador', 
-        email: 'barretotheo25@gmail.com', 
-        hash: '', 
-        salt: ''
-    };
-    sessionStorage.setItem('UserLogado', JSON.stringify(usuarioLogado));
     const userLogado = JSON.parse(sessionStorage.getItem('UserLogado') || '{}');
 
     const EPIList = JSON.parse(sessionStorage.getItem('EPIsCadastrados') || '[]');

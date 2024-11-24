@@ -13,6 +13,7 @@ export const Login = () => {
     const [error, setError] = useState('');
     const navigate = useNavigate();
     const colaboradores = JSON.parse(sessionStorage.getItem("ColaboradoresCadastrados") || "[]");
+    console.log(colaboradores)
 
     const calculateHash = async (password: string, salt: string) => {
         const encoder = new TextEncoder();
