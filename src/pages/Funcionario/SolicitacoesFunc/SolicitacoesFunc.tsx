@@ -31,7 +31,7 @@ export const SolicitacoesFunc = () => {
     { descricaoItem: 'Luva de borracha', codigo: 'COD-03', certificadoAprovacao: '44475', validade: '07/02/2025' },
     { descricaoItem: 'Teste', codigo: 'COD-04', certificadoAprovacao: '44475', validade: '10/02/2025' }
   ];
-  sessionStorage.setItem('EPIs cadastrados', JSON.stringify(MockEPIs));
+  sessionStorage.setItem('EPIsCadastrados', JSON.stringify(MockEPIs));
 
   const { 
     isOpen,

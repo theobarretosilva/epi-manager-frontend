@@ -27,6 +27,11 @@ export const DashboardColab = () => {
     const [modalIsOpenDelete, setModalIsOpenDelete] = useState(false);
     const [idColaborador, setIdColaborador] = useState('0');
 
+    const closeModal = () => {
+        setModalIsOpenAddColaborador(false);
+        setIdColaborador('');
+    }
+
     const openModal = (id: string) => {
         setModalIsOpenAddColaborador(true);
         setIdColaborador(id);
@@ -54,20 +59,25 @@ export const DashboardColab = () => {
 
     const handleAddColaborador = (colaborador: ColaboradorProps) => {
         const storedData = sessionStorage.getItem("ColaboradoresCadastrados");
-        const colaboradoresList = storedData ? JSON.parse(storedData) : [];
-        
-        colaboradoresList.push(colaborador);
-
-        sessionStorage.setItem("ColaboradoresCadastrados", JSON.stringify(colaboradoresList));
-
+        const colaboradoresList: ColaboradorProps[] = storedData ? JSON.parse(storedData) : [];
+    
+        const existingIndex = colaboradoresList.findIndex(c => c.id === colaborador.id);
+    
+        if (existingIndex !== -1) {
+            colaboradoresList[existingIndex] = colaborador;
+        } else {
+            colaboradoresList.push(colaborador);
+        }
+    
         setColaboradores(colaboradoresList);
-
-        setRows(colaboradoresList.map((colaborador: ColaboradorProps) => ({
-            id: colaborador.id,
-            matricula: colaborador.matricula,
-            nome: colaborador.nome,
-            cargo: colaborador.cargo,
-            setor: colaborador.setor,
+        sessionStorage.setItem("ColaboradoresCadastrados", JSON.stringify(colaboradoresList));
+    
+        setRows(colaboradoresList.map(c => ({
+            id: c.id,
+            matricula: c.matricula,
+            nome: c.nome,
+            cargo: c.cargo,
+            setor: c.setor,
         })));
     };
 
@@ -160,7 +170,7 @@ export const DashboardColab = () => {
             <S.MainStyled>
                 <Searchbar onSearch={handleSearch} placeholder="Pesquise pela matrícula ou nome" />
                 <S.ButtonStyled onClick={() => setModalIsOpenAddColaborador(true)}>+ Adicionar Colaborador</S.ButtonStyled>
-                    {filteredRows === "[]" ? (
+                    {filteredRows.length > 0 ? (
                         <Paper sx={{ height: '100%', width: '100%', fontSize: 14, mt: 2 }}>
                         <DataGrid
                             rows={filteredRows}
@@ -196,10 +206,10 @@ export const DashboardColab = () => {
                 style={customStyles}
             >
                 <S.MainWrapper>
-                    <S.ImageContent onClick={() => setModalIsOpenAddColaborador(false)}>
+                    <S.ImageContent onClick={() => closeModal()}>
                         <S.Image src="../../src/assets/svg/Close.svg" />
                     </S.ImageContent>
-                    <AdicionarColaborador onAdd={handleAddColaborador} setModalIsOpen={setModalIsOpenAddColaborador} />
+                    <AdicionarColaborador modalIsOpen={modalIsOpenAddColaborador} idColab={idColaborador} onAdd={handleAddColaborador} setModalIsOpen={setModalIsOpenAddColaborador} />
                 </S.MainWrapper>
             </ReactModal>
         </>
