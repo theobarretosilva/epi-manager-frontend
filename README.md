@@ -1,50 +1,54 @@
-# React + TypeScript + Vite
+# 🛠️ **EPI Manager - Sistema de Gerenciamento de EPIs**
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## 📖 **Descrição do Projeto**
+O **EPI Manager** é uma aplicação web desenvolvida com **React** ⚛️, projetada para modernizar o gerenciamento de Equipamentos de Proteção Individual (EPIs). Com este sistema, substituímos os processos manuais baseados em fichas de papel 📝, oferecendo uma solução digital 💻 e acessível para colaboradores, almoxarifado e administradores.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🚀 **Tecnologias Utilizadas**
 
-## Expanding the ESLint configuration
+### **Frontend**  
+- ⚛️ **React**: Framework para construção da interface do usuário.  
+- 🌐 **React Router**: Gerenciamento de rotas para navegação.  
+- ✨ **React Modal**: Modais interativos para melhor experiência do usuário.
+- ## ✅ **Funcionalidades**
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+### 👷‍♂️ **Colaborador**
+- ✍️ Realiza solicitações de EPIs.  
+- 🔍 Consulta e acompanha o status de suas solicitações.  
 
-- Configure the top-level `parserOptions` property like this:
+### 🏗️ **Almoxarifado**
+- ✅ Aprova ou rejeita solicitações.  
+- 🔢 Gera números de patrimônio para EPIs aprovados.  
+- ➕ Adiciona ou edita novos EPIs.  
+- 📋 Consulta os colaboradores cadastrados.  
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+### 👩‍💼 **Administrador**
+- 📂 Consulta todas as solicitações realizadas.  
+- 🖨️ Gera relatórios em PDF.  
+- 🛠️ Gerencia colaboradores e EPIs (adicionar, editar e remover).  
+- 🔑 Possui controle total do sistema em casos de ausência do almoxarifado.
+
+## 🧩 **Requisitos para Execução**
+
+### **Dependências**
+- 🔵 **Node.js** (v16 ou superior)  
+- 📦 **NPM** ou **Yarn**
+
+## 🏃‍♂️ **Como Executar o Projeto**
+
+### **1. Clone o repositório**  
+```bash
+git clone https://github.com/seu-usuario/epi-manager.git
+cd epi-manager
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+### **2. Instalar dependências
+```
+npm install
+```
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
-
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
+### **3. Rodar localmente
+```
+npm run dev
 ```
