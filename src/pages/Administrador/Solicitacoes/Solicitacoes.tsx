@@ -21,7 +21,7 @@ interface SolicitacaoProps {
 }
   
 interface EPIProps {
-    descricao: string;
+    descricaoItem: string;
     codigo: string;
     validade: string;
     certificadoAprovacao: string;

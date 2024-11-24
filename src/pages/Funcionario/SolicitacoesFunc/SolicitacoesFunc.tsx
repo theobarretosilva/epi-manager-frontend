@@ -11,13 +11,13 @@ import { useModalDetalhesSolicitacao } from '../../../hooks/useModalDetalhesSoli
 
 interface SolicitacaoProps {
   id: string;
-  item: string;
+  descricaoItem: string;
   status: string;
   codigoEPI: string;
 }
 
 interface EPIProps {
-  descricao: string;
+  descricaoItem: string;
   codigo: string;
   CA: string;
   validade: string;
@@ -26,7 +26,7 @@ interface EPIProps {
 export const SolicitacoesFunc = () => {
   const { 
     isOpen,
-    item,
+    descricaoItem,
     id,
     status,
     dataSolicitacao,
@@ -83,7 +83,7 @@ export const SolicitacoesFunc = () => {
 
   const rows = solicitacoes.map((solicitacao: SolicitacaoProps) => ({
     id: solicitacao.id,
-    descricaoItem: solicitacao.item,
+    descricaoItem: solicitacao.descricaoItem,
     status: solicitacao.status,
     validadeEPI: getValidadeEPI(solicitacao.codigoEPI),
   }));
@@ -144,7 +144,7 @@ export const SolicitacoesFunc = () => {
             <InputDisable text={id} title="ID da Solicitação" type="text" />
             <InputDisable text={solicitante} title="Solicitante" type="text" />
             <InputDisable text={quantidade} title="Quantidade" type="number" />
-            <InputDisable text={item} title="Item" type="text" />
+            <InputDisable text={descricaoItem} title="Item" type="text" />
             <InputDisable text={codigoEPI} title="Código" type="text" />
             <SelectInput disable={true} text="Normal" title="Prioridade" />
             <InputDisable text="{getCAEPI(codigoEPI)}" title="CA" type="text" />
