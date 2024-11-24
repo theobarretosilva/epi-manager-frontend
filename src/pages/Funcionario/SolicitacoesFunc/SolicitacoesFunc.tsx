@@ -46,9 +46,6 @@ export const SolicitacoesFunc = () => {
     return savedData ? JSON.parse(savedData) : [{}]; 
   });
 
-  console.log();
-  
-
   const getValidadeEPI = (cod: string) => {
     const epi = dataEpi.find((epi: EPIProps) => epi.codigo === cod);
     return epi ? epi.validade : 'N/A';
