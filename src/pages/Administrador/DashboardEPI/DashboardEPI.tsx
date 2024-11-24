@@ -154,7 +154,9 @@ export const DashboardEPI = () => {
     return(
         <>
             <S.MainStyled>
-                <Searchbar placeholder="Pesquise pela nome ou código" onSearch={handleSearch} />
+                {filteredRows.length > 0 ? (
+                    <Searchbar placeholder="Pesquise pela nome ou código" onSearch={handleSearch} />
+                ) : ("")}
                 <S.ButtonStyled onClick={() => setModalIsOpenAddEpi(true)} >+ Adicionar EPI</S.ButtonStyled>
                 {filteredRows.length > 0 ? (
                     <Paper sx={{ height: '100%', width: '100%', fontSize: 14, mt: 2 }}>
@@ -172,7 +174,6 @@ export const DashboardEPI = () => {
                 ) : (
                     <NoDataToShow mainText="Não foram adicionados EPI's!" />
                 )}
-                
             </S.MainStyled>
             <ToastContainer position="top-right" />
             <ReactModal

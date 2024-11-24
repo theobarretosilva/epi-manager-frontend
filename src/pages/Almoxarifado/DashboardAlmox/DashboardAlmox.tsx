@@ -113,21 +113,28 @@ export const DashboardAlmox = () => {
     return(
         <>
             <S.MainStyled>
-                <Searchbar onSearch={handleSearch} />
-                    <Paper sx={{ height: '100%', width: '100%', fontSize: 14, mt: 2 }}>
-                        <DataGrid
-                            rows={filteredRows}
-                            columns={columns}
-                            paginationModel={paginationModel}
-                            onPaginationModelChange={setPaginationModel}
-                            pageSizeOptions={[6, 10]}
-                            sx={{
-                                border: 0,
-                                '& .MuiDataGrid-cell': { textAlign: 'center' },
-                                '& .MuiDataGrid-columnHeaders': { backgroundColor: '#f5f5f5' },
-                            }}
-                        />
-                    </Paper>
+                {filteredRows.length > 0 ? (
+                    <>
+                        <Searchbar onSearch={handleSearch} />
+                        <Paper sx={{ height: '100%', width: '100%', fontSize: 14, mt: 2 }}>
+                            <DataGrid
+                                rows={filteredRows}
+                                columns={columns}
+                                paginationModel={paginationModel}
+                                onPaginationModelChange={setPaginationModel}
+                                pageSizeOptions={[6, 10]}
+                                sx={{
+                                    border: 0,
+                                    '& .MuiDataGrid-cell': { textAlign: 'center' },
+                                    '& .MuiDataGrid-columnHeaders': { backgroundColor: '#f5f5f5' },
+                                }}
+                            />
+                        </Paper>
+                    </>
+                ) : (
+                    <NoDataToShow mainText='Não foi feita nenhuma solicitação!' />
+                )}
+                
             </S.MainStyled>
             <ReactModal
                 isOpen={modalIsOpen}

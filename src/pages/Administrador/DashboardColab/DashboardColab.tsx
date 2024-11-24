@@ -168,10 +168,12 @@ export const DashboardColab = () => {
     return (
         <>
             <S.MainStyled>
-                <Searchbar onSearch={handleSearch} placeholder="Pesquise pela matrícula ou nome" />
+                {filteredRows.length > 0 ? (
+                    <Searchbar onSearch={handleSearch} placeholder="Pesquise pela matrícula ou nome" />
+                ) : ("")}
                 <S.ButtonStyled onClick={() => setModalIsOpenAddColaborador(true)}>+ Adicionar Colaborador</S.ButtonStyled>
-                    {filteredRows.length > 0 ? (
-                        <Paper sx={{ height: '100%', width: '100%', fontSize: 14, mt: 2 }}>
+                {filteredRows.length > 0 ? (
+                    <Paper sx={{ height: '100%', width: '100%', fontSize: 14, mt: 2 }}>
                         <DataGrid
                             rows={filteredRows}
                             columns={columns}
