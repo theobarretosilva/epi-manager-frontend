@@ -43,5 +43,7 @@ export interface Colaborador {
 export interface AddColaboradorProps {
   setModalIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
   onAdd: (e: Colaborador) => void;
+  idColab?: string;
+  modalIsOpen: boolean;
 }
 
