@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 interface FormData {
     id: string;
     solicitante: string;
-    item: string;
+    descricaoItem: string;
     codigoEPI: string;
     prioridade: string;
     quantidade: number;
@@ -12,20 +12,22 @@ interface FormData {
     dataSolicitacao: string;
     dataConclusao: string;
     numeroPatrimonio: string;
+    certificadoAprovacao: string;
 }
 
 const useHandleFormSolicitarEPI = () => {
     const [formData, setFormData] = useState<FormData>({
         id: '',
         solicitante: '',
-        item: '',
+        descricaoItem: '',
         codigoEPI: '',
         prioridade: '',
         quantidade: 0,
         status: 'Pendente',
         dataSolicitacao: moment().format('DD/MM/YYYY'),
         dataConclusao: '-',
-        numeroPatrimonio: '-'
+        numeroPatrimonio: '-',
+        certificadoAprovacao: '',
     });
 
     const generateUniqueID = () => {
@@ -57,7 +59,6 @@ const useHandleFormSolicitarEPI = () => {
 
             sessionStorage.setItem('Solicitacoes', JSON.stringify(updatedSolicitacoes));
 
-            console.log('Dados enviados com sucesso:', updatedSolicitacoes);
         } catch (error) {
             console.error('Erro ao salvar os dados:', error);
         }

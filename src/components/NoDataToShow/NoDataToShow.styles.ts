@@ -5,7 +5,7 @@ export const PNoData = styled.p`
     font-size: 1.5rem;
     font-weight: 600;
     margin-bottom: 7vh;
-    margin-top: 5vh;
+    margin-top: 3vh;
 `
 
 export const ImgNoData = styled.img`

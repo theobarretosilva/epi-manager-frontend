@@ -1,4 +1,4 @@
-import * as S from './EditColabIon.styles'
+import * as S from './EditColabIcon.styles'
 
 export const EditColabIcon = () => {
     return(

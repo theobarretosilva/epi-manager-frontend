@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { BtnStyled } from '../../../components/BtnStyled/BtnStyled';
 import { InputStyled } from '../../../components/InputStyled/InputStyled';
 import { SelectCodStyled } from '../../../components/SelectCodStyled/SelectCodStyled';
@@ -26,14 +26,6 @@ export const SolicitarEPI = () => {
     sessionStorage.setItem('UserLogado', JSON.stringify(usuarioLogado));
     const userLogado = JSON.parse(sessionStorage.getItem('UserLogado') || '{}');
 
-    const EPIsCadastrados = [
-        { descricao: 'Capacete de proteção', codigo: 'COD-01', certificadoAprovacao: '15122', validade: '20/05/2026' },
-        { descricao: 'Óculos de proteção', codigo: 'COD-02', certificadoAprovacao: '13544', validade: '12/07/2025' },
-        { descricao: 'Luva de borracha', codigo: 'COD-03', certificadoAprovacao: '44475', validade: '07/02/2025' },
-        { descricao: 'Teste', codigo: 'COD-04', certificadoAprovacao: '44475', validade: '10/02/2025' }
-    ];
-    sessionStorage.setItem('EPIsCadastrados', JSON.stringify(EPIsCadastrados));
-
     const EPIList = JSON.parse(sessionStorage.getItem('EPIsCadastrados') || '[]');
     const options = EPIList.map((epi: { descricao: string; codigo: string }) => ({
         label: epi.descricao,
@@ -45,14 +37,15 @@ export const SolicitarEPI = () => {
         return `SOL-${now.getFullYear()}-${now.getMonth() + 1}-${now.getDate()}-${now.getHours()}${now.getMinutes()}${now.getSeconds()}`;
     };
 
+    const [id] = useState(() => generateUniqueID());
+    
     useEffect(() => {
-        const newId = generateUniqueID();
-        updateField('id', newId);
+        updateField('id', id);
         updateField('solicitante', userLogado.nome);
     }, [updateField, userLogado.nome]);
 
     const handleSubmit = () => {
-        if (!formData.item || !formData.codigoEPI || !formData.prioridade || !formData.quantidade) {
+        if (!formData.descricaoItem || !formData.codigoEPI || !formData.prioridade || !formData.quantidade) {
             toast.error('Por favor, preencha todos os campos.');
             return;
         }
@@ -83,10 +76,10 @@ export const SolicitarEPI = () => {
                 <S.DivFlex>
                     <SelectCodStyled 
                         titulo="Escolha um item"
-                        value={formData.item}
+                        value={formData.descricaoItem}
                         options={options}
                         onChange={option => {
-                            updateField('item', option.label);
+                            updateField('descricaoItem', option.label);
                             updateField('codigoEPI', option.value);
                         }}
                     />
