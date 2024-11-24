@@ -58,8 +58,6 @@ export const DashboardColab = () => {
         
         colaboradoresList.push(colaborador);
 
-        sessionStorage.setItem("ColaboradoresCadastrados", JSON.stringify(colaboradoresList));
-
         setColaboradores(colaboradoresList);
 
         setRows(colaboradoresList.map((colaborador: ColaboradorProps) => ({
@@ -160,7 +158,7 @@ export const DashboardColab = () => {
             <S.MainStyled>
                 <Searchbar onSearch={handleSearch} placeholder="Pesquise pela matrícula ou nome" />
                 <S.ButtonStyled onClick={() => setModalIsOpenAddColaborador(true)}>+ Adicionar Colaborador</S.ButtonStyled>
-                    {filteredRows === "[]" ? (
+                    {filteredRows.length > 0 ? (
                         <Paper sx={{ height: '100%', width: '100%', fontSize: 14, mt: 2 }}>
                         <DataGrid
                             rows={filteredRows}
