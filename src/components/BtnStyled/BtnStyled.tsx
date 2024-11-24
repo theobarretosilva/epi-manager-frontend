@@ -8,6 +8,6 @@ interface BtnStyledProps {
 
 export const BtnStyled: React.FC<BtnStyledProps> = ({ text, type, onClick }) => {
     return(
-        <S.ButtonStyled onClick={onClick} type={type} >{text}</S.ButtonStyled>
+        <S.ButtonStyled onClick={onClick} type={type}>{text}</S.ButtonStyled>
     )
 }

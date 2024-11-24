@@ -16,7 +16,7 @@ export const NameInput = styled.p`
 `
 
 export const InputStyled = styled.select`
-    background-color: #EDEDED;
+    background-color: white;
     border: 2.5px solid black;
     height: 5.8vh;
     border-radius: 6px;
@@ -44,4 +44,5 @@ export interface SelectInputProps {
     text: string; 
     title: string; 
     disable: boolean;
-  }
+    handle?: (event: React.ChangeEvent<HTMLInputElement>) => void
+};

@@ -9,3 +9,15 @@ export const MainStyled = styled.main`
     padding: 7vh 3vw 7vh 3vw;
     margin-left: 25.4vw;
 `
+
+export const ImageContent = styled.button`
+    width: 32px;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    cursor: pointer;
+`
+
+export const Image = styled.img`
+    width: 100%;
+`

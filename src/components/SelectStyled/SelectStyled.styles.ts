@@ -14,10 +14,10 @@ export const NameInput = styled.p`
     margin-top: 1vh;
 `
 
-export const InputStyled = styled.input`
+export const SelectStyled = styled.select`
     background-color: white;
     border: 1.5px solid black;
-    height: 5vh;
+    height: 5.5vh;
     border-radius: 4px;
     margin-top: 0;
     font-size: 1.15rem;

@@ -5,6 +5,10 @@ import { DataGrid, GridActionsCellItem, GridColDef, GridRowParams } from '@mui/x
 import { OpenModalIcon } from '../../../components/OpenModalIcon/OpenModalIcon'
 import { useState } from 'react'
 import { NoDataToShow } from '../../../components/NoDataToShow/NoDataToShow'
+import ReactModal from 'react-modal'
+import { AprovarSolicitacao } from '../../../components/AprovarSolicitacao/AprovarSolicitacao'
+import { ExcluirModal } from '../../../components/ModalExcluir/ExcluirModal'
+import AdicionarColaborador from '../../../components/AdicionarColaborador/AdicionarColaborador'
 
 interface SolicitacaoProps {
     id: string;
@@ -32,6 +36,29 @@ interface RowProps {
 export const DashboardAlmox = () => {
     const solicitacoes = JSON.parse(sessionStorage.getItem('Solicitacoes') || '[]');
     const EPIsCadastrados = JSON.parse(sessionStorage.getItem('EPIsCadastrados') || '[]');
+    const [modalIsOpen, setModalIsOpen] = useState(false);
+    const [id, setId] = useState('');
+
+    const customStyles = {
+        overlay: {
+          backgroundColor: "rgba(0, 0, 0, 0.5)", 
+        },
+        content: {
+          top: "50%",
+          left: "50%",
+          right: "auto",
+          bottom: "auto",
+          transform: "translate(-50%, -50%)",
+          padding: "25px",
+          borderRadius: "10px",
+          backgroundColor: "#FCFCFC",
+        },
+    };
+
+    const openModal = (id: string) => {
+        setModalIsOpen(true);
+        setId(id);
+    }    
 
     const getValidadeEPI = (cod: string) => {
         const epi = EPIsCadastrados.find((epi: EPIProps) => epi.codigo === cod);
@@ -49,7 +76,7 @@ export const DashboardAlmox = () => {
                     key={0}
                     icon={<OpenModalIcon />}
                     label='Abrir'
-                    // onClick={() =>  openModal(params.row.descricaoItem, params.row.id, params.row.status, params.row.validadeEPI)}
+                    onClick={() =>  openModal(params.row.id)}
                 />
             ],
             width: 80
@@ -103,8 +130,19 @@ export const DashboardAlmox = () => {
                 ) : (
                     <NoDataToShow mainText='Não foram feitas solicitações!' />
                 )}
-                
+                <button onClick={()=> setModalIsOpen(true)}>Abrir</button>
             </S.MainStyled>
+
+            <ReactModal
+                isOpen={modalIsOpen}
+                onRequestClose={() => setModalIsOpen(false)}
+                style={customStyles}
+            >
+                <S.ImageContent onClick={() => setModalIsOpen(false)}>
+                    <S.Image  src="../../src/assets/svg/Close.svg" />
+                </S.ImageContent>
+                <AprovarSolicitacao setModalIsOpen={setModalIsOpen} id={id}/>
+            </ReactModal>
         </>
     )
 }

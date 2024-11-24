@@ -5,6 +5,8 @@ export const FormContainer = styled.form`
   padding: 2rem;
   background-color: transparent;
   border-radius: 8px;
+  width: 60vw;
+  height: 80vh;
 
   /* Responsividade para telas menores */
   @media (max-width: 768px) {
