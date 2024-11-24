@@ -26,15 +26,7 @@ export const SolicitarEPI = () => {
     sessionStorage.setItem('UserLogado', JSON.stringify(usuarioLogado));
     const userLogado = JSON.parse(sessionStorage.getItem('UserLogado') || '{}');
 
-    const EPIsCadastrados = [
-        { descricao: 'Capacete de proteção', codigo: 'COD-01', certificadoAprovacao: '15122', validade: '20/05/2026' },
-        { descricao: 'Óculos de proteção', codigo: 'COD-02', certificadoAprovacao: '13544', validade: '12/07/2025' },
-        { descricao: 'Luva de borracha', codigo: 'COD-03', certificadoAprovacao: '44475', validade: '07/02/2025' },
-        { descricao: 'Teste', codigo: 'COD-04', certificadoAprovacao: '44475', validade: '10/02/2025' }
-    ];
-    sessionStorage.setItem('EPIs cadastrados', JSON.stringify(EPIsCadastrados));
-
-    const EPIList = JSON.parse(sessionStorage.getItem('EPIs cadastrados') || '[]');
+    const EPIList = JSON.parse(sessionStorage.getItem('EPIsCadastrados') || '[]');
     const options = EPIList.map((epi: { descricao: string; codigo: string }) => ({
         label: epi.descricao,
         value: epi.codigo,

@@ -8,25 +8,34 @@ import ReactModal from 'react-modal';
 import { InputDisable } from '../../../components/InputDisable/InputDisable';
 import { SelectInput } from '../../../components/SelectInput/SelectInput';
 import { useModalDetalhesSolicitacao } from '../../../hooks/useModalDetalhesSolicitacao';
+import { NoDataToShow } from '../../../components/NoDataToShow/NoDataToShow';
 
 interface SolicitacaoProps {
   id: string;
-  item: string;
+  descricaoItem: string;
   status: string;
   codigoEPI: string;
 }
 
 interface EPIProps {
-  descricao: string;
+  descricaoItem: string;
   codigo: string;
-  CA: string;
+  certificadoAprovacao: string;
   validade: string;
 }
 
 export const SolicitacoesFunc = () => {
+  const MockEPIs = [
+    { descricaoItem: 'Capacete de proteção', codigo: 'COD-01', certificadoAprovacao: '15122', validade: '20/05/2026' },
+    { descricaoItem: 'Óculos de proteção', codigo: 'COD-02', certificadoAprovacao: '13544', validade: '12/07/2025' },
+    { descricaoItem: 'Luva de borracha', codigo: 'COD-03', certificadoAprovacao: '44475', validade: '07/02/2025' },
+    { descricaoItem: 'Teste', codigo: 'COD-04', certificadoAprovacao: '44475', validade: '10/02/2025' }
+  ];
+  sessionStorage.setItem('EPIs cadastrados', JSON.stringify(MockEPIs));
+
   const { 
     isOpen,
-    item,
+    descricaoItem,
     id,
     status,
     dataSolicitacao,
@@ -39,7 +48,7 @@ export const SolicitacoesFunc = () => {
   } = useModalDetalhesSolicitacao();
 
   const solicitacoes = JSON.parse(sessionStorage.getItem('Solicitacoes') || '[]');
-  const EPIsCadastrados = JSON.parse(sessionStorage.getItem('EPIs cadastrados') || '[]');
+  const EPIsCadastrados = JSON.parse(sessionStorage.getItem('EPIsCadastrados') || '[]');
 
   const getValidadeEPI = (cod: string) => {
     const epi = EPIsCadastrados.find((epi: EPIProps) => epi.codigo === cod);
@@ -47,16 +56,12 @@ export const SolicitacoesFunc = () => {
   };
 
   const getCAEPI = (cod: string) => {
-    console.log('aiai uiui');
-    console.log("codigo do epi", cod)
     const epi = EPIsCadastrados.find((epi: EPIProps) => epi.codigo === cod);
-    console.log(epi)
-    return epi.CA;
+    return epi ? epi.certificadoAprovacao : 'N/A';
   }
 
   const getSolicitacao = (params: SolicitacaoProps) => {
     const solicitacao = solicitacoes.find((solicitacao: SolicitacaoProps) => solicitacao.id == params.id);
-    console.log(solicitacao)
     return solicitacao;
   }
 
@@ -83,7 +88,7 @@ export const SolicitacoesFunc = () => {
 
   const rows = solicitacoes.map((solicitacao: SolicitacaoProps) => ({
     id: solicitacao.id,
-    descricaoItem: solicitacao.item,
+    descricaoItem: solicitacao.descricaoItem,
     status: solicitacao.status,
     validadeEPI: getValidadeEPI(solicitacao.codigoEPI),
   }));
@@ -119,19 +124,26 @@ export const SolicitacoesFunc = () => {
 
   return (
     <S.MainStyled>
-      <Searchbar onSearch={handleSearch} />
-      <Paper sx={{ height: '100%', width: '100%', fontSize: 14, mt: 2 }}>
-        <DataGrid
-          rows={filteredRows}
-          columns={columns}
-          pageSizeOptions={[5, 10]}
-          sx={{
-            border: 0,
-            '& .MuiDataGrid-cell': { textAlign: 'center' },
-            '& .MuiDataGrid-columnHeaders': { backgroundColor: '#f5f5f5' },
-          }}
-        />
-      </Paper>
+      {filteredRows === "[]" ? (
+        <>
+          <Searchbar onSearch={handleSearch} />
+          <Paper sx={{ height: '100%', width: '100%', fontSize: 14, mt: 2 }}>
+            <DataGrid
+              rows={filteredRows}
+              columns={columns}
+              pageSizeOptions={[5, 10]}
+              sx={{
+                border: 0,
+                '& .MuiDataGrid-cell': { textAlign: 'center' },
+                '& .MuiDataGrid-columnHeaders': { backgroundColor: '#f5f5f5' },
+              }}
+            />
+          </Paper>
+        </>
+      ) : (
+        <NoDataToShow mainText='Não foram feitas solicitações!' />
+      )}
+      
       <ReactModal isOpen={isOpen} onRequestClose={closeModal} style={customStyles}>
         <S.MainWrapper>
           <S.ImageContent onClick={closeModal}>
@@ -144,10 +156,10 @@ export const SolicitacoesFunc = () => {
             <InputDisable text={id} title="ID da Solicitação" type="text" />
             <InputDisable text={solicitante} title="Solicitante" type="text" />
             <InputDisable text={quantidade} title="Quantidade" type="number" />
-            <InputDisable text={item} title="Item" type="text" />
+            <InputDisable text={descricaoItem} title="Descrição do Item" type="text" />
             <InputDisable text={codigoEPI} title="Código" type="text" />
             <SelectInput disable={true} text="Normal" title="Prioridade" />
-            <InputDisable text={getCAEPI(codigoEPI)} title="CA" type="text" />
+            <InputDisable text={getCAEPI(codigoEPI)} title="Certificado de Aprovação" type="text" />
             <InputDisable text={getValidadeEPI(codigoEPI)} title="Data de Validade" type="text" />
             <InputDisable text={numeroPatrimonio} title="Número de Patrimônio" type="text" />
           </S.DivWrapper>

@@ -57,7 +57,6 @@ const useHandleFormSolicitarEPI = () => {
 
             sessionStorage.setItem('Solicitacoes', JSON.stringify(updatedSolicitacoes));
 
-            console.log('Dados enviados com sucesso:', updatedSolicitacoes);
         } catch (error) {
             console.error('Erro ao salvar os dados:', error);
         }
