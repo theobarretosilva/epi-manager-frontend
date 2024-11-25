@@ -62,7 +62,7 @@ export const Image = styled.img`
 `
 export const DivWrapper = styled.div`
     display: flex;
-    flex-wrap: wrap; /* Permite quebrar a linha se necessário */
+    flex-wrap: wrap;
     gap: 10px; 
     width: 700px;
 `

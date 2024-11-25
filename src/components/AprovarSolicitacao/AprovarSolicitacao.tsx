@@ -156,7 +156,7 @@ export const AprovarSolicitacao: React.FC<AprovarSolicitacoesProps> = ({setModal
           title="Código do EPI"
           name="codigo"
         />
-        <SelectInput text={prioridade} title="Prioridade" disable={false} handle={(e) => setPrioridade(e.target.value)}/> {/* Arrumar para receber valor*/}
+        <SelectInput text={prioridade} title="Prioridade" disable={false} handle={(e) => setPrioridade(e.target.value)}/>
         <InputStyled 
           value={patrimonio}
           tipo="text"

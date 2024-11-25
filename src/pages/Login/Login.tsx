@@ -36,6 +36,7 @@ export const Login = () => {
         const hash = await calculateHash(senha, user.salt);
         if (hash === user.hash) {
             sessionStorage.setItem("TipoAcesso", user.cargo);
+            sessionStorage.setItem("UserLogado", JSON.stringify(user));
             return user.cargo;
         } else {
             throw new Error("Senha incorreta.");

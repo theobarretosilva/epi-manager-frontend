@@ -8,7 +8,6 @@ export const FormContainer = styled.form`
   width: 60vw;
   height: 80vh;
 
-  /* Responsividade para telas menores */
   @media (max-width: 768px) {
     width: 90vw;
     padding: 1.5rem;
@@ -18,10 +17,9 @@ export const FormContainer = styled.form`
 export const DivWrapper = styled.div`
   padding-bottom: 40px;
   display: flex;
-  flex-wrap: wrap; /* Permite quebra de linha */
-  gap: 16px; /* Espaçamento entre os itens */
+  flex-wrap: wrap;
+  gap: 16px;
 
-  /* Responsividade para telas menores */
   @media (max-width: 768px) {
     width: 90vw;
     padding: 1.5rem;
