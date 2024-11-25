@@ -1,7 +1,7 @@
 # 🛠️ **EPI Manager - Sistema de Gerenciamento de EPIs**
 
 ## 📖 **Descrição do Projeto**
-O **EPI Manager** é uma aplicação web desenvolvida com **React** ⚛️, projetada para modernizar o gerenciamento de Equipamentos de Proteção Individual (EPIs). Com este sistema, substituímos os processos manuais baseados em fichas de papel 📝, oferecendo uma solução digital 💻 e acessível para colaboradores, almoxarifado e administradores.
+O **EPI Manager** é uma aplicação web desenvolvida com **React** ⚛️, projetada para modernizar o gerenciamento de Equipamentos de Proteção Individual (EPIs). Com este sistema, substituímos os processos manuais baseados em fichas de papel 📝, oferecendo uma solução digital 💻 e acessível para funcionários, almoxarifado e administradores.
 
 ---
 
@@ -13,7 +13,7 @@ O **EPI Manager** é uma aplicação web desenvolvida com **React** ⚛️, proj
 - ✨ **React Modal**: Modais interativos para melhor experiência do usuário.
 - ## ✅ **Funcionalidades**
 
-### 👷‍♂️ **Colaborador**
+### 👷‍♂️ **Funcionários**
 - ✍️ Realiza solicitações de EPIs.  
 - 🔍 Consulta e acompanha o status de suas solicitações.  
 
@@ -21,12 +21,12 @@ O **EPI Manager** é uma aplicação web desenvolvida com **React** ⚛️, proj
 - ✅ Aprova ou rejeita solicitações.  
 - 🔢 Gera números de patrimônio para EPIs aprovados.  
 - ➕ Adiciona ou edita novos EPIs.  
-- 📋 Consulta os colaboradores cadastrados.  
+- 📋 Consulta os funcionários cadastrados.  
 
 ### 👩‍💼 **Administrador**
 - 📂 Consulta todas as solicitações realizadas.  
 - 🖨️ Gera relatórios em PDF.  
-- 🛠️ Gerencia colaboradores e EPIs (adicionar, editar e remover).  
+- 🛠️ Gerencia funcionários e EPIs (adicionar, editar e remover).  
 - 🔑 Possui controle total do sistema em casos de ausência do almoxarifado.
 
 ## 🧩 **Requisitos para Execução**
