@@ -43,12 +43,14 @@ git clone https://github.com/seu-usuario/epi-manager.git
 cd epi-manager
 ```
 
-### **2. Instalar dependências
+### **2. Selecionar branch "develop"
+
+### **3. Instalar dependências
 ```
 npm install
 ```
 
-### **3. Rodar localmente
+### **4. Rodar localmente
 ```
 npm run dev
 ```
